@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const port = 8080;
 
@@ -11,13 +10,8 @@ app.get('/', (req, res) => {
 });
 
 const userRouter = require('./src/routes/user');
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use('/api/user', userRouter);
 
 app.listen(port, function () {
