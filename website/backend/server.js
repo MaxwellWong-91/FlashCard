@@ -10,9 +10,11 @@ app.get('/', (req, res) => {
 });
 
 const userRouter = require('./src/routes/user');
+const flashcardsetRouter = require('./src/routes/flashcardset');
 
 app.use(express.json());
 app.use('/api/user', userRouter);
+app.use('/api/set', flashcardsetRouter);
 
 app.listen(port, function () {
     console.log(`Server Listening on ${port}`);

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 var uniqueValidator = require('mongoose-unique-validator')
+const flashcard = require("./flashcard.js").schema;
 
 const flashcardSetSchema = new mongoose.Schema({
   name: {
@@ -8,8 +9,12 @@ const flashcardSetSchema = new mongoose.Schema({
     unique: true
   }, 
   
+  flashcards: { 
+    type: [flashcard]
+  }
+  
 });
 
 flashcardSetSchema.plugin(uniqueValidator);
-const FlashcardSet = mongoose.model("User", flashcardSetSchema);
+const FlashcardSet = mongoose.model("FlashcardSet", flashcardSetSchema);
 module.exports = FlashcardSet;
