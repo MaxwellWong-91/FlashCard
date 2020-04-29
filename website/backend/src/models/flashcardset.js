@@ -10,7 +10,10 @@ const flashcardSetSchema = new mongoose.Schema({
   }, 
   
   flashcards: { 
-    type: [flashcard]
+    type: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Flashcard"
+    }]
   }
   
 });

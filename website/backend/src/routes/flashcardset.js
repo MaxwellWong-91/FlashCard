@@ -1,6 +1,8 @@
 const router = require("express").Router();
-
+const FlashcardRouter = require("./flashcard");
 let FlashcardSet = require("../models/flashcardset");
+
+router.use("/:id/card", FlashcardRouter);
 
 // should get all flashcard sets
 router.route("/").get((req, res) => {
@@ -31,6 +33,7 @@ router.route("/create").post((req, res) => {
   if (!name) {
     return res.status(400).json({ msg: "Please enter a name for the flashcard" });
   }
+  console.log(name);
 
   // check if name used already
   FlashcardSet.findOne({ name })
