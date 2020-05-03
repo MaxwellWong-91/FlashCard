@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-var uniqueValidator = require('mongoose-unique-validator');
 
-const flashcardSchema = new mongoose.Schema({
+var flashcardSchema = new mongoose.Schema({
   word: {
     type: String,
     required: true,
@@ -14,6 +13,9 @@ const flashcardSchema = new mongoose.Schema({
   }
 })
 
-flashcardSchema.plugin(uniqueValidator);
+flashcardSchema.pre("remove", function(next) {
+  this.model("FlashcardSet").remove({flashcards: this._id}, next);
+})
+
 const flashcard = mongoose.model("Flashcard", flashcardSchema);
 module.exports = flashcard;

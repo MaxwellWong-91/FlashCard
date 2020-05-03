@@ -42,6 +42,7 @@ router.route("/create").post((req, res) => {
         return res.status(400).json({ msg: "Flashcard set with that name already exists" });
       }
     })
+    .catch(err => res.status(400).json('Error: ' + err));
 
   const newSet = new FlashcardSet({
     name
