@@ -20,7 +20,9 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
-    "mongoose-unique-validator": "^2.0.3"
+    "mongoose-unique-validator": "^2.0.3",
+    "request": "^2.88.2",
+    "tesseract.js": "^2.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

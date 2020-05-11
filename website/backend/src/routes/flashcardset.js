@@ -49,7 +49,7 @@ router.route("/create").post((req, res) => {
   })
 
   newSet.save()
-    .then(() => res.json("FlashcardSet added!"))
+    .then(() => res.json(newSet))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
