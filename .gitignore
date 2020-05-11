@@ -18,3 +18,6 @@ words/*
 words.tgz
 words.txt
 data/*
+flashcards_env.json
+key.json
+images/*
