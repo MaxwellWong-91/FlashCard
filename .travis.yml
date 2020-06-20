@@ -9,6 +9,9 @@ node_js:
 notifications:
   email: false
 
+env:
+  - URI=$URI
+
 install:
   - cd ./website/backend
   - npm ci
