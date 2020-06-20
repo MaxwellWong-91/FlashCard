@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "mocha --exit src/tests/routes/*.test.js",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../frontend",
@@ -25,6 +25,10 @@
     "tesseract.js": "^2.1.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.0.1",
+    "nock": "^12.0.3",
     "nodemon": "^2.0.2"
   }
 }

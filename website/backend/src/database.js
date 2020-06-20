@@ -27,8 +27,12 @@ const dbConnectionURL = {
   'LOCALURL': process.env.URI
 };
 
-mongoose.connect(dbConnectionURL.LOCALURL, options)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
-
+module.exports = function initializeDB(callback) {
+    mongoose.connect(dbConnectionURL.LOCALURL, options)
+    .then(() => {
+      console.log("MongoDB connected");
+      callback()
+    })
+    .catch(err => console.log(err));
+}
 
