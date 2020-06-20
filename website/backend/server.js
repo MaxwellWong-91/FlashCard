@@ -30,6 +30,6 @@ initializeDB(function () {
 
 
 
-console.log("hello world");
+console.log(process.env.test);
 
 module.exports = app;
