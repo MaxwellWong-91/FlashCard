@@ -29,7 +29,7 @@ initializeDB(function () {
 });
 
 
-
+console.log(process.env.TRAVIS)
 console.log(process.env.URI);
 console.log(process.env.test)
 module.exports = app;
