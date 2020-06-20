@@ -27,6 +27,8 @@ const dbConnectionURL = {
   'LOCALURL': process.env.URI
 };
 
+console.log(process.env.URI);
+
 module.exports = function initializeDB(callback) {
   console.log(process.env.URI);
   mongoose.connect(dbConnectionURL.LOCALURL, options)
