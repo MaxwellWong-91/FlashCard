@@ -28,8 +28,8 @@ initializeDB(function () {
   });
 });
 
-
+console.log("huh");
 console.log(process.env.TRAVIS)
-console.log(process.env.URI);
-console.log(process.env.test)
+//console.log(process.env.URI);
+//console.log(process.env.test)
 module.exports = app;
