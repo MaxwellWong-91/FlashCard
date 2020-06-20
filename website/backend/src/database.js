@@ -31,7 +31,9 @@ console.log("interesting");
 console.log("for travis: " + process.env.TRAVIS);
 console.log("for test: " + process.env.test);
 
-console.log(process.env.URI);
+console.log("for uri: " + process.env.URI);
+
+console.log(process.env);
 
 module.exports = function initializeDB(callback) {
   console.log(process.env.URI);
