@@ -10,7 +10,7 @@ notifications:
   email: false
 
 env:
-  - URI = $URI
+  - URI=$URI
 
 install:
   - cd ./website/backend
