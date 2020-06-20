@@ -28,11 +28,11 @@ const dbConnectionURL = {
 };
 
 module.exports = function initializeDB(callback) {
-    mongoose.connect(dbConnectionURL.LOCALURL, options)
-    .then(() => {
-      console.log("MongoDB connected");
-      callback()
-    })
-    .catch(err => console.log(err));
+  mongoose.connect(dbConnectionURL.LOCALURL, options)
+  .then(() => {
+    console.log("MongoDB connected");
+    callback()
+  })
+  .catch(err => console.log(err));
 }
 
