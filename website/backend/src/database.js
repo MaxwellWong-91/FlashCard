@@ -29,6 +29,7 @@ const dbConnectionURL = {
 
 console.log("interesting");
 console.log("for travis: " + process.env.TRAVIS);
+console.log("for test: " + process.env.test);
 
 console.log(process.env.URI);
 
