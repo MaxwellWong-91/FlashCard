@@ -27,6 +27,9 @@ const dbConnectionURL = {
   'LOCALURL': process.env.URI
 };
 
+console.log("interesting");
+console.log("for travis: " + process.env.TRAVIS);
+
 console.log(process.env.URI);
 
 module.exports = function initializeDB(callback) {

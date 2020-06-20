@@ -29,6 +29,7 @@ initializeDB(function () {
 });
 
 console.log("huh");
+console.log("what");
 console.log(process.env.TRAVIS)
 //console.log(process.env.URI);
 //console.log(process.env.test)
