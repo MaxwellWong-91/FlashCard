@@ -23,9 +23,7 @@ app.use("/api/set", flashcardsetRouter);
 app.use("/api/process", processRouter);
 
 initializeDB(function () {
-  console.log("here");
   app.listen(port, function () {
-    console.log("or here");
     console.log(`Server Listening on ${port}`);
   });
 });
