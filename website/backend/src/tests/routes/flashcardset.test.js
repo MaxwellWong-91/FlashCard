@@ -38,7 +38,7 @@ describe("Test get /api/set/:id", () => {
         expect(res.body.__v).to.equal(2);
         //res.should.have.status(200);
         //res.body.should.be.eql("lmao");
-        done()
+        done();
       })
   })
 
@@ -51,7 +51,7 @@ describe("Test get /api/set/:id", () => {
         expect(res.body).to.equal(null);
         //res.should.have.status(200);
         //res.body.should.be.eql("lmao");
-        done()
+        done();
       })
   })
 
