@@ -1,0 +1,17 @@
+sudo:
+  false
+
+language: node_js
+
+node_js:
+  - "stable"
+
+notifications:
+  email: false
+
+install:
+  - cd ./website/backend
+  - npm ci
+
+script:
+  - npm test

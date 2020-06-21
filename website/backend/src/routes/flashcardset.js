@@ -13,6 +13,7 @@ router.route("/").get((req, res) => {
 
 // get one flashcard set
 router.route("/:id").get((req, res) => {
+  console.log(req.params.id)
   FlashcardSet.findById(req.params.id)
     .then(set => res.json(set))
     .catch(err => res.status(400).json('Error: ' + err));

@@ -4,7 +4,9 @@ const port = 8080;
 const bodyParser = require("body-parser");
 
 // connect database
-require('./src/database');
+//require('./src/database');
+
+const initializeDB = require("./src/database");
 
 app.get('/', (req, res) => {
     res.send("Hello World ! ");
@@ -20,8 +22,10 @@ app.use("/api/user", userRouter);
 app.use("/api/set", flashcardsetRouter);
 app.use("/api/process", processRouter);
 
-app.listen(port, function () {
+initializeDB(function () {
+  app.listen(port, function () {
     console.log(`Server Listening on ${port}`);
+  });
 });
 
-console.log("hello world");
+module.exports = app;
