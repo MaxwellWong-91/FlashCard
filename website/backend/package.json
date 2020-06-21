@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "travis:test": "npm start && mocha --exit src/tests/routes/*.test.js",
     "test": "mocha --exit src/tests/routes/*.test.js",
     "start": "node server.js",
     "server": "nodemon server.js",
