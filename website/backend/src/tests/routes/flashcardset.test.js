@@ -9,7 +9,7 @@ before(done => {
   done();
 })
 
-describe("maybe something wrong with mocha", (done) => {
+describe("If this pass and everything fails, ip address error", (done) => {
   it("should be true", (done) => {
     expect(5).to.equal(5);
     done();
