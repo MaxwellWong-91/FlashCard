@@ -23,12 +23,12 @@ router.route("/create").post((req, res) => {
           set.flashcards.push(newFlashcard);
           set.markModified("flashcards");
           set.save()
-            .then(() => res.json("FlashcardSet updated after creation!"))
-            .catch(err => res.status(400).json('Error: ' + err));
+            .then(() => res.json({ msg: "FlashcardSet updated after creation!"}))
+            .catch(err => res.status(400).json({error: err}));
         })
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json({error: err}));
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 })
 
 // get one card from set
@@ -49,7 +49,7 @@ router.route("/:cardId").get((req, res) => {
       }
       return res.json(card);
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 })
 
 router.route("/update/:cardId").patch((req, res) => {
@@ -67,9 +67,9 @@ router.route("/update/:cardId").patch((req, res) => {
 
       card.save()
         .then(() => res.json("Flashcard successfully updated!"))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json({error: err}));
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 })
 
 router.route("/delete/:cardId").delete((req, res) => {
@@ -82,12 +82,12 @@ router.route("/delete/:cardId").delete((req, res) => {
         }, 
           (err) => {
             if (err) {
-              return (res.status(400).json('Error: ' + err));
+              return (res.status(400).json({error: err}));
             }
           }
         )
       })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 
   return res.json("Flashcard deleted");
   

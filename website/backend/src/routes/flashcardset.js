@@ -8,22 +8,21 @@ router.use("/:id/card", FlashcardRouter);
 router.route("/").get((req, res) => {
   FlashcardSet.find()
     .then(sets => res.json(sets))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 })
 
 // get one flashcard set
 router.route("/:id").get((req, res) => {
-  console.log(req.params.id)
   FlashcardSet.findById(req.params.id)
     .then(set => res.json(set))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 })
 
 // handle deleting a flashcard set
 router.route("/delete/:id").delete((req, res) => {
   FlashcardSet.findByIdAndDelete(req.params.id)
-    .then(() => res.json("Flashcard Set deleted"))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then(() => res.json({msg: "Flashcard Set deleted"}))
+    .catch(err => res.status(400).json({error: err}));
 })
 
 // handle creating a flashcard set
@@ -38,12 +37,12 @@ router.route("/create").post((req, res) => {
 
   // check if name used already
   FlashcardSet.findOne({ name })
-    .then(user => {
-      if (user) {
+    .then(data => {
+      if (data) {
         return res.status(400).json({ msg: "Flashcard set with that name already exists" });
       }
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 
   const newSet = new FlashcardSet({
     name
@@ -51,7 +50,7 @@ router.route("/create").post((req, res) => {
 
   newSet.save()
     .then(() => res.json(newSet))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({error: err}));
 })
 
 module.exports = router;
