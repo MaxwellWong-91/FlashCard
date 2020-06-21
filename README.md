@@ -1,3 +1,4 @@
+https://travis-ci.org/MaxwellWong-91/FlashCard.svg?branch=master
 FUTURE ITERATIONS
 1) Add travis CI
 2) Add docker support
