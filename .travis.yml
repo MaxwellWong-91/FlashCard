@@ -14,4 +14,4 @@ install:
   - npm ci
 
 script:
-  - npm travis:test
+  - npm run travis:test
