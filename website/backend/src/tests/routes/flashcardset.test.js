@@ -9,6 +9,12 @@ before(done => {
   done();
 })
 
+describe("maybe something wrong with mocha", (done) => {
+  it("should be true", (done) => {
+    expect(5).to.equal(5);
+    done();
+  })
+})
 
 describe("Test get /api/set/:id", () => {
   it("Should give correct value for existing id", (done) => {
