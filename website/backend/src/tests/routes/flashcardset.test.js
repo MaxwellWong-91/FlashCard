@@ -80,10 +80,13 @@ describe("Test post /api/set/create", () => {
   it ("Should create when all fields entered", (done) => {
     chai.request(app)
       .post("/api/set/create")
-      .send({"name": ""})
+      .send({"name": "Biology Terms"})
       .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.property("error");
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property("name");
+        expect(res.body).to.have.property("flashcards");
+        expect(res.body.name).to.equal("Biology Terms");
+        expect(res.body.flashcards.length).to.equal(0);
         done();
       })
   })

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit src/tests/routes/*.test.js",
+    "test": "set NODE_ENV=test&& mocha --exit src/tests/routes/*.test.js --timeout 120000",
     "test-local": "nyc --reporter=lcov --reporter=text npm run test",
     "test-coverage": "nyc --reporter=lcov --reporter=text npm run test && coveralls < coverage/lcov.info",
     "start": "node server.js",
@@ -31,6 +31,8 @@
     "chai-http": "^4.3.0",
     "coveralls": "^3.1.0",
     "mocha": "^8.0.1",
+    "mockgoose": "^8.0.4",
+    "mongo-mock": "^4.0.0",
     "nodemon": "^2.0.2",
     "nyc": "^15.1.0"
   }
