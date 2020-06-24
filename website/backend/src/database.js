@@ -19,9 +19,10 @@ module.exports = function initializeDB(callback) {
   if (process.env.NODE_ENV === 'test') {
     mongoose.connect(process.env.TEST_URI, options)
       .then(() => {
-        
         console.log("Test MongoDB connected");
-        callback()
+        var seedData = require("./models/seed");
+        seedData();
+        callback();
       })
       .catch(err => console.log(err));
 
@@ -29,7 +30,7 @@ module.exports = function initializeDB(callback) {
     mongoose.connect(process.env.URI, options)
       .then(() => {
         console.log("MongoDB connected");
-        callback()
+        callback();
       })
       .catch(err => console.log(err));
   }
