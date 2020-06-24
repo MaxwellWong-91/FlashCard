@@ -13,38 +13,20 @@ const options = {
   bufferMaxEntries: 0          // fails if databse isn't connected
 }
 
-// set up environ variables
-const {
-  MONGO_HOSTNAME,
-  MONGO_DB,
-  MONGO_PORT
-} = process.env;
-
 //var MongoClient = require('mongodb').MongoClient;
-
-const dbConnectionURL = {
-  //'LOCALURL': `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
-  'LOCALURL': process.env.URI
-};
 
 module.exports = function initializeDB(callback) {
   if (process.env.NODE_ENV === 'test') {
-    const Mockgoose = require('mockgoose').Mockgoose;
-    const mockgoose = new Mockgoose(mongoose);
-
-    mockgoose.prepareStorage()
+    mongoose.connect(process.env.TEST_URI, options)
       .then(() => {
-        mongoose.connect(dbConnectionURL.LOCALURL, options)
-          .then(() => {
-            console.log("Mock MongoDB connected");
-            callback()
-          })
-          .catch(err => console.log(err));
-
+        
+        console.log("Test MongoDB connected");
+        callback()
       })
+      .catch(err => console.log(err));
 
   } else {
-    mongoose.connect(dbConnectionURL.LOCALURL, options)
+    mongoose.connect(process.env.URI, options)
       .then(() => {
         console.log("MongoDB connected");
         callback()
