@@ -13,16 +13,13 @@ const options = {
   bufferMaxEntries: 0          // fails if databse isn't connected
 }
 
-//var MongoClient = require('mongodb').MongoClient;
-
 module.exports = function initializeDB(callback) {
   if (process.env.NODE_ENV === 'test') {
     mongoose.connect(process.env.TEST_URI, options)
       .then(() => {
         console.log("Test MongoDB connected");
         var seedData = require("./models/seed");
-        seedData();
-        callback();
+        seedData(callback);
       })
       .catch(err => console.log(err));
 

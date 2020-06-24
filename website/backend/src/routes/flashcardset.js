@@ -33,13 +33,11 @@ router.route("/create").post((req, res) => {
   if (!name) {
     return res.status(400).json({ error: "Please enter a name for the flashcard" });
   }
-  console.log(name);
 
   // check if name used already
   FlashcardSet.findOne({ name })
     .then(data => {
       if (data) {
-        console.log("hi");
         return res.status(400).json({ msg: "Flashcard set with that name already exists" });
       }
     })

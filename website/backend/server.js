@@ -25,6 +25,7 @@ app.use("/api/process", processRouter);
 initializeDB(function () {
   app.listen(port, function () {
     console.log(`Server Listening on ${port}`);
+    app.emit("ready");
   });
 });
 
