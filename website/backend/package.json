@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& mocha --exit src/tests/routes/*.test.js",
-    "test-local": "nyc --reporter=lcov --reporter=text npm run test",
+    "test": "mocha --exit src/tests/routes/*.test.js",
+    "test-local": "set NODE_ENV=test&& nyc --reporter=lcov --reporter=text npm run test",
     "test-coverage": "nyc --reporter=lcov --reporter=text npm run test && coveralls < coverage/lcov.info",
     "start": "node server.js",
     "server": "nodemon server.js",
