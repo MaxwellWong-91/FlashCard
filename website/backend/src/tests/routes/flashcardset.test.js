@@ -46,14 +46,45 @@ describe("Test get /api/set/:id", () => {
     chai.request(app)
       .get("/api/set/5eae0f84f8159e46bc2028c6")
       .end((err, res) => {
-        //console.log(res.body)
+        
         expect(res).to.have.status(200);
         expect(res.body).to.equal(null);
-        //res.should.have.status(200);
-        //res.body.should.be.eql("lmao");
         done();
       })
   })
 
-  
+  it("Should give error for bad format id", (done) => {
+    chai.request(app)
+      .get("/api/set/5eae0f")
+      .end((err, res) => {
+        
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property("error");
+        done();
+      })
+  })
+})
+
+describe("Test post /api/set/create", () => {
+  it ("Should make sure all fields are entered", (done) => {
+    chai.request(app)
+      .post("/api/set/create")
+      .send({"name": ""})
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property("error");
+        done();
+      })
+  })
+
+  it ("Should create when all fields entered", (done) => {
+    chai.request(app)
+      .post("/api/set/create")
+      .send({"name": ""})
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property("error");
+        done();
+      })
+  })
 })

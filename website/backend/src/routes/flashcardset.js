@@ -31,7 +31,7 @@ router.route("/create").post((req, res) => {
 
   // check for name
   if (!name) {
-    return res.status(400).json({ msg: "Please enter a name for the flashcard" });
+    return res.status(400).json({ error: "Please enter a name for the flashcard" });
   }
   console.log(name);
 
