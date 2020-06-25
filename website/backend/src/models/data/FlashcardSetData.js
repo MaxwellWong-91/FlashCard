@@ -7,9 +7,9 @@ const flashcardSets = [
     __v: 0
   },
   {
-    _id: ObjectId("5ac74cccc65aac3e0c4b6cde"), 
-    name: "cse100",
+    _id: ObjectId("5ac74cccc65aac3e0c4b6cde"),
     flashcards: [ObjectId("507f1f77bcf86cd799439011"), ObjectId("507f191e810c19729de860ea")],
+    name: "cse100",
     __v: 0
   }
 ]

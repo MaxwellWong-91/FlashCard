@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 let FlashcardSet = require("./flashcardset");
 let Flashcard = require("./flashcard");
 let User = require("./user");
-const flashcards = require("./data/flashcard_data");
-const flashcardSet = require("./data/flashcardset_data");
+const users = require("./data/UserData");
+const flashcards = require("./data/FlashcardData");
+const flashcardSet = require("./data/FlashcardSetData");
 
 module.exports = function seedData(callback) {
   // clear all data first
@@ -15,7 +16,14 @@ module.exports = function seedData(callback) {
       FlashcardSet.insertMany(flashcardSet)
         .then(() => {
           console.log("FlashcardSet Data inserted");
-          callback();
+          User.insertMany(users)
+            .then(() => {
+              console.log("User Data inserted");
+              callback();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
         })
         .catch((err) => {
           console.log(err);
