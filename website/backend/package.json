@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "travis:test": "npm start && mocha --exit src/tests/routes/*.test.js",
-    "test": "mocha --exit src/tests/routes/*.test.js",
+    "test": "mocha --exit src/tests/routes/flashcard.test.js src/tests/routes/flashcardset.test.js src/tests/routes/user.test.js --timeout 120000",
+    "test-local": "set NODE_ENV=test&& nyc --reporter=lcov --reporter=text npm run test",
+    "test-coverage": "nyc --reporter=lcov --reporter=text npm run test && coveralls < coverage/lcov.info",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../frontend",
@@ -28,7 +29,9 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.1.0",
     "mocha": "^8.0.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "nyc": "^15.1.0"
   }
 }

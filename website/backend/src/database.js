@@ -13,26 +13,23 @@ const options = {
   bufferMaxEntries: 0          // fails if databse isn't connected
 }
 
-// set up environ variables
-const {
-  MONGO_HOSTNAME,
-  MONGO_DB,
-  MONGO_PORT
-} = process.env;
-
-var MongoClient = require('mongodb').MongoClient;
-
-const dbConnectionURL = {
-  //'LOCALURL': `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`
-  'LOCALURL': process.env.URI
-};
-
 module.exports = function initializeDB(callback) {
-  mongoose.connect(dbConnectionURL.LOCALURL, options)
-  .then(() => {
-    console.log("MongoDB connected");
-    callback()
-  })
-  .catch(err => console.log(err));
+  if (process.env.NODE_ENV === 'test') {
+    mongoose.connect(process.env.TEST_URI, options)
+      .then(() => {
+        console.log("Test MongoDB connected");
+        var seedData = require("./models/seed");
+        seedData(callback);
+      })
+      .catch(err => console.log(err));
+
+  } else {
+    mongoose.connect(process.env.URI, options)
+      .then(() => {
+        console.log("MongoDB connected");
+        callback();
+      })
+      .catch(err => console.log(err));
+  }
 }
 

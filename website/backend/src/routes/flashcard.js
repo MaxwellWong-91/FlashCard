@@ -5,15 +5,22 @@ let Flashcard = require("../models/flashcard");
 
 const router = express.Router({mergeParams: true});
 
+/**
+ * /api/set/:id/card/create
+ */
 router.route("/create").post((req, res) => {
   const {word, definition} = req.body;;
   // make sure everything is filled
   if (!word || !definition) {
-    return res.status(400).json({ msg: "Please make sure all fields are entered"});
+    return res.status(400).json({ error: "Please make sure all fields are entered"});
   }
 
   FlashcardSet.findById(req.params.id)
     .then(set => {
+
+      if (!set) {
+        return res.status(400).json({error: "FlashcardSet does not exist"})
+      }
 
       const newFlashcard = new Flashcard({
         word, definition
@@ -23,7 +30,9 @@ router.route("/create").post((req, res) => {
           set.flashcards.push(newFlashcard);
           set.markModified("flashcards");
           set.save()
-            .then(() => res.json({ msg: "FlashcardSet updated after creation!"}))
+            .then(() => {
+              return res.json({ set, msg: "FlashcardSet updated after creation!"})
+            })
             .catch(err => res.status(400).json({error: err}));
         })
         .catch(err => res.status(400).json({error: err}));
@@ -31,7 +40,9 @@ router.route("/create").post((req, res) => {
     .catch(err => res.status(400).json({error: err}));
 })
 
-// get one card from set
+/**
+ * /api/set/:id/card/:cardId
+ */
 router.route("/:cardId").get((req, res) => {
   /**
    * This gives you the parent of it
@@ -45,33 +56,46 @@ router.route("/:cardId").get((req, res) => {
   Flashcard.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
-        return res.status(400).json({ msg: "Flashcard does not exist" });
+        return res.status(400).json({ error: "Flashcard does not exist" });
       }
       return res.json(card);
     })
     .catch(err => res.status(400).json({error: err}));
 })
 
+
+/**
+ * /api/set/:id/card/update/:cardId
+ */
 router.route("/update/:cardId").patch((req, res) => {
   const {word, definition} = req.body;
 
   if (!word || !definition) {
-    return res.status(400).json({ msg: "Please make sure all fields are entered"});
+    return res.status(400).json({ error: "Please make sure all fields are entered"});
   }
 
   Flashcard.findById(req.params.cardId)
     .then((card) => {
-      console.log(card);
+      if (!card) {
+        return res.status(400).json({ error: "Flashcard does not exist" });
+      }
+
       card.word = word;
       card.definition = definition;
 
       card.save()
-        .then(() => res.json("Flashcard successfully updated!"))
+        .then(() => {
+          return res.json({card, msg: "Flashcard successfully updated!"})
+        })
         .catch(err => res.status(400).json({error: err}));
     })
     .catch(err => res.status(400).json({error: err}));
 })
 
+
+/**
+ * /api/set/:id/card/delete/:cardId
+ */
 router.route("/delete/:cardId").delete((req, res) => {
   const {id, cardId} = req.params;
   
@@ -88,9 +112,8 @@ router.route("/delete/:cardId").delete((req, res) => {
         )
       })
     .catch(err => res.status(400).json({error: err}));
-
-  return res.json("Flashcard deleted");
   
+  return res.json("Flashcard deleted");
 })
 
 

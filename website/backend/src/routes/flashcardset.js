@@ -7,14 +7,24 @@ router.use("/:id/card", FlashcardRouter);
 // should get all flashcard sets
 router.route("/").get((req, res) => {
   FlashcardSet.find()
-    .then(sets => res.json(sets))
+    .then(sets => {
+      if (!sets) {
+        return res.status(400).json({ error: "No sets currently exist." });
+      }
+      return res.json(sets);
+    })
     .catch(err => res.status(400).json({error: err}));
 })
 
 // get one flashcard set
 router.route("/:id").get((req, res) => {
   FlashcardSet.findById(req.params.id)
-    .then(set => res.json(set))
+    .then(set => {
+      if (!set) {
+        return res.status(400).json({ error: "Flashcard set does not exist" });
+      }
+      return res.json(set);
+    })
     .catch(err => res.status(400).json({error: err}));
 })
 
@@ -31,15 +41,14 @@ router.route("/create").post((req, res) => {
 
   // check for name
   if (!name) {
-    return res.status(400).json({ msg: "Please enter a name for the flashcard" });
+    return res.status(400).json({ error: "Please enter a name for the flashcard" });
   }
-  console.log(name);
 
   // check if name used already
   FlashcardSet.findOne({ name })
     .then(data => {
       if (data) {
-        return res.status(400).json({ msg: "Flashcard set with that name already exists" });
+        return res.status(400).json({ error: "Flashcard set with that name already exists" });
       }
     })
     .catch(err => res.status(400).json({error: err}));
