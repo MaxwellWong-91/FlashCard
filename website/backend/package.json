@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit src/tests/routes/flashcard.test.js src/tests/routes/flashcardset.test.js src/tests/routes/user.test.js",
+    "test": "mocha --exit src/tests/routes/flashcard.test.js src/tests/routes/flashcardset.test.js src/tests/routes/user.test.js --timeout 12000",
     "test-local": "set NODE_ENV=test&& nyc --reporter=lcov --reporter=text npm run test",
     "test-coverage": "nyc --reporter=lcov --reporter=text npm run test && coveralls < coverage/lcov.info",
     "start": "node server.js",
