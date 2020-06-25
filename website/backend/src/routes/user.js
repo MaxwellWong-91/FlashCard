@@ -81,6 +81,7 @@ router.route("/register").post((req, res) => {
           })
         })
       })
+      .catch(err => res.status(400).json({error: err}));
   
 })
 
@@ -129,6 +130,7 @@ router.route("/login").post((req, res) => {
 
         })
     })
+    .catch(err => res.status(400).json({error: err}));
 })
 
 
