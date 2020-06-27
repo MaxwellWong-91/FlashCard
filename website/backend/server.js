@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 
 // connect database
 //require('./src/database');
-
 const initializeDB = require("./src/database");
 
 app.get('/', (req, res) => {
