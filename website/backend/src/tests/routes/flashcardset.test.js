@@ -5,6 +5,9 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 const app = require("../../../server");
 
+const testSetBiologyId = "5eae0f84f8159e46bc2028c7";
+const testSetCSE100Id = "5ac74cccc65aac3e0c4b6cde";
+
 describe("Test GET /api/set/:id", () => {
   it("Should give error for bad format id", (done) => {
     chai.request(app)
@@ -79,8 +82,32 @@ describe("Test GET /api/set/:id", () => {
   })
 })
 
+describe("Test PUT /api/set/update", () => {
+    it("Should make sure all fields are entered", (done) => {
+        chai.request(app)
+          .put(`/api/set/update/${testSetBiologyId}`)
+          .send({"name": ""})
+          .end((err, res) => {
+              expect(res).to.have.status(400);
+              expect(res.body).to.have.property("error");
+              done();
+          })
+    });
+
+    it ("Should update set when name field is entered", (done) => {
+        chai.request(app)
+          .put(`/api/set/update/${testSetBiologyId}`)
+          .send({"name": "BiologyC"})
+          .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body.name).to.equal("BiologyC");
+              done();
+          })
+    })
+})
+
 describe("Test POST /api/set/create", () => {
-  it ("Should make sure all fields are entered", (done) => {
+  it("Should make sure all fields are entered", (done) => {
     chai.request(app)
       .post("/api/set/create")
       .send({"name": ""})
@@ -91,7 +118,7 @@ describe("Test POST /api/set/create", () => {
       })
   })
 
-  it ("Should create set when all fields entered", (done) => {
+  it("Should create set when all fields entered", (done) => {
     chai.request(app)
       .post("/api/set/create")
       .send({"name": "Biology Terms"})

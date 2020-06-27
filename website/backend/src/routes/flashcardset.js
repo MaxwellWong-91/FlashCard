@@ -41,17 +41,17 @@ router.route("/create").post((req, res) => {
 
   // check for name
   if (!name) {
-    return res.status(400).json({ error: "Please enter a name for the flashcard" });
+    return res.status(400).json({ error: "Please enter a name for the flashcard set" });
   }
 
-  // check if name used already
-  FlashcardSet.findOne({ name })
-    .then(data => {
-      if (data) {
-        return res.status(400).json({ error: "Flashcard set with that name already exists" });
-      }
-    })
-    .catch(err => res.status(400).json({error: err}));
+  // check if name used already (update: not used anymore b/c allow duplicates)
+//   FlashcardSet.findOne({ name })
+//     .then(data => {
+//       if (data) {
+//         return res.status(400).json({ error: "Flashcard set with that name already exists" });
+//       }
+//     })
+//     .catch(err => res.status(400).json({error: err}));
 
   const newSet = new FlashcardSet({
     name
@@ -61,5 +61,30 @@ router.route("/create").post((req, res) => {
     .then(() => res.json(newSet))
     .catch(err => res.status(400).json({error: err}));
 })
+
+// Handle updating a flashcard set
+router.route("/update/:id").put((req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+
+    if (!name) {
+        return res.status(400).json({error: "Please enter a name for the flashcard set"});
+    }
+
+    FlashcardSet.findById(id)
+    .then((card) => {
+        if (!card) {
+            return res.status(400).json({ error: `Flashcard set with ${id} does not exist` });
+        }
+
+        card.name = name;
+        card.save()
+        .then((_) => {
+            res.json(card);
+        })
+        .catch((err) => res.status(500).json({error: err}));
+    })
+    .catch((err) => res.status(500).json({error: err}));
+});
 
 module.exports = router;
