@@ -1,4 +1,32 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
+import SearchIcon from '@material-ui/icons/Search';
+import "../css/components/Navbar.css";
+
+function Navbar() {
+  return (
+    <nav>
+      <ul>
+        <li className="nav-brand">
+          <a>Flashcard Manager</a>
+        </li>
+        <li className="search-container">
+          <input type="text" placeholder="Search for flashcard set"/>
+          <button><SearchIcon /></button> 
+        </li>
+        <li className="nav-button">
+          <a className="nav-pill-primary">Login</a>
+        </li>
+        <li className="nav-button">
+          <a className="nav-pill-secondary">Signup</a>
+        </li>
+      </ul>
+    </nav>
+  )
+}
+
+export default Navbar;
+
+/*import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
 class Navbar extends Component {
@@ -31,3 +59,4 @@ class Navbar extends Component {
 }
 
 export default Navbar;
+*/
