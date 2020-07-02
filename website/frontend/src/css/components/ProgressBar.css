@@ -1,0 +1,9 @@
+div.outer-progress-bar {
+  border-bottom: 10px solid lightgreen;
+}
+
+div.inner-progress-bar {
+  position: absolute;
+  transition: width 0.5s ease-in-out;
+  border-bottom: 10px solid green;
+}

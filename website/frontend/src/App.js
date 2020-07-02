@@ -9,6 +9,8 @@ import CreateSet from "./components/CreateSet";
 import ViewSet from "./components/ViewSet";
 import StudySet from "./components/StudySet";
 import LandingPage from "./pages/LandingPage";
+import StudySetPage from "./pages/StudySetPage";
+
 
 function App() {
   return (
@@ -20,7 +22,11 @@ function App() {
       <Route path = "/set/study/:id" component={StudySet} />
     </Router>
     */
-   <LandingPage />
+  //  <Router>
+  //     <Route path="/" component={LandingPage} />
+  //     <Route path="/set/study" component={StudySetPage} />
+  //  </Router>
+    <StudySetPage />
   );
 }
 

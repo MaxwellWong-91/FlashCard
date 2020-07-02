@@ -1,23 +1,38 @@
 import React, {useState} from "react";
+import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import "../css/components/Navbar.css";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+
 
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <nav>
       <ul>
         <li className="nav-brand">
-          <a>Flashcard Manager</a>
+          <a><h3>Flashcard Manager</h3></a>
         </li>
         <li className="search-container">
-          <input type="text" placeholder="Search for flashcard set"/>
-          <button><SearchIcon /></button> 
+          <input 
+          type="text" 
+          placeholder="Search for flashcard set"/>
+          
         </li>
-        <li className="nav-button">
-          <a className="nav-pill-primary">Login</a>
+        <li>
+          <ul className={`nav-button-container ${menuOpen ? "nav-open" : ""}`}>
+            <li className="nav-button">
+              <a className="nav-pill-primary">Login</a>
+            </li>
+            <li className="nav-button">
+              <a className="nav-pill-secondary">Signup</a>
+            </li>
+          </ul>
         </li>
-        <li className="nav-button">
-          <a className="nav-pill-secondary">Signup</a>
+        <li className="toggle-menu">
+          <MenuIcon 
+          onClick={(e) => setMenuOpen(!menuOpen)}/>
         </li>
       </ul>
     </nav>

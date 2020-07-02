@@ -1,14 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Navbar */
 nav {
   position: relative;
   height: 8vh;
-  width: 100vw;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
+  padding: 0 2em;
 }
 
-nav ul {
+nav > ul {
   height: 100%;
   width: 100%;
   list-style-type: none;
@@ -19,7 +25,7 @@ nav ul {
   align-items: center;
 }
 
-nav ul li {
+nav > ul li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,6 +35,7 @@ nav ul li {
 /* Name and Logo */
 nav ul li.nav-brand {
   justify-content: flex-start;
+  flex-basis: 8%;
 }
 
 /* Search bar */
@@ -38,22 +45,21 @@ nav ul li.nav-brand {
 }
 
 .search-container input {
-  height: 50%;
-  width: 50%;
-  padding: 0;
+  padding: 0.5em 1.75em 0.5em 0.5em;
   font-size: 1rem;
+  background: url("../../images/search.svg") no-repeat;
+  background-position: right;
+  width: 60%;
 }
 
 .search-container button {
-  height: 50%;
-  width: 5%;
   padding: 0;
   margin: 0;
 }
 
 
 /* Nav buttons */
-nav ul li a.nav-pill-primary {
+a.nav-pill-primary {
   background-color: #C06DF1;
   border: none;
   color: #fff;
@@ -62,12 +68,12 @@ nav ul li a.nav-pill-primary {
   padding: 0.5em 4em;
 }
 
-nav ul li a.nav-pill-primary:hover {
+a.nav-pill-primary:hover {
   background-color: #C06DF0;
   color: #fff;
 }
 
-nav ul li a.nav-pill-secondary {
+a.nav-pill-secondary {
   background-color: #fff;
   border: 1px solid #C06DF1;
   color: #C06DF1;
@@ -76,9 +82,42 @@ nav ul li a.nav-pill-secondary {
   padding: 0.5em 4em;
 }
 
-nav ul li a.nav-pill-secondary:hover {
+a.nav-pill-secondary:hover {
   background-color: #fff;
   color: #C06DF1;
+}
+
+.nav-button-container > li:first-child {
+  margin-right: 1em;
+}
+
+.toggle-menu {
+  display: none;
+}
+
+@media(max-width: 720px) {
+  .nav-button-container > li > a {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    transition: max-height 1s ease-in-out;
+  }
+
+  .nav-button-container.nav-open > li > a {
+    max-height: 30px;
+  }
+  
+  .nav-button-container {
+    position: absolute;
+  }
+  .toggle-menu {
+    display: block;
+  }
+
+  .toggle-menu:hover {
+    cursor: pointer;
+  }
 }
 
 .ml-auto {
