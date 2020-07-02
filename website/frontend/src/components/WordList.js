@@ -8,7 +8,7 @@ function WordList() {
   return(
     <>
       <div>
-        <h4>2 cards in this set</h4>
+        <h4 className="word-list-heading">2 cards in this set</h4>
       </div>
       <div className="word-container">
         <div className="word">

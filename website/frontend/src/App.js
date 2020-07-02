@@ -9,6 +9,7 @@ import ViewSet from "./components/ViewSet";
 import StudySet from "./components/StudySet";
 import LandingPage from "./pages/LandingPage";
 import StudySetPage from "./pages/StudySetPage";
+import SearchResultsPage from "./pages/SearchResultsPage";
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/set/study/:setId">
           <StudySetPage />
+        </Route>
+        <Route path="/set/search">
+          <SearchResultsPage />
         </Route>
       </Switch>
     </Router>

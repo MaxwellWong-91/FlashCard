@@ -1,3 +1,7 @@
+.word-list-heading {
+  margin-left: 15%;
+}
+
 .word-container {
   display: flex;
   justify-content: center;
@@ -24,6 +28,10 @@
 }
 
 @media (max-width: 720px) {
+  .word-list-heading {
+    margin-left: 5%;
+  }
+
   .word-container {
     flex-direction: column;
     padding: 2rem;
