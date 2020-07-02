@@ -3,8 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery';
 import Popper from 'popper.js';
-import { BrowserRouter as Router, Route} from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import CreateSet from "./components/CreateSet";
 import ViewSet from "./components/ViewSet";
 import StudySet from "./components/StudySet";
@@ -22,11 +21,16 @@ function App() {
       <Route path = "/set/study/:id" component={StudySet} />
     </Router>
     */
-  //  <Router>
-  //     <Route path="/" component={LandingPage} />
-  //     <Route path="/set/study" component={StudySetPage} />
-  //  </Router>
-    <StudySetPage />
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="/set/study/:setId">
+          <StudySetPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
