@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import FlashCard from "../components/FlashCard";
-import WordList from "../components/WordList";
+import WordListBody from "../components/WordListBody";
 
 
 function StudySetPage() {
@@ -9,7 +9,7 @@ function StudySetPage() {
     <>
       <Navbar />
       <FlashCard />
-      <WordList />
+      <WordListBody />
     </>
   )
 }

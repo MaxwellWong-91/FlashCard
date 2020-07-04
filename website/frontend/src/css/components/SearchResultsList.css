@@ -1,0 +1,65 @@
+.result-list {
+  width: 60%;
+  margin: 0 auto;
+  padding: 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.result-list-item {
+  list-style: none;
+  display: flex;
+}
+
+.result-list-heading {
+  border-bottom: 3px solid #EDE8E8;
+}
+
+.result-list-num-terms {
+  color: blue;
+}
+
+.result-list-word-container {
+  padding: 0;
+  display: flex;
+}
+
+.result-list-word-container-item {
+  list-style: none;
+  flex: 1;
+  max-width: 25%;
+  padding: 0 0.5rem;
+}
+
+.result-list-word-container-item p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  font-size: 0.75rem;
+}
+
+@media(max-width: 920px) {
+  .result-list-word-container-item:nth-child(4) {
+    display: none;
+  }
+
+  .result-list-word-container-item {
+    max-width: 33%;
+  }
+}
+
+@media(max-width: 720px) {
+  .result-list {
+    width: 95%;
+  }
+}
+
+@media(max-width: 520px) {
+  .result-list-word-container-item:nth-child(3) {
+    display: none;
+  }
+
+  .result-list-word-container-item {
+    max-width: 50%;
+  }
+}
