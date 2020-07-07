@@ -58,6 +58,13 @@ nav ul li.nav-brand {
   margin: 0;
 }
 
+.nav-button-container {
+  display: flex;
+}
+
+.nav-button-container > li:first-child {
+  margin-right: 1em;
+}
 
 /* Nav buttons */
 a.nav-pill-primary {
@@ -88,9 +95,6 @@ a.nav-pill-secondary:hover {
   color: #C06DF1;
 }
 
-.nav-button-container > li:first-child {
-  margin-right: 1em;
-}
 
 .toggle-menu {
   display: none;
@@ -108,6 +112,10 @@ a.nav-pill-secondary:hover {
   .nav-button-container.nav-open > li > a {
     max-height: 30px;
     border-radius: 0;
+  }
+
+  .nav-list-button-container {
+    position: absolute;
   }
   
   .nav-button-container {

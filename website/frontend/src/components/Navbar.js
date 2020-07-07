@@ -16,11 +16,11 @@ function Navbar() {
         </li>
         <li className="search-container">
           <input 
-          type="text" 
+          type="text"
           placeholder="Search for flashcard set"/>
           
         </li>
-        <li>
+        <li className="nav-list-button-container">
           <ul className={`nav-button-container ${menuOpen ? "nav-open" : ""}`}>
             <li className="nav-button">
               <a className="nav-pill-primary">Login</a>

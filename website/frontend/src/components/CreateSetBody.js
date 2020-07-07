@@ -1,6 +1,8 @@
 import React, {useState} from "react";
+import Checkbox from '@material-ui/core/Checkbox';
+import ClearIcon from '@material-ui/icons/Clear';
 import "../css/components/CreateSetBody.css";
-
+import UploadFileBody from "./UploadFileBody";
 
 function CreateSetBody() {
   return (
@@ -17,17 +19,21 @@ function CreateSetBody() {
       </div>
 
       <div className="options-container">
-        <div>
-
+        <div className="options-container-item">
+          <Checkbox checkedIcon={<ClearIcon />}/>
+          <p>Upload File</p>
         </div>
-        <div>
-          
+        <div className="options-container-item">
+          <Checkbox checkedIcon={<ClearIcon />}/>
+          <p>Do it Yourself</p>
         </div>
       </div>
 
       <div>
         <h2 className="create-set-subheading">Do it Yourself</h2>
       </div>
+
+      <UploadFileBody />
     </>
   )
 }

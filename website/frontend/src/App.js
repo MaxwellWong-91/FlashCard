@@ -30,27 +30,13 @@ function App() {
     */
     <Router>
       <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/set/study/:setId">
-          <StudySetPage />
-        </Route>
-        <Route path="/set/view/:setId">
-          <ViewSetsPage />
-        </Route>
-        <Route path="/set/create">
-          <CreateSetPage />
-        </Route>
-        <Route path="/set/search">
-          <SearchResultsPage />
-        </Route>
-        <Route path="/signup">
-          <SignupPage />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/set/study/:setId" component={StudySetPage} />
+        <Route path="/set/view/:setId" component={ViewSetsPage} />
+        <Route path="/set/create" component={CreateSetPage} />
+        <Route path="/set/search" component={SearchResultsPage} />
+        <Route path="/signup" component={SignupPage} />
+        <Route path="/login" component={LoginPage} />
       </Switch>
     </Router>
   );
