@@ -1,35 +1,79 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
+import DoneIcon from '@material-ui/icons/Done';
 import "../css/components/WordList.css";
 
 
-function WordList() {
-  const [editMode, setEditMode] = useState(true);
+function WordList({ flashcards, handleEditSubmit }) {
+  const [editedCard, setEditedCard] = useState({});
+  
+  const handleCardChange = (e) => {
+    setEditedCard({ ...editedCard, [e.target.name]: e.target.value});
+  };
 
   return(
     <>
-      <ul className="word-container">
-        <li className="word">
-          { 
-            editMode ?
-            <TextField label="Word" multiline={true} fullWidth={true} defaultValue="Word"/> :
-            <p>Word</p>
-          }
-        </li>
-        <li className="definition">
-          { 
-            editMode ?
-            <TextField label="Definition" multiline={true} fullWidth={true} defaultValue="Lorem idivsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/> :
-            <p>Lorem idivsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          }
-        </li>
-        <li className="edit-words">
-          {editMode ? null : <EditIcon />}
-          <DeleteIcon />
-        </li>
+      <ul>
+      {
+        Object.values(flashcards).map((flashcard) => {
+          let isEditCard = flashcard._id === editedCard._id;
+
+          return (
+            <li>
+              <ul className="word-container">
+                <li className="word">
+                  { 
+                    isEditCard ?
+                    <TextField 
+                      name="word" 
+                      label="Word" 
+                      multiline={true} 
+                      fullWidth={true} 
+                      value={editedCard.word}
+                      onChange={handleCardChange} 
+                    /> :
+                    <p>{flashcard.word}</p>
+                  }
+                </li>
+                <li className="definition">
+                  { 
+                    isEditCard ?
+                    <TextField 
+                      name="definition" 
+                      label="Definition" 
+                      multiline={true} 
+                      fullWidth={true} 
+                      value={editedCard.definition}
+                      onChange={handleCardChange} 
+                    /> :
+                    <p>{flashcard.definition}</p>
+                  }
+                </li>
+                <li className="edit-words">
+                  {
+                    isEditCard ?
+                    <DoneIcon 
+                      onClick={(e) => {
+                        // Insert update call
+                        handleEditSubmit(editedCard);
+                        setEditedCard({});
+                      }}
+                    />
+                    : <EditIcon 
+                    onClick={(e) => setEditedCard(flashcard)}/>
+                  }
+                  <DeleteIcon />
+                </li>
+              </ul>
+            </li>
+
+          )
+        })
+      }
       </ul>
+
     </>
   )
 }
