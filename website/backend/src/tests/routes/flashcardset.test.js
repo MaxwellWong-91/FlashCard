@@ -61,7 +61,21 @@ describe("Test GET /api/set/:id", () => {
       .end((err, res) => {
         const expected = {
           "_id": "5ac74cccc65aac3e0c4b6cde",
-          "flashcards": [ "507f1f77bcf86cd799439011", "507f191e810c19729de860ea", "some_id" ],
+          "flashcards": [ 
+            {
+              _id: "507f1f77bcf86cd799439011", 
+              word: "agile", 
+              definition: "software methodology",
+              __v: 0
+            }, 
+            {
+              _id: "507f191e810c19729de860ea", 
+              word: "waterfall", 
+              definition: "ancient software methodology",
+              __v: 0
+            },
+            { flashcard: "some random data in here that we created earlier"}
+          ],
           "name": "cse100",
           "__v": 1
         }
@@ -73,8 +87,8 @@ describe("Test GET /api/set/:id", () => {
         expect(res.body).to.have.property("__v");
         expect(res.body._id).to.equal("5ac74cccc65aac3e0c4b6cde");
         expect(res.body.flashcards.length).to.equal(3);
-        expect(res.body.flashcards[0]).to.equal("507f1f77bcf86cd799439011");
-        expect(res.body.flashcards[1]).to.equal("507f191e810c19729de860ea");
+        expect(res.body.flashcards[0]._id).to.equal("507f1f77bcf86cd799439011");
+        expect(res.body.flashcards[1]._id).to.equal("507f191e810c19729de860ea");
         expect(res.body.name).to.equal("cse100");
         expect(res.body.__v).to.equal(1);
         done();
@@ -82,28 +96,28 @@ describe("Test GET /api/set/:id", () => {
   })
 })
 
-describe("Test PUT /api/set/update", () => {
-    it("Should make sure all fields are entered", (done) => {
-        chai.request(app)
-          .put(`/api/set/update/${testSetBiologyId}`)
-          .send({"name": ""})
-          .end((err, res) => {
-              expect(res).to.have.status(400);
-              expect(res.body).to.have.property("error");
-              done();
-          })
-    });
+describe("Test PATCH /api/set/update", () => {
+  it("Should make sure all fields are entered", (done) => {
+    chai.request(app)
+      .patch(`/api/set/update/${testSetBiologyId}`)
+      .send({"name": ""})
+      .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property("error");
+          done();
+      })
+  });
 
-    it ("Should update set when name field is entered", (done) => {
-        chai.request(app)
-          .put(`/api/set/update/${testSetBiologyId}`)
-          .send({"name": "BiologyC"})
-          .end((err, res) => {
-              expect(res).to.have.status(200);
-              expect(res.body.name).to.equal("BiologyC");
-              done();
-          })
-    })
+  it ("Should update set when name field is entered", (done) => {
+    chai.request(app)
+      .patch(`/api/set/update/${testSetBiologyId}`)
+      .send({"name": "BiologyC"})
+      .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.name).to.equal("BiologyC");
+          done();
+      })
+  })
 })
 
 describe("Test POST /api/set/create", () => {
@@ -132,19 +146,18 @@ describe("Test POST /api/set/create", () => {
       })
   })
 
-  /*
+  
   it ("Should allow create of same name", (done) => {
     chai.request(app)
       .post("/api/set/create")
-      .send({"name": "Biology"})
+      .send({"name": "cse100"})
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property("name");
         expect(res.body).to.have.property("flashcards");
-        expect(res.body.name).to.equal("Biology");
+        expect(res.body.name).to.equal("cse100");
         expect(res.body.flashcards.length).to.equal(0);
         done();
       })
   })
-  */
 })
