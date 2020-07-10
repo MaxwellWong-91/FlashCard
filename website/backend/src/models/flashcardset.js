@@ -5,8 +5,7 @@ const flashcard = require("./flashcard.js").schema;
 const flashcardSetSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   }, 
   
   flashcards: { 

@@ -19,6 +19,7 @@ router.route("/").get((req, res) => {
 // get one flashcard set
 router.route("/:id").get((req, res) => {
   FlashcardSet.findById(req.params.id)
+    .populate("flashcards")
     .then(set => {
       if (!set) {
         return res.status(400).json({ error: "Flashcard set does not exist" });
@@ -63,7 +64,7 @@ router.route("/create").post((req, res) => {
 })
 
 // Handle updating a flashcard set
-router.route("/update/:id").put((req, res) => {
+router.route("/update/:id").patch((req, res) => {
     const { name } = req.body;
     const { id } = req.params;
 
