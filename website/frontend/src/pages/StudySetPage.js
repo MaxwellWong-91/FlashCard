@@ -38,6 +38,7 @@ function StudySetPage() {
       __v: 0
     }
   });
+
   const [editedCard, setEditedCard] = useState({});
   const [setName, setSetName] = useState("");
   const [isOwner, setIsOwner] = useState(false);
@@ -62,21 +63,22 @@ function StudySetPage() {
     setFlashcards({...flashcards, [flashcard._id]: flashcard});
   }
 
-  const handleDeleteClick = (e) => {
-    
+  const handleDeleteClick = (_id) => {
+    console.log(_id)
   }
 
   return(
     <>
       <Navbar />
-      <div className="background"></div>
       <FlashCard 
-      flashcards={flashcards}
-      editedCard={editedCard}/>
+        flashcards={flashcards}
+        editedCard={editedCard}
+      />
       <WordListBody 
-      flashcards={flashcards}
-      handleEditSubmit={handleEditSubmit}
-       />
+        flashcards={flashcards}
+        handleEditSubmit={handleEditSubmit}
+        handleDeleteClick={handleDeleteClick}
+      />
     </>
   )
 }

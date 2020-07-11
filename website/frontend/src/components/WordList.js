@@ -6,22 +6,36 @@ import DoneIcon from '@material-ui/icons/Done';
 import "../css/components/WordList.css";
 
 
-function WordList({ flashcards, handleEditSubmit }) {
+function WordList({ flashcards, handleEditSubmit, handleDeleteClick }) {
   const [editedCard, setEditedCard] = useState({});
   
   const handleCardChange = (e) => {
     setEditedCard({ ...editedCard, [e.target.name]: e.target.value});
   };
 
+  const deleteCard = (e) => {
+    // should proabbly do the deleting here
+    let cardContainer = e.currentTarget.parentElement.parentElement.parentElement;
+    let cardId = cardContainer.getAttribute("_id");
+    console.log("first")
+    handleDeleteClick(cardId);
+    console.log("before delete")
+    cardContainer.style.animationPlayState = "running";
+    cardContainer.addEventListener("animationend", () => {
+      cardContainer.remove();
+      console.log('hi')
+    })
+  }
+
   return(
     <>
-      <ul>
+      <ul className="word-list-container">
       {
         Object.values(flashcards).map((flashcard) => {
           let isEditCard = flashcard._id === editedCard._id;
 
           return (
-            <li>
+            <li _id={flashcard._id}>
               <ul className="word-container">
                 <li className="word">
                   { 
@@ -64,7 +78,7 @@ function WordList({ flashcards, handleEditSubmit }) {
                     : <EditIcon 
                     onClick={(e) => setEditedCard(flashcard)}/>
                   }
-                  <DeleteIcon />
+                  <DeleteIcon onClick={deleteCard}/>
                 </li>
               </ul>
             </li>

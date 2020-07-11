@@ -32,7 +32,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/set/study/:setId" component={StudySetPage} />
-        <Route path="/set/view/:setId" component={ViewSetsPage} />
+        <Route path="/set/view" component={ViewSetsPage} />
         <Route path="/set/create" component={CreateSetPage} />
         <Route path="/set/search" component={SearchResultsPage} />
         <Route path="/signup" component={SignupPage} />
