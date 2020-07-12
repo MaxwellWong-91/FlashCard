@@ -8,7 +8,7 @@ function UploadFileBody() {
       <div>
         <h4 className="create-set-description">File Guidelines</h4>
       </div>
-      <div className="file-guidelines-container">
+      <div className="file-guidelines-container bg-white">
         <ul>
           <li>
             Files must have extension .pdf or .txt. No other extensions are currently supported

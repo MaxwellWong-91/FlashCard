@@ -36,7 +36,7 @@ function WordList({ flashcards, handleEditSubmit, handleDeleteClick }) {
 
           return (
             <li _id={flashcard._id}>
-              <ul className="word-container">
+              <ul className="word-container bg-white">
                 <li className="word">
                   { 
                     isEditCard ?

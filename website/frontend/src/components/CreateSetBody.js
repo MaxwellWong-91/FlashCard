@@ -19,11 +19,11 @@ function CreateSetBody() {
       </div>
 
       <div className="options-container">
-        <div className="options-container-item">
+        <div className="options-container-item bg-white">
           <Checkbox checkedIcon={<ClearIcon />}/>
           <p>Upload File</p>
         </div>
-        <div className="options-container-item">
+        <div className="options-container-item bg-white">
           <Checkbox checkedIcon={<ClearIcon />}/>
           <p>Do it Yourself</p>
         </div>

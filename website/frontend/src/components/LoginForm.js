@@ -5,7 +5,7 @@ import "../css/components/LoginForm.css";
 
 function LoginForm() {
   return(
-    <form className="login-form-container bg-none">
+    <form className="login-form-container bg-white">
       <h3>Welcome Back!</h3>
       <OutlinedInput placeholder="Username"/>
       <OutlinedInput placeholder="Password"/>

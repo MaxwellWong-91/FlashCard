@@ -4,7 +4,7 @@ import "../css/components/SearchResultsList.css";
 
 function SearchResultsList() {
   return (
-    <ul className="result-list">
+    <ul className="result-list bg-white">
       <li className="result-list-item">
         <div className="result-list-heading">
           <p>Set Name</p>

@@ -3,7 +3,7 @@
 }
 
 body {
-
+  background-color: #EDE8E8;
 }
 
 /* Navbar */
@@ -135,8 +135,8 @@ a.nav-pill-secondary:hover {
 }
 
 /* Utility Classe */
-.bg-none {
-  background-color: none;
+.bg-white {
+  background-color: white;
 }
 
 div.background {

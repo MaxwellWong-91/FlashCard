@@ -9,7 +9,7 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav>
+    <nav className="bg-white">
       <ul>
         <li className="nav-brand">
           <a><h3>Flashcard Manager</h3></a>

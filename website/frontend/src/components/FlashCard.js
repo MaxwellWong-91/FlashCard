@@ -21,14 +21,14 @@ function FlashCard({ flashcards, editedCard }) {
       <div className="flashcard-container">
         <div className="scene" style={{width: "100%"}}>
           <ProgressBar />
-          <div className="flashcard">
+          <div className="flashcard bg-white">
             <p className="flashcard-face flashcard-word">{ currentCard.word }</p>
             <p className="flashcard-face flashcard-definition">{ currentCard.definition }</p>
           </div>      
         </div>
 
         <div className="flashcard-button-container">
-          <div className="flashcard-control-container">
+          <div className="flashcard-control-container bg-white">
             <ArrowBackIcon />
             <a>Flip</a>
             <ArrowForwardIcon />
