@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Checkbox from '@material-ui/core/Checkbox';
 import ClearIcon from '@material-ui/icons/Clear';
+import TextField from '@material-ui/core/TextField';
 import "../css/components/CreateSetBody.css";
 import UploadFileBody from "./UploadFileBody";
 
@@ -12,6 +13,9 @@ function CreateSetBody() {
       </div>
       <div>
         <h4 className="create-set-description">Enter the title of the set</h4>
+        <div className="create-set-title-input-container bg-white">
+          <TextField label="Title"/>
+        </div>
       </div>
 
       <div>

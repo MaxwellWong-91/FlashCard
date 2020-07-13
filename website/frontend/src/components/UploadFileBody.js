@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import PublishIcon from '@material-ui/icons/Publish';
 import "../css/components/UploadFileBody.css";
 
 
@@ -41,9 +42,12 @@ function UploadFileBody() {
         </ul>
       </div>
 
-      <div className="file-upload-container">
-
+      <div className="file-upload-container bg-white">
+        <a>File Upload <PublishIcon /></a>
       </div>
+
+      <a className="nav-pill-primary generate-flashcards-button">Generate Flashcards</a>
+      
     </>
   )
 }
