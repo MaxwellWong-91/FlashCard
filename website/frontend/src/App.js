@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useMemo} from "react";
 import logo from './logo.svg';
 import './App.css';
 import $ from 'jquery';
@@ -17,8 +17,16 @@ import CreateSetPage from "./pages/CreateSetPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 
+import {UserContext} from "./context/UserContext";
+
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  const providerValue = useMemo(() => 
+    ({user, setUser}), [user, setUser]
+  );
+
   return (
     /*
     <Router>
@@ -30,13 +38,15 @@ function App() {
     */
     <Router>
       <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route path="/set/study/:setId" component={StudySetPage} />
-        <Route path="/set/view" component={ViewSetsPage} />
-        <Route path="/set/create" component={CreateSetPage} />
-        <Route path="/set/search" component={SearchResultsPage} />
-        <Route path="/signup" component={SignupPage} />
-        <Route path="/login" component={LoginPage} />
+        <UserContext.Provider value = {providerValue}> 
+          <Route exact path="/" component={LandingPage} />
+          <Route path="/set/study/:setId" component={StudySetPage} />
+          <Route path="/set/view" component={ViewSetsPage} />
+          <Route path="/set/create" component={CreateSetPage} />
+          <Route path="/set/search" component={SearchResultsPage} />
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/login" component={LoginPage} />
+        </UserContext.Provider>
       </Switch>
     </Router>
   );

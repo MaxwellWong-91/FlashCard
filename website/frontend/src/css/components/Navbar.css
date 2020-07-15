@@ -75,7 +75,7 @@ nav > ul li.nav-brand {
   display: flex;
 }
 
-.nav-button-container > li:first-child {
+.nav-button-container > li:not(:last-of-type) {
   margin-right: 1em;
 }
 

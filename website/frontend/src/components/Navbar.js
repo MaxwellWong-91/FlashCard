@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import {UserContext} from "../context/UserContext";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Logo from "../images/logo.svg";
@@ -7,6 +8,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 
 function Navbar() {
+  const {user, setUser} = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -29,12 +31,29 @@ function Navbar() {
           type="text"
           placeholder="Search for flashcard set"/>
           <ul className={`nav-button-container ${menuOpen ? "nav-open" : ""}`}>
-            <li className="nav-button">
-              <a className="nav-pill-primary">Login</a>
-            </li>
-            <li className="nav-button">
-              <a className="nav-pill-secondary">Signup</a>
-            </li>
+            {
+              user ? 
+              <>
+                <li className="nav-button">
+                  <a className="nav-pill-primary">View Your Sets</a>
+                </li>
+                <li className="nav-button">
+                  <a className="nav-pill-primary">Create Set</a>
+                </li>  
+                <li className="nav-button">
+                  <a className="nav-pill-secondary" onClick={(e) => setUser(null)}>Logout</a>
+                </li>
+              </>
+              :
+              <>
+                <li className="nav-button">
+                  <a className="nav-pill-primary">Login</a>
+                </li> 
+                <li className="nav-button">
+                  <a className="nav-pill-secondary">Signup</a>
+                </li>
+              </>
+            }
           </ul>
         </li>
         <li className="toggle-menu">
