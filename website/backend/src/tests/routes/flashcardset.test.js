@@ -94,7 +94,7 @@ describe("Test PUT /api/set/update", () => {
           })
     });
 
-    it ("Should update set when name field is entered", (done) => {
+    it("Should update set when name field is entered", (done) => {
         chai.request(app)
           .put(`/api/set/update/${testSetBiologyId}`)
           .send({"name": "BiologyC"})
@@ -104,8 +104,59 @@ describe("Test PUT /api/set/update", () => {
               done();
           })
     })
+
+    it("Should give error for nonexistent id", (done) => {
+        chai.request(app)
+          .put("/api/set/update/123456789012")
+          .send({name: "notwork"})
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            expect(res.body.error).to.equal("Flashcard set with id 123456789012 does not exist");
+            done();
+          })
+    })
 })
 
+describe("Test POST /api/set/search", () => {
+    it("Should make sure all fields are entered", (done) => {
+        chai.request(app)
+          .post("/api/set/search")
+          .end((err, res) => {
+              expect(res).to.have.status(400);
+              expect(res.body).to.have.property("error");
+              done();
+          })
+    });
+
+    it("Should get a list of sets when name field is entered", (done) => {
+        chai.request(app)
+        .post("/api/set/search")
+        .send({name: "BiologyC"})
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body[0].name).to.equal("BiologyC");
+            done();
+        })
+    })
+
+    it("Should give error for nonexistent name", (done) => {
+        chai.request(app)
+        .post("/api/set/search")
+        .send({name: "notexist"})
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            expect(res.body.error).to.equal(`Flashcard set with name notexist does not exist`);
+            done();
+          
+        })
+    })
+});
+
+// describe("Test DELETE /api/set/delete/:id", () => {
+//     it ()
+// })
 describe("Test POST /api/set/create", () => {
   it("Should make sure all fields are entered", (done) => {
     chai.request(app)
