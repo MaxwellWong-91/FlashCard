@@ -46,7 +46,7 @@ function UploadFileBody() {
         <a>File Upload <PublishIcon /></a>
       </div>
 
-      <a className="nav-pill-primary generate-flashcards-button">Generate Flashcards</a>
+      <a className="pill-primary generate-flashcards-button">Generate Flashcards</a>
       
     </>
   )

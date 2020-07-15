@@ -55,6 +55,10 @@
   justify-content: space-evenly;
 }
 
+.add-card-button {
+  margin: auto;
+}
+
 @media (max-width: 720px) {
   .word-list-heading {
     margin-left: 5%;

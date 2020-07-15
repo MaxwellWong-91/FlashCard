@@ -17,6 +17,15 @@
   margin: auto;
 }
 
+.pill-primary {
+  background-color: #C06DF1;
+  border: none;
+  color: #fff;
+  text-align: center;
+  border-radius: 1rem;
+  padding: 0.5em 4em;
+}
+
 @media (max-width: 720px) {
   .file-guidelines-container {
     width: 90%;

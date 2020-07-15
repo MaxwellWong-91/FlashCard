@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import Logo from "../images/logo.svg";
 import "../css/components/Navbar.css";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
@@ -12,15 +13,21 @@ function Navbar() {
     <nav className="bg-white">
       <ul>
         <li className="nav-brand">
-          <a><h3>Flashcard Manager</h3></a>
+          <a className="brand-container">
+            <img className="brand-logo" src={Logo}></img><h3 className="brand-name">Flashcard Manager</h3>
+          </a>
         </li>
-        <li className="search-container">
+        {/* <li className="search-container">
           <input 
           type="text"
           placeholder="Search for flashcard set"/>
           
-        </li>
+        </li> */}
         <li className="nav-list-button-container">
+          <input 
+          className="searchbar"
+          type="text"
+          placeholder="Search for flashcard set"/>
           <ul className={`nav-button-container ${menuOpen ? "nav-open" : ""}`}>
             <li className="nav-button">
               <a className="nav-pill-primary">Login</a>

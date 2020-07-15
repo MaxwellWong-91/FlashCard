@@ -78,6 +78,7 @@ function StudySetPage() {
         flashcards={flashcards}
         handleEditSubmit={handleEditSubmit}
         handleDeleteClick={handleDeleteClick}
+        isOwner={isOwner}
       />
     </>
   )
