@@ -90,7 +90,7 @@ router.route("/update/:id").patch((req, res) => {
   FlashcardSet.findById(id)
   .then((card) => {
     if (!card) {
-      return res.status(400).json({ error: `Flashcard set with id ${id} does not exist` });
+      return res.status(400).json({ error: `Flashcard set with id ${id} does not exis` });
     }
 
     card.name = name;
