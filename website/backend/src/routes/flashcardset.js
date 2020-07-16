@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const FlashcardRouter = require("./flashcard");
 let FlashcardSet = require("../models/flashcardset");
+let Flashcard = require("../models/flashcard");
 
 router.use("/:id/card", FlashcardRouter);
 
@@ -40,15 +41,14 @@ router.route("/delete/:id").delete((req, res) => {
       }
 
       // If set exists, delete all flashcards that belong to set.
-      set.flashcards.forEach((flashcardId) => {
-        console.log(flashcardId);
-      })
+      Promise.all(set.flashcards.map((flashcardId) => Flashcard.findByIdAndDelete(flashcardId).exec()))
+        .then((_) => FlashcardSet.findByIdAndDelete(req.params.id))
+        .then((_) => res.json({msg: "Flashcard Set deleted"}))
+        .catch(err => res.status(400).json({error: err}));
     })
     .catch((err) => res.status(500).json({error: err}));
 
-  // FlashcardSet.findByIdAndDelete(req.params.id)
-  //   .then(() => res.json({msg: "Flashcard Set deleted"}))
-  //   .catch(err => res.status(400).json({error: err}));
+  
 })
 
 // handle creating a flashcard set
