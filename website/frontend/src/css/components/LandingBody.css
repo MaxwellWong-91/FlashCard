@@ -1,0 +1,50 @@
+img {
+  width: 100%;
+}
+
+.black-bg {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+section#showcase {
+  background: url("../../images/LandingBackground.jpg") no-repeat center/cover;
+  height: 92vh;
+  overflow-y: hidden;
+}
+
+section#showcase div.container {
+  margin-top: 25vh;
+  text-align: center;
+  color: #fff;
+}
+
+section#showcase div.container h1 {
+  font-size: 3rem;
+}
+
+section#showcase div.container p {
+  font-size: 1.5rem;
+}
+
+/* Features */
+section#features {
+  height: 75vh;
+}
+
+section#features .container {
+  display: grid;
+  
+}
+
+.feature-item {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #EDE8E8;
+}
+
+.feature-text {
+  font-size: 1rem;
+}
