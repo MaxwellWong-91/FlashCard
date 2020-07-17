@@ -41,8 +41,7 @@ function StudySetPage() {
 
   const [editedCard, setEditedCard] = useState({});
   const [setName, setSetName] = useState("");
-  const [isOwner, setIsOwner] = useState(false);
-
+  const [isOwner, setIsOwner] = useState(true);
   let { setId } = useParams();
   
   useEffect(() => {
@@ -57,14 +56,18 @@ function StudySetPage() {
     
   }, [])
 
-  const handleEditSubmit = (flashcard) => {
+  const handleDoneSubmit = (flashcard) => {
     console.log(flashcard);
     setEditedCard(flashcard);
     setFlashcards({...flashcards, [flashcard._id]: flashcard});
   }
 
   const handleDeleteClick = (_id) => {
-    console.log(_id)
+    console.log(_id);
+  }
+
+  const handleAddCardClick = (e) => {
+    setFlashcards({...flashcards, "-1": {_id: -1, word: '', definition: ''}});
   }
 
   return(
@@ -76,8 +79,9 @@ function StudySetPage() {
       />
       <WordListBody 
         flashcards={flashcards}
-        handleEditSubmit={handleEditSubmit}
+        handleDoneSubmit={handleDoneSubmit}
         handleDeleteClick={handleDeleteClick}
+        handleAddCardClick={handleAddCardClick}
         isOwner={isOwner}
       />
     </>

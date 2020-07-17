@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import WordList from "./WordList";
 import "../css/components/WordListBody.css";
 
-function WordListBody({ flashcards, handleEditSubmit, handleDeleteClick, isOwner }) {
+function WordListBody({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCardClick, isOwner }) {
   return(
     <>
       <div>
@@ -10,8 +10,9 @@ function WordListBody({ flashcards, handleEditSubmit, handleDeleteClick, isOwner
       </div>
       <WordList 
         flashcards={flashcards}
-        handleEditSubmit={handleEditSubmit}
+        handleDoneSubmit={handleDoneSubmit}
         handleDeleteClick={handleDeleteClick}
+        handleAddCardClick={handleAddCardClick}
         isOwner={isOwner}
       />
     </>

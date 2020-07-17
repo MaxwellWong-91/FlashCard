@@ -6,9 +6,9 @@ import DoneIcon from '@material-ui/icons/Done';
 import "../css/components/WordList.css";
 
 
-function WordList({ flashcards, handleEditSubmit, handleDeleteClick, isOwner }) {
+function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCardClick, isOwner }) {
   const [editedCard, setEditedCard] = useState({});
-  
+  const [addingCard, setAddingCard] = useState(false);
   const handleCardChange = (e) => {
     setEditedCard({ ...editedCard, [e.target.name]: e.target.value});
   };
@@ -25,12 +25,12 @@ function WordList({ flashcards, handleEditSubmit, handleDeleteClick, isOwner }) 
     })
   }
 
-  return(
+  return (
     <>
       <ul className="word-list-container">
       {
         Object.values(flashcards).map((flashcard) => {
-          let isEditCard = flashcard._id === editedCard._id;
+          let isEditCard = flashcard._id === editedCard._id || flashcard._id  === -1; // flashcard._id === null for adding card
 
           return (
             <li>
@@ -70,15 +70,31 @@ function WordList({ flashcards, handleEditSubmit, handleDeleteClick, isOwner }) 
                       isEditCard ?
                       <DoneIcon 
                         onClick={(e) => {
+                          if (editedCard._id === -1) { // If adding card, should set addingCard to false.
+                            setAddingCard(false);
+                          }
+                          
                           // Insert update call
-                          handleEditSubmit(editedCard);
+                          handleDoneSubmit(editedCard);
                           setEditedCard({});
                         }}
                       />
                       : <EditIcon 
-                      onClick={(e) => setEditedCard(flashcard)}/>
+                        onClick={(e) => {
+                          if (!addingCard) {
+                            setEditedCard(flashcard);
+                          }
+                      }}/>
                     }
-                    <DeleteIcon onClick={(e) => deleteCard(e, flashcard._id)}/>
+                    <DeleteIcon onClick={(e) => {
+                      // if you are deleting the card that you added, set adding card to false and edited card to nothing
+                      if (addingCard && flashcard._id === -1) {
+                        setAddingCard(false);
+                        setEditedCard({});
+                      }
+
+                      deleteCard(e, flashcard._id);
+                      }}/>
                   </li>
                   : null
                 }
@@ -90,8 +106,20 @@ function WordList({ flashcards, handleEditSubmit, handleDeleteClick, isOwner }) 
         })
       }
       </ul>
-
-      <a className="nav-pill-secondary add-card-button">Add Card</a>
+      {
+        isOwner ? 
+        <a 
+        className="nav-pill-secondary add-card-button"
+        onClick={(e) => {
+          console.log(editedCard);
+          if (!Object.keys(editedCard).length) {
+            setAddingCard(true);
+            setEditedCard({_id: -1, word: '', definition: ''});
+            handleAddCardClick(e);
+          }
+        }}>Add Card</a>
+        : null
+      }
 
     </>
   )

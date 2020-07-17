@@ -57,6 +57,7 @@
 
 .add-card-button {
   margin: auto;
+  display: block;
 }
 
 @media (max-width: 720px) {
