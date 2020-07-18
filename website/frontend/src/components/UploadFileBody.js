@@ -7,6 +7,9 @@ function UploadFileBody() {
   return (
     <>
       <div>
+        <h2 className="create-set-subheading">Upload File</h2>
+      </div>
+      <div>
         <h4 className="create-set-description">File Guidelines</h4>
       </div>
       <div className="file-guidelines-container bg-white">
@@ -21,7 +24,7 @@ function UploadFileBody() {
             The syntax for each pair is as follows:
             <ul>
               <li>
-                For single-digit numbers, the syntax is "1. word:definition"
+                For <strong>single-digit numbers,</strong> the syntax is "1. word:definition"
                 <ul>
                   <li>There must be one space after the period.</li>
                   <li>There must be a colon after the word, followed by a space</li>
@@ -29,14 +32,14 @@ function UploadFileBody() {
               </li>
 
               <li>
-                For double-digit numbers, the syntax is "12.word:definition"
+                For <strong>double-digit numbers,</strong> the syntax is "12.word:definition"
                 <ul>
                   <li>There must not be a space after the period</li>
                 </ul>
               </li>
 
-              <li>Triple-digit numbers and higher are currently not supported</li>
-              <li>Multi-page files are currently not supported</li>
+              <li><strong>Triple-digit numbers</strong> and higher are currently not supported</li>
+              <li><strong>Multi-page files</strong> are currently not supported</li>
             </ul>
           </li>
         </ul>
@@ -47,7 +50,9 @@ function UploadFileBody() {
       </div>
 
       <a className="pill-primary generate-flashcards-button">Generate Flashcards</a>
-      
+      <div>
+        <h2 className="create-set-subheading">Make Changes</h2>
+      </div>
     </>
   )
 }

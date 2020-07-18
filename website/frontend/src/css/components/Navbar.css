@@ -6,6 +6,11 @@ body {
   background-color: #EDE8E8;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* Navbar */
 nav {
   position: relative;

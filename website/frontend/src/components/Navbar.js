@@ -1,4 +1,5 @@
 import React, {useState, useContext} from "react";
+import {Link} from "react-router-dom";
 import {UserContext} from "../context/UserContext";
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,9 +16,9 @@ function Navbar() {
     <nav className="bg-white">
       <ul>
         <li className="nav-brand">
-          <a className="brand-container">
+          <Link className="brand-container" to="/">
             <img className="brand-logo" src={Logo}></img><h3 className="brand-name">Flashcard Manager</h3>
-          </a>
+          </Link>
         </li>
         {/* <input 
           className="searchbar outer-menu-searchbar"

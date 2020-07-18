@@ -6,6 +6,20 @@ import "../css/components/CreateSetBody.css";
 import UploadFileBody from "./UploadFileBody";
 
 function CreateSetBody() {
+  const [upload, setUpload] = useState(false);
+  const [diy, setDiy] = useState(false);
+
+  const handleDiyClick = (e) => {
+    console.log(e.target.checked);
+    setDiy(true);
+    setUpload(false);
+  }
+
+  const handleUploadClick = (e) => {
+    setDiy(false);
+    setUpload(true);
+  }
+
   return (
     <>
       <div>
@@ -24,18 +38,18 @@ function CreateSetBody() {
 
       <div className="options-container">
         <div className="options-container-item bg-white">
-          <Checkbox checkedIcon={<ClearIcon />}/>
+          <Checkbox checkedIcon={<ClearIcon />} onClick={handleUploadClick}/>
           <p>Upload File</p>
         </div>
         <div className="options-container-item bg-white">
-          <Checkbox checkedIcon={<ClearIcon />}/>
+          <Checkbox checkedIcon={<ClearIcon />} onClick={handleDiyClick}/>
           <p>Do it Yourself</p>
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <h2 className="create-set-subheading">Do it Yourself</h2>
-      </div>
+      </div> */}
 
       <UploadFileBody />
     </>
