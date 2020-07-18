@@ -117,6 +117,7 @@ router.route("/login").post((req, res) => {
               if (err) {
                 throw err;
               }
+              
               res.json({
                 token,
                 user: {

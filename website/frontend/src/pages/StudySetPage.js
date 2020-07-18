@@ -46,13 +46,13 @@ function StudySetPage() {
   
   useEffect(() => {
     console.log(setId);
-    // axios.get("/api/set/" + setId)
-    //   .then((res) => {
-
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
+    axios.get("/api/set/" + setId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     
   }, [])
 

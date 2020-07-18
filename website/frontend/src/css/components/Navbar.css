@@ -31,7 +31,7 @@ nav > ul {
 
 nav > ul li {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   flex: 1;
 }
@@ -39,7 +39,6 @@ nav > ul li {
 /* Name and Logo */
 nav > ul li.nav-brand {
   justify-content: flex-start;
-  flex: 0.42 1;
 }
 
 .brand-container {
@@ -54,8 +53,8 @@ nav > ul li.nav-brand {
 
 /* Search bar */
 .search-container {
-  flex: 3;
   height: 100%;
+  justify-content: center;
 }
 
 .searchbar {
@@ -63,7 +62,10 @@ nav > ul li.nav-brand {
   font-size: 1rem;
   background: url("../../images/search.svg") no-repeat;
   background-position: right;
-  width: 50%;
+}
+
+input.outer-menu-searchbar {
+  width: 100%;
 }
 
 .search-container button {
@@ -80,7 +82,7 @@ nav > ul li.nav-brand {
 }
 
 /* Nav buttons */
-a.nav-pill-primary {
+.nav-pill-primary {
   background-color: #C06DF1;
   border: none;
   color: #fff;
@@ -90,12 +92,12 @@ a.nav-pill-primary {
   padding: 0.5rem 0;
 }
 
-a.nav-pill-primary:hover {
+.nav-pill-primary:hover {
   background-color: #C06DF0;
   color: #fff;
 }
 
-a.nav-pill-secondary {
+.nav-pill-secondary {
   background-color: #fff;
   border: 1px solid #C06DF1;
   color: #C06DF1;
@@ -105,13 +107,17 @@ a.nav-pill-secondary {
   padding: calc(0.5rem - 1px) 0;
 }
 
-a.nav-pill-secondary:hover {
+.nav-pill-secondary:hover {
   background-color: #fff;
   color: #C06DF1;
 }
 
 
 .toggle-menu {
+  display: none;
+}
+
+input.inner-menu-searchbar {
   display: none;
 }
 
@@ -140,14 +146,22 @@ a.nav-pill-secondary:hover {
   .toggle-menu {
     display: flex;
     justify-content: flex-end;
+    flex: 0.5 1;
   }
 
   .toggle-menu:hover {
     cursor: pointer;
   }
+
+  .search-container {
+    flex: 1 1;
+  }
 }
 
 @media(max-width: 720px) {
+  nav ul > li.nav-brand {
+    flex: 0.42 1;
+  }
   .nav-brand {
     flex-basis: 3%;
   }
@@ -159,6 +173,10 @@ a.nav-pill-secondary:hover {
   .brand-logo {
     width: 70%;
     min-width: 43px;
+  }
+
+  .toggle-menu {
+    flex: 0.25 1;
   }
 }
 
@@ -173,4 +191,14 @@ div.background {
   height: 100%;
   z-index: -100;
   background-color: #EDE8E8;
+}
+
+@media(max-width: 450px) {
+  input.inner-menu-searchbar {
+    display: block;
+  }
+
+  input.outer-menu-searchbar {
+    display: none;
+  }
 }

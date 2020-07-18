@@ -54,6 +54,7 @@ section#showcase div.container p {
 /* Features */
 section#features {
   height: 75vh;
+  padding-top: 0.83em;
 }
 
 section#features .container {
@@ -63,12 +64,13 @@ section#features .container {
   column-gap: 3rem;
   row-gap: 2rem;
   justify-content: space-around;
-  padding: 0 5rem;
+  padding: 0 5vw;
 }
 
 section#features h2 {
   text-align: center;
   font-size: 2.5rem;
+  margin-top: 0;
 }
 
 .feature-item {

@@ -14,6 +14,7 @@ function SignupForm() {
       <OutlinedInput placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
       <OutlinedInput placeholder="Password" value={password1} onChange={(e) => setPassword1(e.target.value)}/>
       <OutlinedInput placeholder="Confirm Password" value={password2} onChange={(e) => setPassword2(e.target.value)}/>
+      <p className="error">error</p>
       <a className="nav-pill-primary">
         Signup
       </a>

@@ -19,15 +19,20 @@ function Navbar() {
             <img className="brand-logo" src={Logo}></img><h3 className="brand-name">Flashcard Manager</h3>
           </a>
         </li>
-        {/* <li className="search-container">
+        {/* <input 
+          className="searchbar outer-menu-searchbar"
+          type="text"
+          placeholder="Search for flashcard set"/> */}
+        <li className="search-container">
           <input 
+          className="searchbar outer-menu-searchbar"
           type="text"
           placeholder="Search for flashcard set"/>
           
-        </li> */}
+        </li>
         <li className="nav-list-button-container">
           <input 
-          className="searchbar"
+          className="searchbar inner-menu-searchbar"
           type="text"
           placeholder="Search for flashcard set"/>
           <ul className={`nav-button-container ${menuOpen ? "nav-open" : ""}`}>

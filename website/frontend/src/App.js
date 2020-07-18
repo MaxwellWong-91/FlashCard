@@ -1,14 +1,5 @@
 import React, {useState, useMemo} from "react";
-import logo from './logo.svg';
-import './App.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-/*
-import CreateSet from "./components/oldcomponents/CreateSet";
-import ViewSet from "./components/oldcomponents/ViewSet";
-import StudySet from "./components/oldcomponents/StudySet";
-*/
 import LandingPage from "./pages/LandingPage";
 import StudySetPage from "./pages/StudySetPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
@@ -16,9 +7,15 @@ import ViewSetsPage from "./pages/ViewSetsPage";
 import CreateSetPage from "./pages/CreateSetPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
-
 import {UserContext} from "./context/UserContext";
+import axios from "axios";
 
+//axios.defaults.baseURL = "http://localhost:8080";
+//axios.defaults.withCredentials = true;
+
+axios.defaults.validateStatus = function (status) {
+  return status >= 200 && status < 500;
+}
 
 function App() {
   const [user, setUser] = useState(null);

@@ -20,7 +20,7 @@ function LandingBody() {
   const classes = useStyles();
   return(
     <>
-      <div className="outer-showcase">
+      <div className="outer-showcase bg-white">
         <section id="showcase">
           <div className="container">
             <h1>Learn. Study. Repeat.</h1>
@@ -30,7 +30,7 @@ function LandingBody() {
         <div className="inner-showcase black-bg"></div>
       </div>
 
-      <section id="features">
+      <section id="features" className="bg-white">
         <h2>
           What We Offer
         </h2>
