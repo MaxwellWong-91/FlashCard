@@ -28,11 +28,12 @@ function LoginForm() {
     
     axios.post("/api/user/login", data)
       .then((res) => {
-        console.log(res);
         if (res.data.error) {
           setError(res.data.error);
+        } else {
+          setError("");
+          setUser(res.data.token);
         }
-        setUser(res.data.token);
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +46,7 @@ function LoginForm() {
       <h3>Welcome Back!</h3>
       <OutlinedInput placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
       <OutlinedInput placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <p className="error">{error}</p>
+      {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">
         Login
       </button>

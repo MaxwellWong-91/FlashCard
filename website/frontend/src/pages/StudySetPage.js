@@ -45,7 +45,6 @@ function StudySetPage() {
   let { setId } = useParams();
   
   useEffect(() => {
-    console.log(setId);
     axios.get("/api/set/" + setId)
       .then((res) => {
         console.log(res);
