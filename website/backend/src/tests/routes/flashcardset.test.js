@@ -7,6 +7,8 @@ const app = require("../../../server");
 
 const testSetBiologyId = "5eae0f84f8159e46bc2028c7";
 const testSetCSE100Id = "5ac74cccc65aac3e0c4b6cde";
+const testCardAgileId = "507f1f77bcf86cd799439011";
+const testCardWaterfallId = "507f191e810c19729de860ea";
 
 describe("Test GET /api/set/:id", () => {
   it("Should give error for bad format id", (done) => {
@@ -108,17 +110,65 @@ describe("Test PATCH /api/set/update", () => {
       })
   });
 
-  it ("Should update set when name field is entered", (done) => {
-    chai.request(app)
-      .patch(`/api/set/update/${testSetBiologyId}`)
-      .send({"name": "BiologyC"})
-      .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body.name).to.equal("BiologyC");
-          done();
-      })
-  })
+    it("Should update set when name field is entered", (done) => {
+        chai.request(app)
+          .patch(`/api/set/update/${testSetBiologyId}`)
+          .send({"name": "BiologyC"})
+          .end((err, res) => {
+              expect(res).to.have.status(200);
+              expect(res.body.name).to.equal("BiologyC");
+              done();
+          })
+    })
+
+    it("Should give error for nonexistent id", (done) => {
+        chai.request(app)
+          .patch("/api/set/update/123456789012")
+          .send({name: "notwork"})
+          .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            expect(res.body.error).to.equal("Flashcard set with id 123456789012 does not exist");
+            done();
+          })
+    })
 })
+
+describe("Test POST /api/set/search", () => {
+    it("Should make sure all fields are entered", (done) => {
+        chai.request(app)
+          .post("/api/set/search")
+          .end((err, res) => {
+              expect(res).to.have.status(400);
+              expect(res.body).to.have.property("error");
+              done();
+          })
+    });
+
+    it("Should get a list of sets when name field is entered", (done) => {
+        chai.request(app)
+        .post("/api/set/search")
+        .send({name: "BiologyC"})
+        .end((err, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body[0].name).to.equal("BiologyC");
+            done();
+        })
+    })
+
+    it("Should give error for nonexistent name", (done) => {
+        chai.request(app)
+        .post("/api/set/search")
+        .send({name: "notexist"})
+        .end((err, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            expect(res.body.error).to.equal(`Flashcard set with name notexist does not exist`);
+            done();
+          
+        })
+    })
+});
 
 describe("Test POST /api/set/create", () => {
   it("Should make sure all fields are entered", (done) => {
@@ -160,4 +210,41 @@ describe("Test POST /api/set/create", () => {
         done();
       })
   })
+})
+
+describe("Test DELETE /api/set/delete/:id", () => {
+    it ("Should make sure set exists", (done) => {
+        chai.request(app)
+          .delete("/api/set/delete/123456789012")
+          .end((err, res) => {
+              expect(res).to.have.status(400);
+              expect(res.body).to.have.property("error");
+              done();
+          })
+    })
+
+    it ("Should make sure the set is deleted", (done) => {
+        let requester = chai.request(app).keepOpen();
+        requester.delete(`/api/set/delete/${testSetCSE100Id}`)
+          .then((res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.property("msg");
+            return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardAgileId}`);
+          })
+          .then((res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardWaterfallId}`);
+          })
+          .then((res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.have.property("error");
+            requester.close();
+            done();            
+          })
+          .catch((err) => {
+            requester.close();
+            done(err);
+          })
+    })
 })

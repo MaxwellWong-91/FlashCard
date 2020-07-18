@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const FlashcardRouter = require("./flashcard");
 let FlashcardSet = require("../models/flashcardset");
+let Flashcard = require("../models/flashcard");
 
 router.use("/:id/card", FlashcardRouter);
 
@@ -31,9 +32,23 @@ router.route("/:id").get((req, res) => {
 
 // handle deleting a flashcard set
 router.route("/delete/:id").delete((req, res) => {
-  FlashcardSet.findByIdAndDelete(req.params.id)
-    .then(() => res.json({msg: "Flashcard Set deleted"}))
-    .catch(err => res.status(400).json({error: err}));
+  const { id } = req.params;
+
+  FlashcardSet.findById(id) 
+    .then((set) => {
+      if (!set) {
+        return res.status(400).json({error: `Flashcard set with id ${id} does not exist`});
+      }
+
+      // If set exists, delete all flashcards that belong to set.
+      Promise.all(set.flashcards.map((flashcardId) => Flashcard.findByIdAndDelete(flashcardId).exec()))
+        .then((_) => FlashcardSet.findByIdAndDelete(req.params.id))
+        .then((_) => res.json({msg: "Flashcard Set deleted"}))
+        .catch(err => res.status(400).json({error: err}));
+    })
+    .catch((err) => res.status(500).json({error: err}));
+
+  
 })
 
 // handle creating a flashcard set
@@ -65,27 +80,46 @@ router.route("/create").post((req, res) => {
 
 // Handle updating a flashcard set
 router.route("/update/:id").patch((req, res) => {
-    const { name } = req.body;
-    const { id } = req.params;
+  const { name } = req.body;
+  const { id } = req.params;
+  
+  if (!name) {
+    return res.status(400).json({error: "Please enter a name for the flashcard set"});
+  }
 
-    if (!name) {
-        return res.status(400).json({error: "Please enter a name for the flashcard set"});
+  FlashcardSet.findById(id)
+  .then((card) => {
+    if (!card) {
+      return res.status(400).json({ error: `Flashcard set with id ${id} does not exist` });
     }
 
-    FlashcardSet.findById(id)
-    .then((card) => {
-        if (!card) {
-            return res.status(400).json({ error: `Flashcard set with ${id} does not exist` });
-        }
-
-        card.name = name;
-        card.save()
-        .then((_) => {
-            res.json(card);
-        })
-        .catch((err) => res.status(500).json({error: err}));
+    card.name = name;
+    card.save()
+    .then((_) => {
+      res.json(card);
     })
     .catch((err) => res.status(500).json({error: err}));
+  })
+  .catch((err) => res.status(500).json({error: err}));
+});
+
+// Handle searching for a flashcard set by name
+router.route("/search").post((req, res) => {
+  const { name } = req.body;
+
+  if (!name) {
+    return res.status(400).json({error: "Please enter a name to search!"});
+  }
+
+  FlashcardSet.find({ name })
+  .then((data) => {
+    if (!data.length) {
+      return res.status(400).json({error: `Flashcard set with name ${name} does not exist`})
+    }
+
+    return res.json(data);
+  })
+  .catch((err) => res.status(500).json({error: err}));
 });
 
 module.exports = router;
