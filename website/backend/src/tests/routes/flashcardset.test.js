@@ -180,9 +180,21 @@ describe("Test POST /api/set/search", () => {
 });
 
 describe("Test POST /api/set/create", () => {
+  let requester = chai.request(app).keepOpen();
+  let authToken = null;
+
+  before("Logging in", (done) => {
+    requester.post("/api/user/login")
+      .send({username: "awesomename", password: "easypass"})
+      .end((err, res) => {
+        authToken = res.body.token;
+        done();
+      })
+  });
+
   it("Should make sure all fields are entered", (done) => {
-    chai.request(app)
-      .post("/api/set/create")
+    requester.post("/api/set/create")
+      .set("x-auth-token", authToken)
       .send({"name": ""})
       .end((err, res) => {
         expect(res).to.have.status(400);
@@ -192,32 +204,34 @@ describe("Test POST /api/set/create", () => {
   })
 
   it("Should create set when all fields entered", (done) => {
-    chai.request(app)
-      .post("/api/set/create")
-      .send({"name": "Biology Terms"})
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property("name");
-        expect(res.body).to.have.property("flashcards");
-        expect(res.body.name).to.equal("Biology Terms");
-        expect(res.body.flashcards.length).to.equal(0);
-        done();
-      })
+      requester.post("/api/set/create")
+        .set("x-auth-token", authToken)
+        .send({"name": "Biology Terms"})
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property("name");
+          expect(res.body).to.have.property("flashcards");
+          expect(res.body.name).to.equal("Biology Terms");
+          expect(res.body.flashcards.length).to.equal(0);
+          done();
+        })
   })
 
   
   it ("Should allow create of same name", (done) => {
-    chai.request(app)
-      .post("/api/set/create")
-      .send({"name": "cse100"})
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property("name");
-        expect(res.body).to.have.property("flashcards");
-        expect(res.body.name).to.equal("cse100");
-        expect(res.body.flashcards.length).to.equal(0);
-        done();
-      })
+      requester.post("/api/set/create")
+        .set("x-auth-token", authToken)
+        .send({"name": "cse100"})
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property("name");
+          expect(res.body).to.have.property("flashcards");
+          expect(res.body.name).to.equal("cse100");
+          expect(res.body.flashcards.length).to.equal(0);
+
+          requester.close();
+          done();
+        })
   })
 })
 
@@ -287,7 +301,6 @@ describe("Test GET /api/set (i.e. current user's sets)", () => {
           return requester.get('/api/set').set("x-auth-token", res.body.token);
         })
         .then((res) => {
-          console.log(res.body);
           expect(res).to.have.status(200);
           expect(res.body).to.have.length(1);
           expect(res.body[0].name).to.equal("Biology");
@@ -299,4 +312,19 @@ describe("Test GET /api/set (i.e. current user's sets)", () => {
           done(err);
         })
     })
+})
+
+describe("Test GET /api/set/names (i.e. get all unique set names)", () => {
+  it ("Should get the appropriate names", (done) => {
+    chai.request(app)
+      .get("/api/set/names")
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.length(3);
+        expect(res.body).to.include("Biology");
+        expect(res.body).to.include("Biology Terms");
+        expect(res.body).to.include("cse100");
+        done();
+      });
+  })
 })

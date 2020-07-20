@@ -35,6 +35,19 @@ router.route("/all").get((req, res) => {
     .catch(err => res.status(400).json({error: err}));
 })
 
+// should get unique flashcard set names
+// This is meant for autofill for search
+router.route("/names").get((req, res) => {
+  FlashcardSet.distinct('name', (err, names) => {
+    if (err) {
+      return res.status(500).json({error: err});
+    }
+    else {
+      return res.json(names);
+    }
+  })
+})
+
 // get one flashcard set
 router.route("/:id").get((req, res) => {
   FlashcardSet.findById(req.params.id)
@@ -70,7 +83,8 @@ router.route("/delete/:id").delete((req, res) => {
 })
 
 // handle creating a flashcard set
-router.route("/create").post((req, res) => {
+router.route("/create").post(auth, (req, res) => {
+  const { user } = req;
   const { name } = req.body;
 
   // check for name
@@ -78,22 +92,26 @@ router.route("/create").post((req, res) => {
     return res.status(400).json({ error: "Please enter a name for the flashcard set" });
   }
 
-  // check if name used already (update: not used anymore b/c allow duplicates)
-//   FlashcardSet.findOne({ name })
-//     .then(data => {
-//       if (data) {
-//         return res.status(400).json({ error: "Flashcard set with that name already exists" });
-//       }
-//     })
-//     .catch(err => res.status(400).json({error: err}));
+  // Get username before creating set
+  User.findById(user.id)
+    .then((user) => {
+      if (!user) {
+        return res.status(400).json({ error: "User not found." });
+      }
+      else {
+        const newSet = new FlashcardSet({
+          name,
+          user: user.username
+        })
+      
+        newSet.save()
+          .then(() => res.json(newSet))
+          .catch(err => res.status(400).json({error: err}));
+      }
+    })
+    .catch((err) => res.status(500).json({ error: err }));
 
-  const newSet = new FlashcardSet({
-    name
-  })
-
-  newSet.save()
-    .then(() => res.json(newSet))
-    .catch(err => res.status(400).json({error: err}));
+  
 })
 
 // Handle updating a flashcard set
