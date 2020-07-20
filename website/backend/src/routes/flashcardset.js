@@ -2,11 +2,29 @@ const router = require("express").Router();
 const FlashcardRouter = require("./flashcard");
 let FlashcardSet = require("../models/flashcardset");
 let Flashcard = require("../models/flashcard");
+let User = require('../models/user');
+const auth = require("../middleware/auth");
 
 router.use("/:id/card", FlashcardRouter);
 
+// get currently-logged in user's sets
+router.route("/").get(auth, (req, res) => {
+    const { user } = req;
+
+    User.findById(user.id)
+    .populate("sets")
+    .then((user) => {
+      if (!user) {
+        return res.status(400).json({ error: "User not found." });
+      }
+
+      return res.json(user.sets);
+    })
+    .catch(err => res.status(500).json({ error: err}));
+});
+
 // should get all flashcard sets
-router.route("/").get((req, res) => {
+router.route("/all").get((req, res) => {
   FlashcardSet.find()
     .then(sets => {
       if (!sets) {

@@ -111,14 +111,23 @@ describe("Test PATCH /api/set/update", () => {
   });
 
     it("Should update set when name field is entered", (done) => {
-        chai.request(app)
-          .patch(`/api/set/update/${testSetBiologyId}`)
-          .send({"name": "BiologyC"})
-          .end((err, res) => {
-              expect(res).to.have.status(200);
-              expect(res.body.name).to.equal("BiologyC");
-              done();
-          })
+      let requester = chai.request(app).keepOpen();
+      requester.patch(`/api/set/update/${testSetBiologyId}`)
+        .send({"name": "BiologyC"})
+        .then((res) => {
+            expect(res).to.have.status(200);
+            expect(res.body.name).to.equal("BiologyC");
+            return requester.patch(`/api/set/update/${testSetBiologyId}`)
+              .send({"name": "Biology"});
+        })
+        .then((res) => {
+          requester.close();
+          done();
+        })
+        .catch((err) => {
+          requester.close();
+          done(err);
+        })
     })
 
     it("Should give error for nonexistent id", (done) => {
@@ -148,10 +157,10 @@ describe("Test POST /api/set/search", () => {
     it("Should get a list of sets when name field is entered", (done) => {
         chai.request(app)
         .post("/api/set/search")
-        .send({name: "BiologyC"})
+        .send({name: "Biology"})
         .end((err, res) => {
             expect(res).to.have.status(200);
-            expect(res.body[0].name).to.equal("BiologyC");
+            expect(res.body[0].name).to.equal("Biology");
             done();
         })
     })
@@ -246,5 +255,48 @@ describe("Test DELETE /api/set/delete/:id", () => {
             requester.close();
             done(err);
           })
+    })
+})
+
+describe("Test GET /api/set (i.e. current user's sets)", () => {
+    it ("Shouldn't work without login", (done) => {
+        chai.request(app)
+          .get("/api/set")
+          .end((err, res) => {
+            expect(res).to.have.status(401);
+            expect(res.body).to.have.property("msg");
+            expect(res.body.msg).to.equal("Missing token. Authorization denied.");
+            done();
+          })
+    })
+
+    it ("Should get the appropriate sets when logged in", (done) => {
+      let requester = chai.request(app).keepOpen();
+
+      requester.post('/api/user/login')
+        .send({"username": "coolname", "password": "hardpass"})
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property("token");
+          expect(res.body).to.have.property("user");
+          expect(res.body.user).to.have.property("id");
+          expect(res.body.user).to.have.property("username");
+          expect(res.body.user.id).to.equal("579a25921f417dd1e5518141");
+          expect(res.body.user.username).to.equal("coolname");
+
+          return requester.get('/api/set').set("x-auth-token", res.body.token);
+        })
+        .then((res) => {
+          console.log(res.body);
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.length(1);
+          expect(res.body[0].name).to.equal("Biology");
+          requester.close();
+          done();
+        })
+        .catch((err) => {
+          requester.close();
+          done(err);
+        })
     })
 })
