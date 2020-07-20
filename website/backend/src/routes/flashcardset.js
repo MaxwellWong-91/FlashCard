@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const mongoose = require("mongoose");
+
 const FlashcardRouter = require("./flashcard");
 let FlashcardSet = require("../models/flashcardset");
 let Flashcard = require("../models/flashcard");
@@ -62,7 +64,8 @@ router.route("/:id").get((req, res) => {
 })
 
 // handle deleting a flashcard set
-router.route("/delete/:id").delete((req, res) => {
+router.route("/delete/:id").delete(auth, (req, res) => {
+  const { user } = req;
   const { id } = req.params;
 
   FlashcardSet.findById(id) 
@@ -71,8 +74,17 @@ router.route("/delete/:id").delete((req, res) => {
         return res.status(400).json({error: `Flashcard set with id ${id} does not exist`});
       }
 
-      // If set exists, delete all flashcards that belong to set.
-      Promise.all(set.flashcards.map((flashcardId) => Flashcard.findByIdAndDelete(flashcardId).exec()))
+      // If set exists, delete all flashcards that belong to set AND deletes entry in user that had the flashcard set.
+      Promise.all([...set.flashcards.map((flashcardId) => Flashcard.findByIdAndDelete(flashcardId).exec()),
+        User.findOneAndUpdate({_id: mongoose.Types.ObjectId(user.id)}, {
+          $pull: {sets: mongoose.Types.ObjectId(id)}
+          }, 
+            (err) => {
+              if (err) {
+                return res.status(500).json({error: err});
+              }
+            }
+          )])
         .then((_) => FlashcardSet.findByIdAndDelete(req.params.id))
         .then((_) => res.json({msg: "Flashcard Set deleted"}))
         .catch(err => res.status(400).json({error: err}));
@@ -102,11 +114,13 @@ router.route("/create").post(auth, (req, res) => {
         const newSet = new FlashcardSet({
           name,
           user: user.username
-        })
-      
-        newSet.save()
-          .then(() => res.json(newSet))
-          .catch(err => res.status(400).json({error: err}));
+        });
+
+        user.sets.push(mongoose.Types.ObjectId(newSet._id));
+
+        Promise.all([user.save(), newSet.save()])
+          .then((_) => res.json(newSet))
+          .catch((err) => res.status(500).json({ error: err }));
       }
     })
     .catch((err) => res.status(500).json({ error: err }));

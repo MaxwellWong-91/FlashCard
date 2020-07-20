@@ -235,42 +235,6 @@ describe("Test POST /api/set/create", () => {
   })
 })
 
-describe("Test DELETE /api/set/delete/:id", () => {
-    it ("Should make sure set exists", (done) => {
-        chai.request(app)
-          .delete("/api/set/delete/123456789012")
-          .end((err, res) => {
-              expect(res).to.have.status(400);
-              expect(res.body).to.have.property("error");
-              done();
-          })
-    })
-
-    it ("Should make sure the set is deleted", (done) => {
-        let requester = chai.request(app).keepOpen();
-        requester.delete(`/api/set/delete/${testSetCSE100Id}`)
-          .then((res) => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.have.property("msg");
-            return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardAgileId}`);
-          })
-          .then((res) => {
-            expect(res).to.have.status(400);
-            expect(res.body).to.have.property("error");
-            return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardWaterfallId}`);
-          })
-          .then((res) => {
-            expect(res).to.have.status(400);
-            expect(res.body).to.have.property("error");
-            requester.close();
-            done();            
-          })
-          .catch((err) => {
-            requester.close();
-            done(err);
-          })
-    })
-})
 
 describe("Test GET /api/set (i.e. current user's sets)", () => {
     it ("Shouldn't work without login", (done) => {
@@ -326,5 +290,54 @@ describe("Test GET /api/set/names (i.e. get all unique set names)", () => {
         expect(res.body).to.include("cse100");
         done();
       });
+  })
+})
+
+describe("Test DELETE /api/set/delete/:id", () => {
+  let requester = chai.request(app).keepOpen();
+  let authToken = null;
+
+  before("Logging in", (done) => {
+    requester.post("/api/user/login")
+      .send({username: "awesomename", password: "easypass"})
+      .end((err, res) => {
+        authToken = res.body.token;
+        done();
+      })
+  });
+
+  it ("Should make sure set exists", (done) => {
+        requester.delete("/api/set/delete/123456789012")
+          .set("x-auth-token", authToken)
+          .end((err, res) => {
+              expect(res).to.have.status(400);
+              expect(res.body).to.have.property("error");
+              done();
+          })
+  })
+
+  it ("Should make sure the set is deleted", (done) => {
+      requester.delete(`/api/set/delete/${testSetCSE100Id}`)
+        .set("x-auth-token", authToken)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property("msg");
+          return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardAgileId}`);
+        })
+        .then((res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property("error");
+          return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardWaterfallId}`);
+        })
+        .then((res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property("error");
+          requester.close();
+          done();            
+        })
+        .catch((err) => {
+          requester.close();
+          done(err);
+        })
   })
 })
