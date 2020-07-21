@@ -111,13 +111,13 @@ router.route("/delete/:id").delete(auth, (req, res) => {
 // handle creating a flashcard set
 router.route("/create").post(auth, (req, res) => {
   const { user } = req;
-  const { name } = req.body;
+  const { name, flashcards } = req.body;
 
   // check for name
   if (!name) {
     return res.status(400).json({ error: "Please enter a name for the flashcard set" });
   }
-
+  console.log(flashcards);
   // Get username before creating set
   User.findById(user.id)
     .then((user) => {
@@ -125,16 +125,38 @@ router.route("/create").post(auth, (req, res) => {
         return res.status(400).json({ error: "User not found." });
       }
       else {
-        const newSet = new FlashcardSet({
-          name,
-          user: user.username
-        });
+        if (flashcards) {
+          let flashcardDocs = flashcards.map((flashcard) => new Flashcard(flashcard));
+          let flashcardIds = flashcardDocs.map((flashcard) => flashcard._id);
 
-        user.sets.push(mongoose.Types.ObjectId(newSet._id));
+          Promise.all(flashcardDocs.map((flashcard) => flashcard.save()))
+            .then((_) => {
+              const newSet = new FlashcardSet({
+                name,
+                flashcards: flashcardIds,
+                user: user.username
+              });
+      
+              user.sets.push(mongoose.Types.ObjectId(newSet._id));
+      
+              Promise.all([user.save(), newSet.save()])
+                .then((_) => res.json(newSet))
+                .catch((err) => res.status(500).json({ error: err }));
+            });
+        }
+        else {
+          const newSet = new FlashcardSet({
+            name,
+            user: user.username
+          });
+  
+          user.sets.push(mongoose.Types.ObjectId(newSet._id));
+  
+          Promise.all([user.save(), newSet.save()])
+            .then((_) => res.json(newSet))
+            .catch((err) => res.status(500).json({ error: err }));
+        }
 
-        Promise.all([user.save(), newSet.save()])
-          .then((_) => res.json(newSet))
-          .catch((err) => res.status(500).json({ error: err }));
       }
     })
     .catch((err) => res.status(500).json({ error: err }));

@@ -4,6 +4,7 @@ const should = chai.should();
 const expect = chai.expect;
 chai.use(chaiHttp);
 const app = require("../../../server");
+const { request } = require("chai");
 
 const testSetBiologyId = "5eae0f84f8159e46bc2028c7";
 const testSetCSE100Id = "5ac74cccc65aac3e0c4b6cde";
@@ -229,10 +230,35 @@ describe("Test POST /api/set/create", () => {
           expect(res.body.name).to.equal("cse100");
           expect(res.body.flashcards.length).to.equal(0);
 
-          requester.close();
           done();
         })
   })
+
+  it("Should be able to create with flashcards passed in", (done) => {
+    requester.post("/api/set/create")
+    .set("x-auth-token", authToken)
+    .send({"name": "testFlashcards", "flashcards": [
+      {
+        word: "test1",
+        definition: "def1"
+      },
+      {
+        word: "test2",
+        definition: "def2"
+      }
+    ]})
+    .end((err, res) => {
+      // console.log(res);
+      expect(res).to.have.status(200);
+      expect(res.body).to.have.property("name");
+      expect(res.body).to.have.property("flashcards");
+      expect(res.body.flashcards).to.have.length(2);
+      expect(res.body.name).to.equal("testFlashcards");
+
+      requester.close();
+      done();
+    })
+  });
 })
 
 
@@ -264,7 +290,7 @@ describe("Test GET /api/set (i.e. current user's sets)", () => {
         })
         .then((res) => {
           expect(res).to.have.status(200);
-          expect(res.body).to.have.length(3);
+          expect(res.body).to.have.length(4);
           requester.close();
           done();
         })
@@ -281,7 +307,7 @@ describe("Test GET /api/set/names (i.e. get all unique set names)", () => {
       .get("/api/set/names")
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.have.length(3);
+        expect(res.body).to.have.length(4);
         expect(res.body).to.include("Biology");
         expect(res.body).to.include("Biology Terms");
         expect(res.body).to.include("cse100");
