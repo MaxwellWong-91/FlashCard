@@ -117,7 +117,6 @@ router.route("/create").post(auth, (req, res) => {
   if (!name) {
     return res.status(400).json({ error: "Please enter a name for the flashcard set" });
   }
-  // Get username before creating set
   User.findById(user.id)
     .then((user) => {
       if (!user) {
