@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 var uniqueValidator = require('mongoose-unique-validator')
+// const flashcardSet = require('./flashcardset').schema;
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -10,6 +11,12 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  sets: {
+    type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FlashcardSet"
+    }]
   }
 });
 
