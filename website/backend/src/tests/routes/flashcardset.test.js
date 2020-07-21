@@ -248,7 +248,6 @@ describe("Test POST /api/set/create", () => {
       }
     ]})
     .end((err, res) => {
-      // console.log(res);
       expect(res).to.have.status(200);
       expect(res.body).to.have.property("name");
       expect(res.body).to.have.property("flashcards");
