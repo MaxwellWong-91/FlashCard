@@ -2,22 +2,30 @@ import React, {useState} from "react";
 import Checkbox from '@material-ui/core/Checkbox';
 import ClearIcon from '@material-ui/icons/Clear';
 import TextField from '@material-ui/core/TextField';
-import "../css/components/CreateSetBody.css";
 import UploadFileBody from "./UploadFileBody";
+import AddCardList from "./AddCardList";
+import {makeStyles} from "@material-ui/core/styles";
+import "../css/components/CreateSetBody.css";
+
+const useStyles = makeStyles({
+  root: {
+  },
+});
+
 
 function CreateSetBody() {
   const [upload, setUpload] = useState(false);
   const [diy, setDiy] = useState(false);
+  const [checkedId, setCheckedId] = useState("");
 
-  const handleDiyClick = (e) => {
-    console.log(e.target.checked);
-    setDiy(true);
-    setUpload(false);
-  }
-
-  const handleUploadClick = (e) => {
-    setDiy(false);
-    setUpload(true);
+  const handleCheckClick = (e) => {
+    if (e.target.id === checkedId) {
+      setCheckedId("");
+    }
+    else {
+      setCheckedId(e.target.id);
+    }
+    console.log(checkedId)
   }
 
   return (
@@ -38,20 +46,47 @@ function CreateSetBody() {
 
       <div className="options-container">
         <div className="options-container-item bg-white">
-          <Checkbox checkedIcon={<ClearIcon />} onClick={handleUploadClick}/>
+          <Checkbox id="upload-option" checked={checkedId === "upload-option"} checkedIcon={<ClearIcon />} onClick={handleCheckClick}/>
           <p>Upload File</p>
         </div>
         <div className="options-container-item bg-white">
-          <Checkbox checkedIcon={<ClearIcon />} onClick={handleDiyClick}/>
+          <Checkbox id="diy-option" checked={checkedId === "diy-option"} checkedIcon={<ClearIcon />} onClick={handleCheckClick}/>
           <p>Do it Yourself</p>
         </div>
       </div>
 
-      {/* <div>
-        <h2 className="create-set-subheading">Do it Yourself</h2>
-      </div> */}
+      {
+        checkedId === "upload-option" ? 
+        <UploadFileBody /> :
+        null
+      }
 
-      <UploadFileBody />
+      {
+        checkedId === "diy-option" ?
+        <>
+          <div>
+            <h2 className="create-set-subheading">Do it Yourself</h2>
+          </div>
+          <AddCardList generatedFlashcards ={[
+            {
+              word: "agile", 
+              definition: "software methodology"
+            },
+            {
+              word: "waterfall", 
+              definition: "ancient software methodology"
+            },
+            {
+              word: "test",
+              definition: "test test test"
+            }
+          ]} />
+        </> :
+        null
+      }
+      
+     
+
     </>
   )
 }

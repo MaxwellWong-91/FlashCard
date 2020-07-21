@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import SearchResultsList from "./SearchResultsList";
+import ResultsList from "./ResultsList";
 import "../css/components/SearchResultsBody.css";
 
 
-function SearchResultsBody() {
+function SearchResultsBody({sets}) {
   return(
     <>
       <div>
@@ -18,7 +18,7 @@ function SearchResultsBody() {
         </p>
       </div>
 
-      <SearchResultsList />
+      <ResultsList isSearch={true} sets={sets}/>
     </>
   )
 }

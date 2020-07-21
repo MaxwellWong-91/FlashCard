@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import DescriptionIcon from '@material-ui/icons/Description';
 import SearchIcon from '@material-ui/icons/Search';
 import EditIcon from '@material-ui/icons/Edit';
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import "../css/components/LandingBody.css";
 
 const useStyles = makeStyles({

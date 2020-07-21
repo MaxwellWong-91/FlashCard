@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import SearchResultsList from "./SearchResultsList";
+import ResultsList from "./ResultsList";
 import "../css/components/ViewSetsBody.css";
 
 function ViewSetsBody() {
@@ -11,7 +11,7 @@ function ViewSetsBody() {
         </h1>
       </div>
 
-      <SearchResultsList />
+      <ResultsList isSearch={false}/>
     </>
   )
 }

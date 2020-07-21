@@ -25,7 +25,6 @@ function App() {
   );
 
   return (
-<<<<<<< HEAD
     /*
     <Router>
       <Navbar />
@@ -47,17 +46,6 @@ function App() {
         </UserContext.Provider>
       </Switch>
     </Router>
-=======
-    <div>
-        <Router>
-            <Navbar />
-            <Route path = "/set/create" component={CreateSet} />
-            <Route path = "/set/view" component={ViewSet} />
-            <Route path = "/set/study/:id" component={StudySet} />
-        </Router>
-    </div>
-
->>>>>>> master
   );
 }
 

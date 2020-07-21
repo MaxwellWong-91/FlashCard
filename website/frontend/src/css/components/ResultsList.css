@@ -8,10 +8,19 @@
 .result-list-item {
   list-style: none;
   display: flex;
+  border-bottom: 3px solid #EDE8E8;
 }
 
 .result-list-heading {
-  border-bottom: 3px solid #EDE8E8;
+  display: flex;
+  align-items: center;
+}
+
+.set-name {
+  margin-right: 0.25rem;
+}
+
+.icon-container {
   display: flex;
 }
 

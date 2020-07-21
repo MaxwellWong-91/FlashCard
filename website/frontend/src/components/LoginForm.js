@@ -6,7 +6,12 @@ import "../css/components/LoginForm.css";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
-    
+  root: {
+    marginBottom: "1rem",
+  },
+  input: {
+    padding: "0.75em 1.25em"
+  }
 })
 
 
@@ -44,8 +49,8 @@ function LoginForm() {
   return(
     <form className="login-form-container bg-white" onSubmit={handleClick}>
       <h3>Welcome Back!</h3>
-      <OutlinedInput placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <OutlinedInput placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">
         Login

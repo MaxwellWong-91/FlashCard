@@ -3,10 +3,20 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
 import DoneIcon from '@material-ui/icons/Done';
+import {makeStyles} from "@material-ui/core/styles";
 import "../css/components/WordList.css";
 
 
+const useStyles = makeStyles({
+  root: {
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    paddingRight: "0.5rem"
+  },
+});
+
 function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCardClick, isOwner }) {
+  const classes = useStyles();
   const [editedCard, setEditedCard] = useState({});
   const [addingCard, setAddingCard] = useState(false);
   const handleCardChange = (e) => {
@@ -38,7 +48,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                 <li className="word">
                   { 
                     isEditCard ?
-                    <TextField 
+                    <TextField
+                      classes={{root: classes.root}}
                       name="word" 
                       label="Word" 
                       multiline={true} 
@@ -52,7 +63,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                 <li className="definition">
                   { 
                     isEditCard ?
-                    <TextField 
+                    <TextField
+                      classes={{root: classes.root}}
                       name="definition" 
                       label="Definition" 
                       multiline={true} 

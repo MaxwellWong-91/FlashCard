@@ -1,12 +1,13 @@
 .login-form-container {
   margin: 8% auto;
-  width: 40%;
+  width: 25%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 292px;
 }
 
 .login-form-container h3 {
