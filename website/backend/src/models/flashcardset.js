@@ -7,14 +7,16 @@ const flashcardSetSchema = new mongoose.Schema({
     type: String,
     required: true
   }, 
-  
   flashcards: { 
     type: [{ 
       type: mongoose.Schema.Types.ObjectId, 
       ref: "Flashcard"
     }]
+  },
+  user: {
+      type: String,
+      required: true
   }
-  
 });
 
 flashcardSetSchema.plugin(uniqueValidator);
