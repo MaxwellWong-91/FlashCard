@@ -25,7 +25,6 @@ function CreateSetBody() {
     else {
       setCheckedId(e.target.id);
     }
-    console.log(checkedId)
   }
 
   return (

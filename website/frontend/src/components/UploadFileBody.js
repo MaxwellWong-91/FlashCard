@@ -53,7 +53,7 @@ function UploadFileBody() {
       </div>
 
       <div className="file-upload-container bg-white">
-        <a>File Upload <PublishIcon /></a>
+        <a className="file-upload-button">File Upload <PublishIcon /></a>
       </div>
       
       <a className="pill-primary generate-flashcards-button" onClick={handleGenerateFlashcards}>Generate Flashcards</a>

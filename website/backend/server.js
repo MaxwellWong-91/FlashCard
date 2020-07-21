@@ -4,7 +4,6 @@ const app = express();
 const port = 8080;
 
 // connect database
-//require('./src/database');
 const initializeDB = require("./src/database");
 
 app.get('/', (req, res) => {
