@@ -14,28 +14,42 @@ router.route("/").get(auth, (req, res) => {
     const { user } = req;
 
     User.findById(user.id)
-    .populate("sets")
+    .populate({
+      path: "sets",
+      populate: {
+        path: "flashcards"
+      }  
+    })
     .then((user) => {
       if (!user) {
         return res.status(400).json({ error: "User not found." });
       }
+      let newSets = [];
 
-      return res.json(user.sets);
+      user.sets.forEach((set, idx) => {
+        let newFlashcards = {};
+        set.flashcards.forEach((card) => {
+          newFlashcards[card._id] = card;
+        });
+        newSets[idx] = { ...set.toObject(), flashcards: newFlashcards };
+      })
+
+      return res.json(newSets);
     })
     .catch(err => res.status(500).json({ error: err}));
 });
 
 // should get all flashcard sets
-router.route("/all").get((req, res) => {
-  FlashcardSet.find()
-    .then(sets => {
-      if (!sets) {
-        return res.status(400).json({ error: "No sets currently exist." });
-      }
-      return res.json(sets);
-    })
-    .catch(err => res.status(400).json({error: err}));
-})
+// router.route("/all").get((req, res) => {
+//   FlashcardSet.find()
+//     .then(sets => {
+//       if (!sets) {
+//         return res.status(400).json({ error: "No sets currently exist." });
+//       }
+//       return res.json(sets);
+//     })
+//     .catch(err => res.status(400).json({error: err}));
+// })
 
 // should get unique flashcard set names
 // This is meant for autofill for search

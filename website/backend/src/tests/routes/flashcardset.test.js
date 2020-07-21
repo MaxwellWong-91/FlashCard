@@ -252,22 +252,19 @@ describe("Test GET /api/set (i.e. current user's sets)", () => {
       let requester = chai.request(app).keepOpen();
 
       requester.post('/api/user/login')
-        .send({"username": "coolname", "password": "hardpass"})
+        .send({"username": "awesomename", "password": "easypass"})
         .then((res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("token");
           expect(res.body).to.have.property("user");
           expect(res.body.user).to.have.property("id");
           expect(res.body.user).to.have.property("username");
-          expect(res.body.user.id).to.equal("579a25921f417dd1e5518141");
-          expect(res.body.user.username).to.equal("coolname");
 
           return requester.get('/api/set').set("x-auth-token", res.body.token);
         })
         .then((res) => {
           expect(res).to.have.status(200);
-          expect(res.body).to.have.length(1);
-          expect(res.body[0].name).to.equal("Biology");
+          expect(res.body).to.have.length(3);
           requester.close();
           done();
         })
