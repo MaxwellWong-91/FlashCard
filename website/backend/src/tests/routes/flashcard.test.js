@@ -72,7 +72,6 @@ describe("Test GET /api/set/:id/card/:cardId", (done) => {
   })
 })
 
-
 describe("Test POST /api/set/:id/card/create", (done) => {
   it("Should not create card when missing word", (done) => {
     chai.request(app)
@@ -217,4 +216,52 @@ describe("Test PATCH /api/set/:id/card/update/:cardId", (done) => {
         done();
       })
   })
+})
+
+describe("Test DELETE /api/set/:id/card/:cardId", () => {
+    let requester = chai.request(app).keepOpen();
+    let authToken = null;
+
+    before("Logging in", (done) => {
+      requester.post("/api/user/login")
+        .send({username: "awesomename", password: "easypass"})
+        .end((err, res) => {
+          authToken = res.body.token;
+          done();
+        })
+    });
+
+    it ("Shouldn't work if not authenticated", (done) => {
+      requester.delete("/api/set/5ac74cccc65aac3e0c4b6cde/card/delete/507f191e810c19729de860ea")
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.have.property("msg");
+          expect(res.body.msg).to.equal("Missing token. Authorization denied.");
+          done();
+        })
+    });
+
+    it ("Should delete the card as well as the card id in the set", (done) => {
+      requester.delete("/api/set/5ac74cccc65aac3e0c4b6cde/card/delete/507f191e810c19729de860ea")
+        .set("x-auth-token", authToken)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.equal("Flashcard deleted");
+          return requester.get("/api/set/5ac74cccc65aac3e0c4b6cde");
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          console.log(res.body.flashcards);
+          expect(res.body.flashcards.filter((flashcard) => flashcard._id === "507f191e810c19729de860ea"))
+            .to.have.length(0);
+          requester.close();
+          done();
+        })
+        .catch((err) => {
+          requester.close();
+          done(err);
+        })
+        
+    })
+
 })

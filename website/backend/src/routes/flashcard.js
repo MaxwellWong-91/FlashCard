@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 let FlashcardSet = require("../models/flashcardset");
 let Flashcard = require("../models/flashcard");
+const auth = require("../middleware/auth");
 
 const router = express.Router({mergeParams: true});
 
@@ -96,7 +97,7 @@ router.route("/update/:cardId").patch((req, res) => {
 /**
  * /api/set/:id/card/delete/:cardId
  */
-router.route("/delete/:cardId").delete((req, res) => {
+router.route("/delete/:cardId").delete(auth, (req, res) => {
   const {id, cardId} = req.params;
   
   Flashcard.findByIdAndDelete(cardId)
@@ -114,7 +115,7 @@ router.route("/delete/:cardId").delete((req, res) => {
     .catch(err => res.status(400).json({error: err}));
   
   return res.json("Flashcard deleted");
-})
+});
 
 
 module.exports = router;

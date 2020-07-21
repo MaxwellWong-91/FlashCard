@@ -62,36 +62,14 @@ describe("Test GET /api/set/:id", () => {
     chai.request(app)
       .get("/api/set/5ac74cccc65aac3e0c4b6cde")
       .end((err, res) => {
-        const expected = {
-          "_id": "5ac74cccc65aac3e0c4b6cde",
-          "flashcards": [ 
-            {
-              _id: "507f1f77bcf86cd799439011", 
-              word: "agile", 
-              definition: "software methodology",
-              __v: 0
-            }, 
-            {
-              _id: "507f191e810c19729de860ea", 
-              word: "waterfall", 
-              definition: "ancient software methodology",
-              __v: 0
-            },
-            { flashcard: "some random data in here that we created earlier"}
-          ],
-          "name": "cse100",
-          "__v": 1
-        }
-
         expect(res).to.have.status(200);
         expect(res.body).to.have.property("_id");
         expect(res.body).to.have.property("flashcards");
         expect(res.body).to.have.property("name");
         expect(res.body).to.have.property("__v");
         expect(res.body._id).to.equal("5ac74cccc65aac3e0c4b6cde");
-        expect(res.body.flashcards.length).to.equal(3);
+        expect(res.body.flashcards.length).to.equal(2);
         expect(res.body.flashcards[0]._id).to.equal("507f1f77bcf86cd799439011");
-        expect(res.body.flashcards[1]._id).to.equal("507f191e810c19729de860ea");
         expect(res.body.name).to.equal("cse100");
         expect(res.body.__v).to.equal(1);
         done();
