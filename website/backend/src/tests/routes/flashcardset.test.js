@@ -78,9 +78,31 @@ describe("Test GET /api/set/:id", () => {
 })
 
 describe("Test PATCH /api/set/update", () => {
+  let requester = chai.request(app).keepOpen();
+  let authToken = null;
+
+  before("Logging in", (done) => {
+    requester.post("/api/user/login")
+      .send({"username": "coolname", "password": "hardpass"})
+      .end((err, res) => {
+        authToken = res.body.token;
+        done();
+      })
+  });
+
+  it("Should make sure the user is logged in", (done) => {
+    requester.patch(`/api/set/update/${testSetBiologyId}`)
+      .send({"name": "qef"})
+      .end((err, res) => {
+        expect(res).to.have.status(401);
+        expect(res.body).to.have.property("msg");
+        done();
+      })
+  });
+
   it("Should make sure all fields are entered", (done) => {
-    chai.request(app)
-      .patch(`/api/set/update/${testSetBiologyId}`)
+    requester.patch(`/api/set/update/${testSetBiologyId}`)
+      .set("x-auth-token", authToken)
       .send({"name": ""})
       .end((err, res) => {
           expect(res).to.have.status(400);
@@ -89,37 +111,49 @@ describe("Test PATCH /api/set/update", () => {
       })
   });
 
-    it("Should update set when name field is entered", (done) => {
-      let requester = chai.request(app).keepOpen();
-      requester.patch(`/api/set/update/${testSetBiologyId}`)
-        .send({"name": "BiologyC"})
-        .then((res) => {
-            expect(res).to.have.status(200);
-            expect(res.body.name).to.equal("BiologyC");
-            return requester.patch(`/api/set/update/${testSetBiologyId}`)
-              .send({"name": "Biology"});
-        })
-        .then((res) => {
-          requester.close();
+  it("Should update set when name field is entered", (done) => {
+    requester.patch(`/api/set/update/${testSetBiologyId}`)
+      .set("x-auth-token", authToken)
+      .send({"name": "BiologyC"})
+      .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.name).to.equal("BiologyC");
+          return requester.patch(`/api/set/update/${testSetBiologyId}`)
+            .set("x-auth-token", authToken)
+            .send({"name": "Biology"});
+      })
+      .then((res) => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      })
+  })
+
+  it("Should give error for nonexistent id", (done) => {
+      requester.patch("/api/set/update/123456789012")
+        .set("x-auth-token", authToken)
+        .send({"name": "notwork"})
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body).to.have.property("error");
+          expect(res.body.error).to.equal("Flashcard set with id 123456789012 does not exist");
           done();
         })
-        .catch((err) => {
-          requester.close();
-          done(err);
-        })
-    })
+  })
 
-    it("Should give error for nonexistent id", (done) => {
-        chai.request(app)
-          .patch("/api/set/update/123456789012")
-          .send({name: "notwork"})
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.body).to.have.property("error");
-            expect(res.body.error).to.equal("Flashcard set with id 123456789012 does not exist");
-            done();
-          })
-    })
+  it("Should make sure the user is the creator of the set", (done) => {
+    requester.patch("/api/set/update/5ac74cccc65aac3e0c4b6cde")
+      .set("x-auth-token", authToken)
+      .send({"name": "notwork"})
+      .end((err, res) => {
+        expect(res).to.have.status(403);
+        expect(res.body).to.have.property("error");
+
+        requester.close();
+        done();
+      })
+  })
 })
 
 describe("Test POST /api/set/search", () => {
@@ -315,6 +349,16 @@ describe("Test DELETE /api/set/delete/:id", () => {
               done();
           })
   })
+
+  it ("Should make sure it is the correct user deleting the set", (done) => {
+      requester.delete("/api/set/delete/5eae0f84f8159e46bc2028c7")
+        .set("x-auth-token", authToken)
+        .end((err, res) => {
+            expect(res).to.have.status(403);
+            expect(res.body).to.have.property("error");
+            done();
+        })
+  });
 
   it ("Should make sure the set is deleted", (done) => {
       requester.delete(`/api/set/delete/${testSetCSE100Id}`)
