@@ -1,10 +1,11 @@
 import React, {useState} from "react";
+import AddCardList from "./AddCardList";
 import PublishIcon from '@material-ui/icons/Publish';
 import LoadingSpinner from "../images/LoadingSpinner.svg";
 import "../css/components/UploadFileBody.css";
 
 
-function UploadFileBody() {
+function UploadFileBody({title}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGenerateFlashcards = (e) => {
@@ -68,6 +69,21 @@ function UploadFileBody() {
       <div>
         <h2 className="create-set-subheading">Make Changes</h2>
       </div>
+
+      <AddCardList generatedFlashcards ={[
+            {
+              word: "agile", 
+              definition: "software methodology"
+            },
+            {
+              word: "waterfall", 
+              definition: "ancient software methodology"
+            },
+            {
+              word: "test",
+              definition: "test test test"
+            }
+          ]} title={title}/>
     </>
   )
 }

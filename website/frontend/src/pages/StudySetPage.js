@@ -47,6 +47,7 @@ function StudySetPage() {
   useEffect(() => {
     axios.get("/api/set/" + setId)
       .then((res) => {
+        console.log("hi")
         console.log(res);
       })
       .catch((err) => {

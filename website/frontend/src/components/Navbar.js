@@ -12,6 +12,11 @@ function Navbar() {
   const {user, setUser} = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const handleLogout = (e) => {
+    setUser(null);
+    localStorage.removeItem("token");
+  }
+
   return (
     <nav className="bg-white">
       <ul>
@@ -44,10 +49,10 @@ function Navbar() {
                   <a className="nav-pill-primary">View Your Sets</a>
                 </li>
                 <li className="nav-button">
-                  <a className="nav-pill-primary">Create Set</a>
+                  <Link className="nav-pill-primary" to="/set/create">Create Set</Link>
                 </li>  
                 <li className="nav-button">
-                  <a className="nav-pill-secondary" onClick={(e) => setUser(null)}>Logout</a>
+                  <a className="nav-pill-secondary" onClick={handleLogout}>Logout</a>
                 </li>
               </>
               :

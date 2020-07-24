@@ -6,8 +6,9 @@ import DoneIcon from '@material-ui/icons/Done';
 import "../css/components/ResultsList.css";
 
 
-function ResultsList({isSearch, sets}) {
+function ResultsList({isSearch}) {
   const [isEdit, setIsEdit] = useState(false);
+  
 
   return (
     <ul className="result-list bg-white">

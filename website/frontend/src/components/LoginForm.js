@@ -38,6 +38,7 @@ function LoginForm() {
         } else {
           setError("");
           setUser(res.data.token);
+          localStorage.setItem("token", res.data.token);
         }
       })
       .catch((err) => {

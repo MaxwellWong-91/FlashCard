@@ -18,7 +18,7 @@ axios.defaults.validateStatus = function (status) {
 }
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem("token"));
 
   const providerValue = useMemo(() => 
     ({user, setUser}), [user, setUser]
