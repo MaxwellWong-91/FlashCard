@@ -1,7 +1,7 @@
 {
   "include": ["src/*"],
   "exclude": ["src/routes/process.js", "src/database.js", "src/tests/*"],
-  "check-coverage": false,
+  "check-coverage": true,
   "branches": 85,
   "lines": 85,
   "functions": 80,

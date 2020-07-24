@@ -221,6 +221,7 @@ describe("Test POST /api/set/create", () => {
         .set("x-auth-token", authToken)
         .send({"name": "Biology Terms"})
         .end((err, res) => {
+          console.log(res.body);
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("name");
           expect(res.body).to.have.property("flashcards");
@@ -366,12 +367,14 @@ describe("Test DELETE /api/set/delete/:id", () => {
         .then((res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("msg");
-          return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardAgileId}`);
+          return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardAgileId}`)
+                  .set("x-auth-token", authToken);
         })
         .then((res) => {
           expect(res).to.have.status(400);
           expect(res.body).to.have.property("error");
-          return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardWaterfallId}`);
+          return requester.get(`/api/set/${testSetCSE100Id}/card/${testCardWaterfallId}`)
+                  .set("x-auth-token", authToken);
         })
         .then((res) => {
           expect(res).to.have.status(400);
