@@ -221,7 +221,6 @@ describe("Test POST /api/set/create", () => {
         .set("x-auth-token", authToken)
         .send({"name": "Biology Terms"})
         .end((err, res) => {
-          console.log(res.body);
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("name");
           expect(res.body).to.have.property("flashcards");
