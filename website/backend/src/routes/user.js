@@ -13,7 +13,7 @@ router.route("/").get(auth, (req, res) => {
   User.find()
     .select("-password")
     .then(users => res.json(users))
-    .catch(err => res.status(400).json({error: err}));
+    .catch(err => res.status(500).json({error: err}));
 });
 
 // handle getting user by jwt token
@@ -21,7 +21,7 @@ router.route("/get").get(auth, (req, res) => {
   User.findById(req.user.id)
     .select("-password")
     .then(user => res.json(user))
-    .catch(err => res.status(400).json({error: err}));
+    .catch(err => res.status(500).json({error: err}));
 });
 
 // handle registration
@@ -81,7 +81,7 @@ router.route("/register").post((req, res) => {
           })
         })
       })
-      .catch(err => res.status(400).json({error: err}));
+      .catch(err => res.status(500).json({error: err}));
   
 })
 
@@ -130,7 +130,7 @@ router.route("/login").post((req, res) => {
 
         })
     })
-    .catch(err => res.status(400).json({error: err}));
+    .catch(err => res.status(500).json({error: err}));
 })
 
 
