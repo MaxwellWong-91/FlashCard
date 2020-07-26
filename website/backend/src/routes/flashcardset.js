@@ -84,7 +84,6 @@ router.route("/delete/:id").delete(auth, (req, res) => {
             if (set.user !== user.username) {
                 return res.status(403).json({error: `User with id ${user.id} is not the creator of this set.`});
             }
-            // If set exists, delete all flashcards that belong to set AND deletes entry in user that had the flashcard set.
             Promise.all([...set.flashcards.map((flashcardId) => Flashcard.findByIdAndDelete(flashcardId).exec()),
                 User.findOneAndUpdate({_id: mongoose.Types.ObjectId(user.id)}, {
                 $pull: {sets: mongoose.Types.ObjectId(id)}
