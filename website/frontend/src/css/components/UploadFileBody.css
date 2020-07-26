@@ -20,6 +20,7 @@
 
 .generate-flashcards-button {
   margin: auto;
+  margin-bottom: 1rem;
   display: block;
   width: fit-content;
 }
@@ -34,7 +35,9 @@
 }
 
 .loading-spinner {
-  width: 60%;
+  width: 30%;
+  min-width: 150px;
+  margin: 0 auto;
 }
 
 @media (max-width: 720px) {

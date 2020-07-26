@@ -10,7 +10,7 @@ router.route("/").post((req, res) => {
   let base64Image = data.split(';base64,').pop();
   fs.writeFile("./src/images/convert.png", base64Image, {encoding: 'base64'}, function (err, data) {
     if (err) {
-      console.log (err);
+      console.log(err);
     }
     
     tesseract.recognize(fs.readFileSync("./src/images/convert.png"))
@@ -28,7 +28,6 @@ router.route("/").post((req, res) => {
             if (parseInt(tmp[0]) && (tmp[2] === ' ' || tmp[2] === '.')) {
               tmp = tmp.substring(3);
               arr.push(tmp);
-              
             } else {
               arr[arr.length - 1] += " " + tmp;
             
@@ -39,8 +38,14 @@ router.route("/").post((req, res) => {
         for (var i = 0; i < arr.length; i++) {
           arr[i] = arr[i].split(":");
         }
+
+        let cardObject = [];
+
+        for (var i = 0; i < arr.length; i++) {
+          cardObject.push({"word": arr[i][0], "definition": arr[i][1]})
+        }
         
-        return (res.json(arr));
+        return (res.json(cardObject));
         /**
          * Used to store file into data, so we can use it for quick testing
          */
@@ -54,6 +59,9 @@ router.route("/").post((req, res) => {
         })
         */
         
+      })
+      .catch((err) => {
+        console.log(err);
       })
       /**
        * load file straight from data for quick testing
@@ -86,18 +94,6 @@ router.route("/").post((req, res) => {
       return (res.json(arr));
       */
   });
-  
-  /*
-  client.textDetection("./images/convert.png")
-    .then(
-      results => {
-        console.log(results);
-        return res.json(results);
-      }
-    )
-    .catch(err => res.status(400).json('Error: ' + err))
-  */
- 
   
 })
 

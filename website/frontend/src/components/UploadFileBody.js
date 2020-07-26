@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import axios from "axios";
 import AddCardList from "./AddCardList";
 import PublishIcon from '@material-ui/icons/Publish';
 import LoadingSpinner from "../images/LoadingSpinner.svg";
@@ -6,10 +7,56 @@ import "../css/components/UploadFileBody.css";
 
 
 function UploadFileBody({title}) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [file, setFile] = useState(null);
+  const [sets, setSets] = useState([]);
+  var cards = [
+    {
+      word: "agile", 
+      definition: "software methodology"
+    },
+    {
+      word: "waterfall", 
+      definition: "ancient software methodology"
+    },
+    {
+      word: "test",
+      definition: "test test test"
+    }
+  ]
 
   const handleGenerateFlashcards = (e) => {
-    setIsLoading(true);
+    if (file) {
+      setLoadingStatus("loading");
+      var fileReader = new FileReader();
+
+      fileReader.onload = function(fileLoadedEvent) {
+        var file = fileLoadedEvent.target.result;
+
+        var data = {
+          data: file,
+        }
+
+        axios.post("/api/process", data)
+          .then((res) => {
+            setSets(res.data);
+            setLoadingStatus("done");
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+
+      }
+
+      fileReader.readAsDataURL(file);
+    } else {
+      console.log("no file")
+    }
+    console.log(file);
+  }
+
+  const handleFileUpload = (e) => {
+    setFile(e.target.files[0]);
   }
 
   return (
@@ -55,35 +102,30 @@ function UploadFileBody({title}) {
 
       <div className="file-upload-container bg-white">
         <a className="file-upload-button">File Upload <PublishIcon /></a>
+        <input type="file" onChange={handleFileUpload}></input>
       </div>
       
       <a className="pill-primary generate-flashcards-button" onClick={handleGenerateFlashcards}>Generate Flashcards</a>
 
       {
-        isLoading ? 
-        <img src={LoadingSpinner} className="loading-spinner"></img> :
+        loadingStatus === "loading" ? 
+        <div>
+          <img src={LoadingSpinner} className="loading-spinner"></img>
+          <h2 className="">Creating Your flashcards...</h2>
+        </div>
+        : null
+      }
+
+      {
+        loadingStatus === "done" ?
+        <>
+          <div>
+            <h2 className="create-set-subheading">Make Changes</h2>
+          </div>
+          <AddCardList generatedFlashcards={sets} title={title}/>
+        </> :
         null
       }
-      
-
-      <div>
-        <h2 className="create-set-subheading">Make Changes</h2>
-      </div>
-
-      <AddCardList generatedFlashcards ={[
-            {
-              word: "agile", 
-              definition: "software methodology"
-            },
-            {
-              word: "waterfall", 
-              definition: "ancient software methodology"
-            },
-            {
-              word: "test",
-              definition: "test test test"
-            }
-          ]} title={title}/>
     </>
   )
 }

@@ -27,7 +27,7 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
     // should proabbly do the deleting here
     let cardContainer = e.currentTarget.parentElement.parentElement.parentElement;
     
-    handleDeleteClick(cardId);
+    handleDeleteClick(e, cardId);
     
     cardContainer.style.animationPlayState = "running";
     cardContainer.addEventListener("animationend", () => {
@@ -105,8 +105,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                         setEditedCard({});
                       }
 
-                      deleteCard(e, flashcard._id);
-                      }}/>
+                      handleDeleteClick(e, flashcard._id);
+                    }}/>
                   </li>
                   : null
                 }
@@ -123,7 +123,7 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
         <a 
         className="nav-pill-secondary add-card-button"
         onClick={(e) => {
-          console.log(editedCard);
+          //console.log(editedCard);
           if (!Object.keys(editedCard).length) {
             setAddingCard(true);
             setEditedCard({_id: -1, word: '', definition: ''});

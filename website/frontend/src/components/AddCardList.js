@@ -54,7 +54,7 @@ function AddCardList({ generatedFlashcards, title, history }) {
   const handleCreateSet = (e) => {
     const empty = flashcards.filter(card => card.word === "" || card.definition === "");
 
-    if (empty && flashcards.length !== 0) {
+    if (empty.length > 0 && flashcards.length !== 0) {
       setError("Please make sure all cards are filled in")
     } else {
       const data = {

@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import {UserContext} from "../context/UserContext";
 import { useParams} from "react-router";
 import axios from "axios";
 import Navbar from "../components/Navbar";
@@ -22,6 +23,7 @@ const flashcardSets = [
 
 
 function StudySetPage() {
+  const {user, setUser} = useContext(UserContext);
   const [flashcards, setFlashcards] = useState({
     "507f1f77bcf86cd799439011":
       {
@@ -47,8 +49,8 @@ function StudySetPage() {
   useEffect(() => {
     axios.get("/api/set/" + setId)
       .then((res) => {
-        console.log("hi")
-        console.log(res);
+        setFlashcards(res.data.flashcards);
+        setSetName(res.data.name)
       })
       .catch((err) => {
         console.log(err);
@@ -57,13 +59,42 @@ function StudySetPage() {
   }, [])
 
   const handleDoneSubmit = (flashcard) => {
-    console.log(flashcard);
+    /*
+    if (flashcard._id === -1) {
+      console.log("add")
+      axios.post("/api/set/" + setId + "card/create")
+        .then()
+
+    } else {
+      setEditedCard(flashcard);
+      setFlashcards({...flashcards, [flashcard._id]: flashcard});
+    }
+    */
     setEditedCard(flashcard);
     setFlashcards({...flashcards, [flashcard._id]: flashcard});
   }
 
-  const handleDeleteClick = (_id) => {
-    console.log(_id);
+  const handleDeleteClick = (e, _id) => {
+    let cardContainer = e.currentTarget.parentElement.parentElement.parentElement;
+
+    const headers = {
+      "x-auth-token": user
+    } 
+    /*
+    axios.delete("/api/set/" + setId + "/card/delete/" + _id, {headers})
+      .then((res) => {
+        cardContainer.style.animationPlayState = "running";
+        cardContainer.addEventListener("animationend", () => {
+          cardContainer.remove();
+
+        })
+      })
+      .catch((err) => {
+
+      })
+    */
+    console.log(flashcards);
+    console.log(typeof(_id));
   }
 
   const handleAddCardClick = (e) => {

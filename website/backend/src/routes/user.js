@@ -63,7 +63,7 @@ router.route("/register").post((req, res) => {
           newUser.save()
             .then(user => {
               // send jwt token
-              jwt.sign({ id: user.id }, process.env.JWT_SECRET,{ expiresIn: 3600}, 
+              jwt.sign({ id: user.id }, process.env.JWT_SECRET, 
                 (err, token) => {
                   if (err) {
                     throw err;
@@ -112,7 +112,6 @@ router.route("/login").post((req, res) => {
           jwt.sign(
             { id: user.id }, 
             process.env.JWT_SECRET,
-            { expiresIn: 3600 }, 
             (err, token) => {
               if (err) {
                 throw err;

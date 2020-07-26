@@ -113,6 +113,7 @@ router.route("/create").post(auth, (req, res) => {
   const { user } = req;
   const { name, flashcards } = req.body;
 
+  console.log(req);
   // check for name
   if (!name) {
     return res.status(400).json({ error: "Please enter a name for the flashcard set" });
