@@ -28,7 +28,7 @@ describe("Test GET /api/set/:id/card/:cardId", (done) => {
     requester.get("/api/set/5ac74cccc65aac3e0c4b6cde/card/507")
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res.body).to.have.property("msg");
+        expect(res.body).to.have.property("error");
         done();
       })
   })
@@ -37,7 +37,7 @@ describe("Test GET /api/set/:id/card/:cardId", (done) => {
     requester.get("/api/set/5ac74cccc65aac3e0c4b6cde/card/507")
       .set("x-auth-token", authToken)
       .end((err, res) => {
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(500);
         expect(res.body).to.have.property("error");
         done();
       })
@@ -91,7 +91,7 @@ describe("Test POST /api/set/:id/card/create", (done) => {
       .send({"word": "", "definition": "a tree data structure with exactly two children"})
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res.body).to.have.property("msg");
+        expect(res.body).to.have.property("error");
         done();
       })
   });
@@ -186,7 +186,7 @@ describe("Test PATCH /api/set/:id/card/update/:cardId", () => {
       .send({"word": "", "definition": "A newer form of software methodology"})
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res.body).to.have.property("msg");
+        expect(res.body).to.have.property("error");
         done();
       })
   });
@@ -297,8 +297,8 @@ describe("Test DELETE /api/set/:id/card/:cardId", () => {
       requester.delete("/api/set/5ac74cccc65aac3e0c4b6cde/card/delete/507f191e810c19729de860ea")
         .end((err, res) => {
           expect(res).to.have.status(401);
-          expect(res.body).to.have.property("msg");
-          expect(res.body.msg).to.equal("Missing token. Authorization denied.");
+          expect(res.body).to.have.property("error");
+          expect(res.body.error).to.equal("Missing token. Authorization denied.");
           done();
         })
     });

@@ -17,7 +17,7 @@ describe("Test GET /api/set/:id", () => {
       .get("/api/set/5eae0f")
       .end((err, res) => {
         
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(500);
         expect(res.body).to.have.property("error");
         done();
       })
@@ -95,7 +95,7 @@ describe("Test PATCH /api/set/update", () => {
       .send({"name": "qef"})
       .end((err, res) => {
         expect(res).to.have.status(401);
-        expect(res.body).to.have.property("msg");
+        expect(res.body).to.have.property("error");
         done();
       })
   });
@@ -279,8 +279,8 @@ describe("Test GET /api/set (i.e. current user's sets)", () => {
           .get("/api/set")
           .end((err, res) => {
             expect(res).to.have.status(401);
-            expect(res.body).to.have.property("msg");
-            expect(res.body.msg).to.equal("Missing token. Authorization denied.");
+            expect(res.body).to.have.property("error");
+            expect(res.body.error).to.equal("Missing token. Authorization denied.");
             done();
           })
     })
