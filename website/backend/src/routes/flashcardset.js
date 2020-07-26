@@ -21,17 +21,7 @@ router.route("/").get(auth, (req, res) => {
       }  
     })
     .then((user) => {
-      let newSets = [];
-
-      user.sets.forEach((set, idx) => {
-        let newFlashcards = {};
-        set.flashcards.forEach((card) => {
-          newFlashcards[card._id] = card;
-        });
-        newSets[idx] = { ...set.toObject(), flashcards: newFlashcards };
-      })
-
-      return res.json(newSets);
+      return res.json(user.sets);
     })
     .catch(err => res.status(500).json({ error: err}));
 });
@@ -69,7 +59,12 @@ router.route("/:id").get((req, res) => {
       if (!set) {
         return res.status(400).json({ error: "Flashcard set does not exist" });
       }
-      return res.json(set);
+      let newFlashcards = {};
+      set.flashcards.forEach((card) => {
+        newFlashcards[card._id] = card;
+      });
+      
+      return res.json({ ...set.toObject(), flashcards: newFlashcards });
     })
     .catch(err => res.status(500).json({error: err}));
 })

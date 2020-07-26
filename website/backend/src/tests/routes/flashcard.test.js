@@ -333,9 +333,7 @@ describe("Test DELETE /api/set/:id/card/:cardId", () => {
         })
         .then((res) => {
           expect(res).to.have.status(200);
-          expect(res.body.flashcards.filter((flashcard) => flashcard._id === "507f191e810c19729de860ea"))
-            .to.have.length(0);
-          requester.close();
+          expect(res.body.flashcards["507f191e810c19729de860ea"]).to.be.undefined;
           done();
         })
         .catch((err) => {
