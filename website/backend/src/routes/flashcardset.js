@@ -71,7 +71,7 @@ router.route("/:id").get((req, res) => {
       }
       return res.json(set);
     })
-    .catch(err => res.status(400).json({error: err}));
+    .catch(err => res.status(500).json({error: err}));
 })
 
 // handle deleting a flashcard set
