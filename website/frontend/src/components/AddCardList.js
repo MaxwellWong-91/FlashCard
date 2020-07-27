@@ -71,7 +71,7 @@ function AddCardList({ generatedFlashcards, title, history }) {
           if (res.data.error) {
             setError(res.data.error)
           } else {
-            //history.push
+            history.push("/set/study/" + res.data._id);
             console.log(res);
           }
         })

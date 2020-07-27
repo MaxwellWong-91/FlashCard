@@ -23,18 +23,6 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
     setEditedCard({ ...editedCard, [e.target.name]: e.target.value});
   };
 
-  const deleteCard = (e, cardId) => {
-    // should proabbly do the deleting here
-    let cardContainer = e.currentTarget.parentElement.parentElement.parentElement;
-    
-    handleDeleteClick(e, cardId);
-    
-    cardContainer.style.animationPlayState = "running";
-    cardContainer.addEventListener("animationend", () => {
-      cardContainer.remove();
-    })
-  }
-
   return (
     <>
       <ul className="word-list-container">

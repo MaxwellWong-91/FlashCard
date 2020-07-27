@@ -4,7 +4,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import "../css/components/FlashCard.css";
 
-function FlashCard({ flashcards, editedCard }) {
+function FlashCard({ flashcards, editedCard, setName }) {
   const [currentCard, setCurrentCard] = useState(Object.values(flashcards)[0]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function FlashCard({ flashcards, editedCard }) {
   return (
     <>
       <div>
-        <h3 className="flashcard-title">Name of Set</h3>
+        <h3 className="flashcard-title">{setName}</h3>
       </div>
       <div className="flashcard-container">
         <div className="scene" style={{width: "100%"}}>

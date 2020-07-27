@@ -40,7 +40,7 @@ function ResultsList({isSearch}) {
       "x-auth-token": user
     }
     let item = e.currentTarget.parentElement.parentElement.parentElement;
-    console.log(id);
+
     axios.delete("/api/set/delete/" + id, {headers})
       .then((res) => {
         console.log(res);
@@ -104,39 +104,17 @@ function ResultsList({isSearch}) {
         
                   <ul className="result-list-word-container">
                     {
-                      // set.flashcards.length ? 
-                      // // set.flashcards.map((card) => {
-                      // //   console.log("hi")
-                      // //   return (
-                      // //     <li className="result-list-word-container-item">
-                      // //       <p>{card.word}</p>
-                      // //       <p>{card.definition}</p>
-                      // //     </li>
-                      // //   )
-                      // // })
-                      // console.log(set)
-                      // : null
-                      //console.log(set.flashcards)
+                      set.flashcards.length ? 
+                      set.flashcards.slice(0, 4).map((card) => {
+                        return (
+                          <li className="result-list-word-container-item">
+                            <p>{card.word}</p>
+                            <p>{card.definition}</p>
+                          </li>
+                        )
+                      })
+                      : null
                     }
-                    {/* <li className="result-list-word-container-item">
-                      <p>Word Word Word Word Word WordWordWordWord</p>
-                      <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-                    </li>
-            
-                    <li className="result-list-word-container-item">
-                      <p>Word</p>
-                      <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-                    </li>
-            
-                    <li className="result-list-word-container-item">
-                      <p>Word</p>
-                      <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-                    </li>
-            
-                    <li className="result-list-word-container-item">
-                      <p>Word</p>
-                      <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-                    </li> */}
                   </ul>
                 </Link>
               </li>

@@ -79,22 +79,22 @@ function StudySetPage() {
 
     const headers = {
       "x-auth-token": user
-    } 
-    /*
+    }
+
     axios.delete("/api/set/" + setId + "/card/delete/" + _id, {headers})
       .then((res) => {
         cardContainer.style.animationPlayState = "running";
         cardContainer.addEventListener("animationend", () => {
           cardContainer.remove();
-
+          let newFlashcards = flashcards;
+          delete newFlashcards[_id];
+          setFlashcards(newFlashcards);
         })
       })
       .catch((err) => {
-
+        console.log(err);
       })
-    */
-    console.log(flashcards);
-    console.log(typeof(_id));
+    
   }
 
   const handleAddCardClick = (e) => {
@@ -107,6 +107,7 @@ function StudySetPage() {
       <FlashCard 
         flashcards={flashcards}
         editedCard={editedCard}
+        setName={setName}
       />
       <WordListBody 
         flashcards={flashcards}
