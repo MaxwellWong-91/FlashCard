@@ -41,7 +41,6 @@ function StudySetPage() {
     }
   });
 
-  const [editedCard, setEditedCard] = useState({});
   const [setName, setSetName] = useState("");
   const [isOwner, setIsOwner] = useState(true);
   let { setId } = useParams();
@@ -59,41 +58,79 @@ function StudySetPage() {
   }, [])
 
   const handleDoneSubmit = (flashcard) => {
-    /*
+    const headers = {
+      "x-auth-token": user
+    }
+
+    const data = {
+      word: flashcard.word,
+      definition: flashcard.definition
+    }
+
     if (flashcard._id === -1) {
-      console.log("add")
-      axios.post("/api/set/" + setId + "card/create")
-        .then()
+      return axios.post("/api/set/" + setId + "/card/create", data, {headers})
+        .then((res) => {
+          if (res.data.error) {
+            return Promise.reject(res.data.error);
+          } 
+          else {
+            let newFlashcards = {...flashcards};
+            delete newFlashcards[-1];
+            setFlashcards({ ...newFlashcards,  [res.data.flashcard._id]: res.data.flashcard });
+            return Promise.resolve();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
 
     } else {
-      setEditedCard(flashcard);
-      setFlashcards({...flashcards, [flashcard._id]: flashcard});
+      return axios.patch(`/api/set/${setId}/card/update/${flashcard._id}`, data, {headers})
+        .then((res) => {
+          if (res.data.error) {
+            return Promise.reject(res.data.error);
+          }
+          else {
+            setFlashcards({...flashcards, [flashcard._id]: flashcard});
+            return Promise.resolve();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      
     }
-    */
-    setEditedCard(flashcard);
-    setFlashcards({...flashcards, [flashcard._id]: flashcard});
   }
 
   const handleDeleteClick = (e, _id) => {
     let cardContainer = e.currentTarget.parentElement.parentElement.parentElement;
 
-    const headers = {
-      "x-auth-token": user
-    }
-
-    axios.delete("/api/set/" + setId + "/card/delete/" + _id, {headers})
-      .then((res) => {
-        cardContainer.style.animationPlayState = "running";
-        cardContainer.addEventListener("animationend", () => {
-          cardContainer.remove();
-          let newFlashcards = flashcards;
-          delete newFlashcards[_id];
-          setFlashcards(newFlashcards);
+    if (_id === -1) {
+      cardContainer.style.animationPlayState = "running";
+      cardContainer.addEventListener("animationend", () => {
+        let newFlashcards = {...flashcards};
+        delete newFlashcards[_id];
+        setFlashcards(newFlashcards);
+      });
+    } 
+    else {
+      const headers = {
+        "x-auth-token": user
+      }
+  
+      axios.delete("/api/set/" + setId + "/card/delete/" + _id, {headers})
+        .then((res) => {
+          cardContainer.style.animationPlayState = "running";
+          cardContainer.addEventListener("animationend", () => {
+            let newFlashcards = {...flashcards};
+            delete newFlashcards[_id];
+            setFlashcards(newFlashcards);
+          })
         })
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
     
   }
 
@@ -105,8 +142,7 @@ function StudySetPage() {
     <>
       <Navbar />
       <FlashCard 
-        flashcards={flashcards}
-        editedCard={editedCard}
+        flashcards={Object.values(flashcards)}
         setName={setName}
       />
       <WordListBody 

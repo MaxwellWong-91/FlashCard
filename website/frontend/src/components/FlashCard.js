@@ -4,15 +4,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import "../css/components/FlashCard.css";
 
-function FlashCard({ flashcards, editedCard, setName }) {
-  const [currentCard, setCurrentCard] = useState(Object.values(flashcards)[0]);
-
-  useEffect(() => {
-    if (currentCard._id === editedCard._id) {
-      setCurrentCard(editedCard);
-    }
-  }, [editedCard]);
-  
+function FlashCard({ flashcards, setName }) {
+  const [currentCardIdx, setCurrentCardIdx] = useState(0);
   return (
     <>
       <div>
@@ -22,8 +15,8 @@ function FlashCard({ flashcards, editedCard, setName }) {
         <div className="scene" style={{width: "100%"}}>
           <ProgressBar />
           <div className="flashcard bg-white">
-            <p className="flashcard-face flashcard-word">{ currentCard.word }</p>
-            <p className="flashcard-face flashcard-definition">{ currentCard.definition }</p>
+            <p className="flashcard-face flashcard-word">{ flashcards[currentCardIdx] && flashcards[currentCardIdx].word }</p>
+            <p className="flashcard-face flashcard-definition">{ flashcards[currentCardIdx] && flashcards[currentCardIdx].definition }</p>
           </div>      
         </div>
 

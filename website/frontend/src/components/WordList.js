@@ -23,6 +23,21 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
     setEditedCard({ ...editedCard, [e.target.name]: e.target.value});
   };
 
+  const handleSaveClick = (e) => {
+    if (editedCard._id === -1) { // If adding card, should set addingCard to false.
+      setAddingCard(false);
+    }
+    
+    // Insert update call
+    handleDoneSubmit(editedCard)
+      .then((_) => {
+        setEditedCard({});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <>
       <ul className="word-list-container">
@@ -31,7 +46,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
           let isEditCard = flashcard._id === editedCard._id || flashcard._id  === -1; // flashcard._id === null for adding card
 
           return (
-            <li>
+            <li
+            key={flashcard._id}>
               <ul className="word-container bg-white">
                 <li className="word">
                   { 
@@ -69,15 +85,7 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                     {
                       isEditCard ?
                       <DoneIcon 
-                        onClick={(e) => {
-                          if (editedCard._id === -1) { // If adding card, should set addingCard to false.
-                            setAddingCard(false);
-                          }
-                          
-                          // Insert update call
-                          handleDoneSubmit(editedCard);
-                          setEditedCard({});
-                        }}
+                        onClick={handleSaveClick}
                       />
                       : <EditIcon 
                         onClick={(e) => {
@@ -111,7 +119,7 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
         <a 
         className="nav-pill-secondary add-card-button"
         onClick={(e) => {
-          //console.log(editedCard);
+          console.log(editedCard);
           if (!Object.keys(editedCard).length) {
             setAddingCard(true);
             setEditedCard({_id: -1, word: '', definition: ''});

@@ -50,7 +50,6 @@ function ResultsList({isSearch}) {
         } else {
           item.style.animationPlayState = "running";
           item.addEventListener("animationend", () => {
-            item.remove();
             let newSets = [...sets];
             newSets.splice(idx, 0);
             setSets(newSets);

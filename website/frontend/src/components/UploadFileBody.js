@@ -101,8 +101,11 @@ function UploadFileBody({title}) {
       </div>
 
       <div className="file-upload-container bg-white">
-        <a className="file-upload-button">File Upload <PublishIcon /></a>
-        <input type="file" onChange={handleFileUpload}></input>
+        {/* <a className="file-upload-button">File Upload <PublishIcon /></a> */}
+        <label>
+            <span>File Upload <PublishIcon /></span>
+            <input type="file" onChange={handleFileUpload} style={{visibility: "hidden"}}></input>
+        </label>
       </div>
       
       <a className="pill-primary generate-flashcards-button" onClick={handleGenerateFlashcards}>Generate Flashcards</a>
