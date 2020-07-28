@@ -8,7 +8,7 @@ function auth(req, res, next) {
 
   // check if token sent
   if (!token) {
-    return res.status(401).json({ msg: "Missing token. Authorization denied." });
+    return res.status(401).json({ error: "Missing token. Authorization denied." });
   }
 
   try {
@@ -19,7 +19,7 @@ function auth(req, res, next) {
     req.user = decoded;
     next();
   } catch (e) {
-    res.status(400).json({ msg: "Invalid token" })
+    return res.status(500).json({ error: "Invalid token" })
   }
   
 
