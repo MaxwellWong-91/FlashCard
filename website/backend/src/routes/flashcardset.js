@@ -69,7 +69,6 @@ router.route("/:id").get((req, res) => {
     .catch(err => res.status(500).json({error: err}));
 })
 
-// handle deleting a flashcard set
 router.route("/delete/:id").delete(auth, (req, res) => {
   const { user } = req;
   const { id } = req.params;
