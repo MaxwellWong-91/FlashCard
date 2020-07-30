@@ -1,5 +1,6 @@
 import React, {useState, useMemo} from "react";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import PrivateRoute from "./auth/PrivateRoute";
 import LandingPage from "./pages/LandingPage";
 import StudySetPage from "./pages/StudySetPage";
 import SearchResultsPage from "./pages/SearchResultsPage";
@@ -38,8 +39,8 @@ function App() {
         <UserContext.Provider value = {providerValue}> 
           <Route exact path="/" component={LandingPage} />
           <Route path="/set/study/:setId" component={StudySetPage} />
-          <Route path="/set/view" component={ViewSetsPage} />
-          <Route path="/set/create" component={CreateSetPage} />
+          <PrivateRoute path="/set/view" component={ViewSetsPage} />
+          <PrivateRoute path="/set/create" component={CreateSetPage} />
           <Route path="/set/search" component={SearchResultsPage} />
           <Route path="/signup" component={SignupPage} />
           <Route path="/login" component={LoginPage} />

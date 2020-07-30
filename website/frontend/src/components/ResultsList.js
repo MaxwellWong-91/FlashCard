@@ -2,17 +2,19 @@ import React, {useState, useEffect, useContext} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {UserContext} from "../context/UserContext";
+import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
-import DoneIcon from '@material-ui/icons/Done';
 import "../css/components/ResultsList.css";
 
 
 function ResultsList({isSearch}) {
   const {user, setUser} = useContext(UserContext);
-  const [isEdit, setIsEdit] = useState(false);
   const [sets, setSets] = useState([]);
+  const [editSet, setEditSet] = useState({});
+  const [index, setIndex] = useState(null);
 
   useEffect(() => {
     const headers = {
@@ -31,11 +33,45 @@ function ResultsList({isSearch}) {
     
   }, [])
 
-  const handleEditClick = (e) => {
-    setIsEdit(true);
+  const handleEditClick = (e, set) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setEditSet(set);
+  }
+
+  const handleSaveClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const headers = {
+      "x-auth-token": user
+    }
+
+    const data = {
+      name: editSet.name
+    }
+
+    axios.patch("/api/set/" + editSet._id + "/update", data, {headers})
+      .then((res) => {
+        console.log(res);
+        if (res.data.error) {
+          console.log(res.data.error);
+        } else {
+          setEditSet({});
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const handleSetChange = (e) => {
+    setEditSet({...editSet, [e.target.name]: e.target.value})
   }
 
   const handleDeleteClick = (e, id, idx) => {
+    e.stopPropagation();
+    e.preventDefault();
     const headers = {
       "x-auth-token": user
     }
@@ -54,6 +90,7 @@ function ResultsList({isSearch}) {
             newSets.splice(idx, 0);
             setSets(newSets);
           })
+          setEditSet({});
         }
       })
       .catch((err) => {
@@ -61,21 +98,32 @@ function ResultsList({isSearch}) {
       })
   }
 
+  const stopLink = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
   return (
     <ul className="result-list">
       {
         sets.map((set, idx) => {
+          let isEditSet = editSet._id === set._id;
           return (
             <>
               <li className="result-list-item bg-white">
                 <Link className="result-list-link" to={"/set/study/" + set._id}>
                   <div className="result-list-heading">
                     {
-                      isEdit ?
+                      isEditSet ?
                       <TextField 
                         name="name" 
                         label="Name" 
                         multiline={true} 
+                        value={editSet.name}
+                        error={editSet.name === ""}
+                        helperText={editSet.name === "" ? "Please make sure field is filled out" : ""}
+                        onChange={handleSetChange} 
+                        onClick={(e) => stopLink(e)}
                       /> :
                       <p className="set-name">{set.name}</p>
                     }
@@ -86,11 +134,17 @@ function ResultsList({isSearch}) {
                       :
                       <div className="icon-container">
                         {
-                          isEdit ? 
-                          <DoneIcon /> : 
-                          <EditIcon onClick={handleEditClick}/>
+                          isEditSet ? 
+                          <IconButton onClick={handleSaveClick}>
+                            <SaveIcon/> 
+                          </IconButton> : 
+                          <IconButton onClick={(e) => handleEditClick(e, set)}>
+                            <EditIcon/>
+                          </IconButton>
                         }
-                        <DeleteIcon onClick={(e) => handleDeleteClick(e, set._id, idx)}/>
+                        <IconButton onClick={(e) => handleDeleteClick(e, set._id, idx)}>
+                          <DeleteIcon/>
+                        </IconButton>
                       </div>
                     }
 

@@ -36,7 +36,12 @@ function CreateSetBody({history}) {
       <div>
         <h4 className="create-set-description">Enter the title of the set</h4>
         <div className="create-set-title-input-container bg-white">
-          <TextField label="Title" onChange={(e) => setTitle(e.target.value)}/>
+          <TextField
+            label="Title"
+            onChange={(e) => setTitle(e.target.value)}
+            error={title === ""}
+            helperText={title === "" ? "Please make sure field is filled out" : ""}
+          />
         </div>
       </div>
 

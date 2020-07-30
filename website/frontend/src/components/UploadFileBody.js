@@ -10,20 +10,6 @@ function UploadFileBody({title}) {
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [file, setFile] = useState(null);
   const [sets, setSets] = useState([]);
-  var cards = [
-    {
-      word: "agile", 
-      definition: "software methodology"
-    },
-    {
-      word: "waterfall", 
-      definition: "ancient software methodology"
-    },
-    {
-      word: "test",
-      definition: "test test test"
-    }
-  ]
 
   const handleGenerateFlashcards = (e) => {
     if (file) {
@@ -52,7 +38,6 @@ function UploadFileBody({title}) {
     } else {
       console.log("no file")
     }
-    console.log(file);
   }
 
   const handleFileUpload = (e) => {
@@ -70,7 +55,7 @@ function UploadFileBody({title}) {
       <div className="file-guidelines-container bg-white">
         <ul>
           <li>
-            Files must have extension .pdf or .txt. No other extensions are currently supported
+            Files must have extension .jpg. No other extensions are currently supported
           </li>
           <li>
             File must contain a numbered list of word-definition pairs
@@ -103,7 +88,7 @@ function UploadFileBody({title}) {
       <div className="file-upload-container bg-white">
         {/* <a className="file-upload-button">File Upload <PublishIcon /></a> */}
         <label>
-            <span>File Upload <PublishIcon /></span>
+            <span className="file-upload-button">File Upload <PublishIcon /></span>
             <input type="file" onChange={handleFileUpload} style={{visibility: "hidden"}}></input>
         </label>
       </div>

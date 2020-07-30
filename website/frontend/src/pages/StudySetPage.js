@@ -24,22 +24,7 @@ const flashcardSets = [
 
 function StudySetPage() {
   const {user, setUser} = useContext(UserContext);
-  const [flashcards, setFlashcards] = useState({
-    "507f1f77bcf86cd799439011":
-      {
-        _id: "507f1f77bcf86cd799439011",
-        word: "agile", 
-        definition: "software methodology",
-        __v: 0
-      },
-    "507f191e810c19729de860ea":
-    {
-      _id: "507f191e810c19729de860ea",
-      word: "waterfall", 
-      definition: "ancient software methodology",
-      __v: 0
-    }
-  });
+  const [flashcards, setFlashcards] = useState({});
 
   const [setName, setSetName] = useState("");
   const [isOwner, setIsOwner] = useState(true);

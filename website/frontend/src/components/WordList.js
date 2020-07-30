@@ -60,6 +60,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                       fullWidth={true} 
                       value={editedCard.word}
                       onChange={handleCardChange} 
+                      error={editedCard.word === ""}
+                      helperText={editedCard.word === "" ? "Please make sure field is filled out" : ""}
                     /> :
                     <p>{flashcard.word}</p>
                   }
@@ -75,6 +77,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                       fullWidth={true} 
                       value={editedCard.definition}
                       onChange={handleCardChange} 
+                      error={editedCard.definition === ""}
+                      helperText={editedCard.definition === "" ? "Please make sure field is filled out" : ""}
                     /> :
                     <p>{flashcard.definition}</p>
                   }

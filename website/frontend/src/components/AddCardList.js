@@ -98,7 +98,9 @@ function AddCardList({ generatedFlashcards, title, history }) {
                     multiline={true} 
                     fullWidth={true} 
                     value={flashcard.word}
-                    onChange={(e) => handleCardChange(e, idx, "word")} 
+                    onChange={(e) => handleCardChange(e, idx, "word")}
+                    error={flashcard.word === ""}
+                    helperText={flashcard.word === "" ? "Please make sure field is filled out" : ""}
                   /> 
                   
                 </li>
@@ -111,6 +113,8 @@ function AddCardList({ generatedFlashcards, title, history }) {
                     fullWidth={true} 
                     value={flashcard.definition}
                     onChange={(e) => handleCardChange(e, idx, "definition")}
+                    error={flashcard.definition === ""}
+                    helperText={flashcard.definition === "" ? "Please make sure field is filled out" : ""}
                   />
                 </li>
                 

@@ -51,9 +51,24 @@ function SignupForm() {
   return(
     <form className="signup-form-container bg-white" onSubmit={handleClick}>
       <h3>Create an Account</h3>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Password" value={password1} onChange={(e) => setPassword1(e.target.value)}/>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Confirm Password" value={password2} onChange={(e) => setPassword2(e.target.value)}/>
+      <OutlinedInput 
+        classes={{root: classes.root, input: classes.input}} 
+        value={username} 
+        onChange={(e) => setUsername(e.target.value)}
+        label="Username"
+      />
+      <OutlinedInput 
+        classes={{root: classes.root, input: classes.input}} 
+        placeholder="Password" 
+        value={password1} 
+        onChange={(e) => setPassword1(e.target.value)}
+      />
+      <OutlinedInput 
+        classes={{root: classes.root, input: classes.input}} 
+        placeholder="Confirm Password" 
+        value={password2} 
+        onChange={(e) => setPassword2(e.target.value)}
+      />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">
         Signup

@@ -50,8 +50,18 @@ function LoginForm() {
   return(
     <form className="login-form-container bg-white" onSubmit={handleClick}>
       <h3>Welcome Back!</h3>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <OutlinedInput 
+        classes={{root: classes.root, input: classes.input}} 
+        placeholder="Username" 
+        value={username} 
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <OutlinedInput 
+        classes={{root: classes.root, input: classes.input}} 
+        placeholder="Password" 
+        value={password} 
+        onChange={(e) => setPassword(e.target.value)}
+      />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">
         Login

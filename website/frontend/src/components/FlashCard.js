@@ -6,6 +6,24 @@ import "../css/components/FlashCard.css";
 
 function FlashCard({ flashcards, setName }) {
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
+  const [isWord, setIsWord] = useState(true);
+
+  const handleLeftClick = (e) => {
+    if (currentCardIdx === 0) {
+      return;
+    } else {
+      setCurrentCardIdx(currentCardIdx => currentCardIdx - 1);
+    }
+  }
+
+  const handleRightClick = (e) => {
+    if (currentCardIdx === flashcards.length - 1) {
+      return;
+    } else {
+      setCurrentCardIdx(currentCardIdx => currentCardIdx + 1);
+    }
+  }
+
   return (
     <>
       <div>
@@ -13,20 +31,23 @@ function FlashCard({ flashcards, setName }) {
       </div>
       <div className="flashcard-container">
         <div className="scene" style={{width: "100%"}}>
-          <ProgressBar />
+          <ProgressBar percent={((currentCardIdx + 1)/flashcards.length) * 100 }/>
           <div className="flashcard bg-white">
-            <p className="flashcard-face flashcard-word">{ flashcards[currentCardIdx] && flashcards[currentCardIdx].word }</p>
-            <p className="flashcard-face flashcard-definition">{ flashcards[currentCardIdx] && flashcards[currentCardIdx].definition }</p>
+            {
+              isWord ?
+              <p className="flashcard-face flashcard-word">{ flashcards[currentCardIdx] && flashcards[currentCardIdx].word }</p> :
+              <p className="flashcard-face flashcard-definition">{ flashcards[currentCardIdx] && flashcards[currentCardIdx].definition }</p>
+            }
           </div>      
         </div>
 
         <div className="flashcard-button-container">
           <div className="flashcard-control-container bg-white">
-            <ArrowBackIcon />
-            <a>Flip</a>
-            <ArrowForwardIcon />
+            <ArrowBackIcon onClick={handleLeftClick}/>
+            <a onClick={(e) => setIsWord(isWord => !isWord)}>Flip</a>
+            <ArrowForwardIcon onClick={handleRightClick}/>
           </div>
-          <a>Reset</a>
+          <a onClick={(e) => setCurrentCardIdx(0)}>Reset</a>
         </div>
       </div>
     </>

@@ -46,7 +46,7 @@ function Navbar() {
               user ? 
               <>
                 <li className="nav-button">
-                  <a className="nav-pill-primary">View Your Sets</a>
+                  <Link className="nav-pill-primary" to="/set/view">View Your Sets</Link>
                 </li>
                 <li className="nav-button">
                   <Link className="nav-pill-primary" to="/set/create">Create Set</Link>
@@ -58,10 +58,10 @@ function Navbar() {
               :
               <>
                 <li className="nav-button">
-                  <a className="nav-pill-primary">Login</a>
+                  <Link className="nav-pill-primary" to="/login">Login</Link>
                 </li> 
                 <li className="nav-button">
-                  <a className="nav-pill-secondary">Signup</a>
+                  <Link className="nav-pill-secondary" to="/signup">Signup</Link>
                 </li>
               </>
             }
