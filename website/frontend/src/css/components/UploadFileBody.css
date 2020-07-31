@@ -12,10 +12,31 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   width: 30%;
   padding: 0.5rem;
+  min-width: 280px;
+}
+
+.file-upload-label {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.5em;
 }
 
 .file-upload-button {
-  display: flex;
+  display: inline-flex;
+  color: white;
+  padding: 0.5em;
+  background-color: #C06DF1;
+}
+
+.file-upload-input {
+  position: absolute;
+  top: 0;
+}
+
+.file-uploaded {
+  display: inline-block;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid black;
 }
 
 .generate-flashcards-button {

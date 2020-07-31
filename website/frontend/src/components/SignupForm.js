@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import {UserContext} from "../context/UserContext";
 import axios from "axios";
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
 import "../css/components/SignupForm.css";
 import { makeStyles } from "@material-ui/core";
 
@@ -51,23 +51,26 @@ function SignupForm() {
   return(
     <form className="signup-form-container bg-white" onSubmit={handleClick}>
       <h3>Create an Account</h3>
-      <OutlinedInput 
+      <TextField
         classes={{root: classes.root, input: classes.input}} 
         value={username} 
         onChange={(e) => setUsername(e.target.value)}
         label="Username"
+        variant="outlined"
       />
-      <OutlinedInput 
+      <TextField
         classes={{root: classes.root, input: classes.input}} 
-        placeholder="Password" 
+        label="Password" 
         value={password1} 
         onChange={(e) => setPassword1(e.target.value)}
+        variant="outlined"
       />
-      <OutlinedInput 
+      <TextField 
         classes={{root: classes.root, input: classes.input}} 
-        placeholder="Confirm Password" 
+        label="Confirm Password" 
         value={password2} 
         onChange={(e) => setPassword2(e.target.value)}
+        variant="outlined"
       />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">

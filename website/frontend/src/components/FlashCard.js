@@ -12,6 +12,7 @@ function FlashCard({ flashcards, setName }) {
     if (currentCardIdx === 0) {
       return;
     } else {
+      setIsWord(true);
       setCurrentCardIdx(currentCardIdx => currentCardIdx - 1);
     }
   }
@@ -20,6 +21,7 @@ function FlashCard({ flashcards, setName }) {
     if (currentCardIdx === flashcards.length - 1) {
       return;
     } else {
+      setIsWord(true);
       setCurrentCardIdx(currentCardIdx => currentCardIdx + 1);
     }
   }
@@ -31,7 +33,7 @@ function FlashCard({ flashcards, setName }) {
       </div>
       <div className="flashcard-container">
         <div className="scene" style={{width: "100%"}}>
-          <ProgressBar percent={((currentCardIdx + 1)/flashcards.length) * 100 }/>
+          <ProgressBar total={flashcards.length} current={currentCardIdx + 1}/>
           <div className="flashcard bg-white">
             {
               isWord ?
