@@ -22,7 +22,7 @@ const flashcardSets = [
 
 
 
-function StudySetPage() {
+function StudySetPage({history}) {
   const {user, setUser} = useContext(UserContext);
   const [flashcards, setFlashcards] = useState({});
 
@@ -125,7 +125,7 @@ function StudySetPage() {
 
   return(
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <FlashCard 
         flashcards={Object.values(flashcards)}
         setName={setName}

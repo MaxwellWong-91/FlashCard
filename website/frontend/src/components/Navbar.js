@@ -1,6 +1,7 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Link} from "react-router-dom";
 import {UserContext} from "../context/UserContext";
+import axios from "axios";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -9,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Logo from "../images/logo.svg";
 import "../css/components/Navbar.css";
 import {makeStyles} from "@material-ui/core";
+
 
 const useStyles = makeStyles({
   inputRoot: {
@@ -19,14 +21,39 @@ const useStyles = makeStyles({
   }
 });
 
-function Navbar() { 
+function Navbar({history}) { 
   const classes = useStyles();
   const {user, setUser} = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [searchParam, setSearchParam] = useState("");
 
   const handleLogout = (e) => {
     setUser(null);
     localStorage.removeItem("token");
+  }
+
+  useEffect(() => {
+    axios.get("/api/set/names")
+      .then((res) => {
+        console.log(res.data);
+        setOptions(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
+  }, []);
+
+  const handleSubmit = (e, value) => {
+    const data = {
+      name: value
+    }
+
+    history.push({
+      pathname: "/set/search", 
+      search: "?name=" + value
+    })
   }
 
   return (
@@ -52,8 +79,12 @@ function Navbar() {
               input: classes.inputRoot,
               inputRoot: classes.inputRoot
             }}
-            options={[]}
+            options={options}
             popupIcon={<SearchIcon />}
+            // onInputChange={(event, value) => {
+            //   setSearchParam(value);
+            // }}
+            onChange={handleSubmit}
             renderInput={(params) => <TextField {...params} label="Find flashcard sets" variant="outlined" />}
           />
           

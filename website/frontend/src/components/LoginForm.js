@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import {UserContext} from "../context/UserContext";
 import axios from "axios";
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
 import "../css/components/LoginForm.css";
 import { makeStyles } from "@material-ui/core";
 
@@ -50,17 +50,19 @@ function LoginForm() {
   return(
     <form className="login-form-container bg-white" onSubmit={handleClick}>
       <h3>Welcome Back!</h3>
-      <OutlinedInput 
+      <TextField
         classes={{root: classes.root, input: classes.input}} 
-        placeholder="Username" 
         value={username} 
         onChange={(e) => setUsername(e.target.value)}
+        label="Username"
+        variant="outlined"
       />
-      <OutlinedInput 
+      <TextField
         classes={{root: classes.root, input: classes.input}} 
-        placeholder="Password" 
         value={password} 
         onChange={(e) => setPassword(e.target.value)}
+        label="Password"
+        variant="outlined"
       />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">

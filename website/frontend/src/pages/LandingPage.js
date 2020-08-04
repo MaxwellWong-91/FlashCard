@@ -2,10 +2,10 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import LandingBody from "../components/LandingBody";
 
-function LandingPage() {
+function LandingPage({history}) {
   return (
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <LandingBody />
     </>
   )

@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 import ViewSetsBody from "../components/ViewSetsBody";
 
 
-function ViewSetsPage() {
+function ViewSetsPage({history}) {
   return (
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <ViewSetsBody />
     </>
   )

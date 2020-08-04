@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 import LoginForm from "../components/LoginForm";
 
 
-function LoginPage() {
+function LoginPage({history}) {
   return (
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <LoginForm />
     </>
   )

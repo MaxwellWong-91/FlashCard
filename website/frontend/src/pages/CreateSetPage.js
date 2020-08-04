@@ -5,7 +5,7 @@ import CreateSetBody from "../components/CreateSetBody";
 function CreateSetPage({history}) {
   return (
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <CreateSetBody history={history}/>
     </>
   )

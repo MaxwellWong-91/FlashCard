@@ -10,26 +10,30 @@ import TextField from '@material-ui/core/TextField';
 import "../css/components/ResultsList.css";
 
 
-function ResultsList({isSearch}) {
+function ResultsList({isSearch, initialSets}) {
   const {user, setUser} = useContext(UserContext);
-  const [sets, setSets] = useState([]);
+  const [sets, setSets] = useState(initialSets ? initialSets : []);
   const [editSet, setEditSet] = useState({});
   const [index, setIndex] = useState(null);
-
+  // console.log(initialSets ? initialSets : []);
+  console.log(sets);
   useEffect(() => {
-    const headers = {
-      "x-auth-token": user
+    if (!isSearch) {
+      const headers = {
+        "x-auth-token": user
+      }
+  
+      axios.get("/api/set/", {headers})
+        .then((res) => {
+          console.log(res.data);
+          setSets(res.data);
+          //console.log(sets);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
 
-    axios.get("/api/set/", {headers})
-      .then((res) => {
-        console.log(res.data);
-        setSets(res.data);
-        //console.log(sets);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
     
   }, [])
 
@@ -39,7 +43,7 @@ function ResultsList({isSearch}) {
     setEditSet(set);
   }
 
-  const handleSaveClick = (e) => {
+  const handleSaveClick = (e, id) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -51,12 +55,22 @@ function ResultsList({isSearch}) {
       name: editSet.name
     }
 
-    axios.patch("/api/set/" + editSet._id + "/update", data, {headers})
+    axios.patch("/api/set/update/" + editSet._id, data, {headers})
       .then((res) => {
         console.log(res);
         if (res.data.error) {
           console.log(res.data.error);
         } else {
+          
+          let newSets = [...sets];
+          console.log(newSets)
+          newSets[id] = res.data;
+          setSets(newSets);
+
+
+          // console.log(sets[id])
+          // console.log(res.data)
+          //setSets(sets => sets[id] = res.data)
           setEditSet({});
         }
       })
@@ -135,7 +149,7 @@ function ResultsList({isSearch}) {
                       <div className="icon-container">
                         {
                           isEditSet ? 
-                          <IconButton onClick={handleSaveClick}>
+                          <IconButton onClick={(e) => handleSaveClick(e, idx)}>
                             <SaveIcon/> 
                           </IconButton> : 
                           <IconButton onClick={(e) => handleEditClick(e, set)}>

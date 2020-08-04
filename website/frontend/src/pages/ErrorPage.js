@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 
-function ErrorPage() {
+function ErrorPage({history}) {
   return(
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <ErrorBody />
     </>
   )
