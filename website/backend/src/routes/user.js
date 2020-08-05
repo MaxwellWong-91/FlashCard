@@ -8,22 +8,6 @@ require('dotenv').config();
 
 let User = require("../models/user");
 
-// handle finding getting all users
-router.route("/").get(auth, (req, res) => {
-  User.find()
-    .select("-password")
-    .then(users => res.json(users))
-    .catch(err => res.status(500).json({error: err}));
-});
-
-// handle getting user by jwt token
-router.route("/get").get(auth, (req, res) => {
-  User.findById(req.user.id)
-    .select("-password")
-    .then(user => res.json(user))
-    .catch(err => res.status(500).json({error: err}));
-});
-
 // handle registration
 router.route("/register").post((req, res) => {
   const {username, password1, password2} = req.body;
@@ -63,7 +47,7 @@ router.route("/register").post((req, res) => {
           newUser.save()
             .then(user => {
               // send jwt token
-              jwt.sign({ id: user.id }, process.env.JWT_SECRET,{ expiresIn: 3600}, 
+              jwt.sign({ id: user.id }, process.env.JWT_SECRET, 
                 (err, token) => {
                   if (err) {
                     throw err;
@@ -112,11 +96,11 @@ router.route("/login").post((req, res) => {
           jwt.sign(
             { id: user.id }, 
             process.env.JWT_SECRET,
-            { expiresIn: 3600 }, 
             (err, token) => {
               if (err) {
                 throw err;
               }
+              
               res.json({
                 token,
                 user: {

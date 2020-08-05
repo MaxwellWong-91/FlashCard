@@ -1,0 +1,9 @@
+.view-sets-heading {
+  margin-left: 10%;
+}
+
+@media (max-width: 720px) {
+  .view-sets-heading {
+    margin-left: 5%;
+  }
+}

@@ -1,0 +1,9 @@
+.word-list-heading {
+  margin-left: 15%;
+}
+
+@media (max-width: 720px) {
+  .word-list-heading {
+    margin-left: 5%;
+  }
+}

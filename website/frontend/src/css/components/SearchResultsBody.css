@@ -1,0 +1,17 @@
+.search-results-heading {
+  margin-left: 10%;
+}
+
+.search-results-description {
+  margin-left: 20%;
+}
+
+@media(max-width: 720px) {
+  .search-results-heading {
+    margin-left: 5%;
+  }
+
+  .search-results-description {
+    margin-left: 5%;
+  }
+}

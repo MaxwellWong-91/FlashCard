@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
-import "../style/ProgressBar.css";
+import "../css/components/ProgressBar.css";
 
-export default function ProgressBar(props) {
-    const [percent, setPercent] = useState(0);
-
-    const handleIncrement = (e) => {
-        e.preventDefault();
-
-        setPercent(percent + 25);
-    };
-
-    return (
-        <div>
-            <div className="inner-progress-bar" style={{width: `${percent}%`}}></div>
-            <div className="outer-progress-bar"></div>
-            <input type="button" value="Increment me" onClick={handleIncrement} />
-            <input type="button" value="Reset me" onClick={(e) => setPercent(0)} />            
-        </div>
-    )
+function ProgressBar({total, current}) {
+  return (
+    <div style={{position: "relative"}}>
+      <div className="progress-bar-text">{current}/{total} cards - {total - current} left</div>
+      <div className="inner-progress-bar" style={{width: `${current / total * 100}%`}}></div>
+      <div className="outer-progress-bar"></div>
+    </div>
+  )
 };
+
+export default ProgressBar;
