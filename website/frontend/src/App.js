@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import $ from 'jquery';
-import Popper from 'popper.js';
-import { BrowserRouter as Router, Route} from "react-router-dom";
-import Navbar from "./components/Navbar";
-import CreateSet from "./components/CreateSet";
-import ViewSet from "./components/ViewSet";
-import StudySet from "./components/StudySet";
-import ProgressBar from "./components/ProgressBar";
+import React, {useState, useMemo} from "react";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import PrivateRoute from "./auth/PrivateRoute";
+import LandingPage from "./pages/LandingPage";
+import StudySetPage from "./pages/StudySetPage";
+import SearchResultsPage from "./pages/SearchResultsPage";
+import ViewSetsPage from "./pages/ViewSetsPage";
+import CreateSetPage from "./pages/CreateSetPage";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import {UserContext} from "./context/UserContext";
+import axios from "axios";
+
+//axios.defaults.baseURL = "http://localhost:8080";
+//axios.defaults.withCredentials = true;
+
+axios.defaults.validateStatus = function (status) {
+  return status >= 200 && status < 500;
+}
 
 function App() {
-  return (
-    <div>
-        <Router>
-            <Navbar />
-            <Route path = "/set/create" component={CreateSet} />
-            <Route path = "/set/view" component={ViewSet} />
-            <Route path = "/set/study/:id" component={StudySet} />
-        </Router>
-    </div>
+  const [user, setUser] = useState(localStorage.getItem("token"));
+//   const [userName, setUserName] = useState(localStorage.getItem("username"));
+  const providerValue = useMemo(() => 
+    ({user, setUser}), [user, setUser]
+  );
 
+  return (
+    /*
+    <Router>
+      <Navbar />
+      <Route path = "/set/create" component={CreateSet} />
+      <Route path = "/set/view" component={ViewSet} />
+      <Route path = "/set/study/:id" component={StudySet} />
+    </Router>
+    */
+    <Router>
+      <Switch>
+        <UserContext.Provider value={providerValue}> 
+          <Route exact path="/" component={LandingPage} />
+          <Route path="/set/study/:setId" component={StudySetPage} />
+          <PrivateRoute path="/set/view" component={ViewSetsPage} />
+          <PrivateRoute path="/set/create" component={CreateSetPage} />
+          <Route path="/set/search" component={SearchResultsPage} />
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/login" component={LoginPage} />
+        </UserContext.Provider>
+      </Switch>
+    </Router>
   );
 }
 

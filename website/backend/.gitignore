@@ -1,4 +1,4 @@
 /src/data/*
 /src/images/*
 /coverage/*
-/nyv_output/*
+/nyc_output/*
