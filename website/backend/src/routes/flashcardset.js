@@ -110,7 +110,6 @@ router.route("/create").post(auth, (req, res) => {
   const { user } = req;
   const { name, flashcards } = req.body;
 
-  console.log(req);
   // check for name
   if (!name) {
     return res.status(400).json({ error: "Please enter a name for the flashcard set" });
@@ -189,6 +188,7 @@ router.route("/search").post((req, res) => {
   }
 
   FlashcardSet.find({ name })
+  .populate("flashcards")
   .then((data) => {
     if (!data.length) {
       return res.status(400).json({error: `Flashcard set with name ${name} does not exist`})

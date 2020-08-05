@@ -46,14 +46,12 @@ function Navbar({history}) {
   }, []);
 
   const handleSubmit = (e, value) => {
-    const data = {
-      name: value
+    if (value) {
+      history.push({
+        pathname: "/set/search", 
+        search: "?name=" + value
+      })
     }
-
-    history.push({
-      pathname: "/set/search", 
-      search: "?name=" + value
-    })
   }
 
   return (
@@ -80,12 +78,14 @@ function Navbar({history}) {
               inputRoot: classes.inputRoot
             }}
             options={options}
-            popupIcon={<SearchIcon />}
-            // onInputChange={(event, value) => {
-            //   setSearchParam(value);
-            // }}
             onChange={handleSubmit}
-            renderInput={(params) => <TextField {...params} label="Find flashcard sets" variant="outlined" />}
+            renderInput={(params) => 
+              <TextField 
+                {...params} 
+                label="Find flashcard sets" 
+                variant="outlined"
+              />
+            }
           />
           
         </li>
@@ -96,12 +96,18 @@ function Navbar({history}) {
             <Autocomplete 
               className="searchbar inner-menu-searchbar"
               classes={{
-              input: classes.inputRoot,
-              inputRoot: classes.inputRoot
+                input: classes.inputRoot,
+                inputRoot: classes.inputRoot
               }}
-              options={[]}
-              popupIcon={<SearchIcon />}
-              renderInput={(params) => <TextField {...params} label="Find flashcard sets" variant="outlined" />}
+              options={options}
+              onChange={handleSubmit}
+              renderInput={(params) => 
+                <TextField 
+                  {...params} 
+                  label="Find flashcard sets" 
+                  variant="outlined"
+                />
+              }
             />
           <ul className="nav-button-container">
             {

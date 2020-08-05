@@ -143,6 +143,8 @@ input.outer-menu-searchbar {
     justify-content: flex-start;
     align-items: flex-start;
     padding: 2em;
+    z-index: 100;
+    width: 80%;
   }
 
   .nav-list-icon-wrapper {

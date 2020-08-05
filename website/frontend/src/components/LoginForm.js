@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    marginBottom: "1rem",
+    marginBottom: "1rem"
   },
   input: {
     padding: "0.75em 1.25em"
@@ -51,15 +51,17 @@ function LoginForm() {
     <form className="login-form-container bg-white" onSubmit={handleClick}>
       <h3>Welcome Back!</h3>
       <TextField
-        classes={{root: classes.root, input: classes.input}} 
+        classes={{root: classes.root}} 
         value={username} 
+        size="small"
         onChange={(e) => setUsername(e.target.value)}
         label="Username"
         variant="outlined"
       />
       <TextField
-        classes={{root: classes.root, input: classes.input}} 
+        classes={{root: classes.root}} 
         value={password} 
+        size="small"
         onChange={(e) => setPassword(e.target.value)}
         label="Password"
         variant="outlined"

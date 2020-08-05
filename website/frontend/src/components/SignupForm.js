@@ -53,15 +53,17 @@ function SignupForm() {
       <h3>Create an Account</h3>
       <TextField
         classes={{root: classes.root, input: classes.input}} 
-        value={username} 
+        value={username}
+        size="small"
         onChange={(e) => setUsername(e.target.value)}
         label="Username"
         variant="outlined"
       />
       <TextField
         classes={{root: classes.root, input: classes.input}} 
-        label="Password" 
+        label="Password"
         value={password1} 
+        size="small"
         onChange={(e) => setPassword1(e.target.value)}
         variant="outlined"
       />
@@ -69,6 +71,7 @@ function SignupForm() {
         classes={{root: classes.root, input: classes.input}} 
         label="Confirm Password" 
         value={password2} 
+        size="small"
         onChange={(e) => setPassword2(e.target.value)}
         variant="outlined"
       />

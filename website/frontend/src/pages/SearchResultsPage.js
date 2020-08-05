@@ -21,7 +21,11 @@ function SearchResultsPage({history}) {
       .catch((err) => {
         console.log(err);
       })
-  }, [])
+  }, [searchParam]);
+
+  useEffect(() => {
+    setSearchParam(qs.parse(history.location.search, {ignoreQueryPrefix: true}).name);
+  }, [history.location]);
 
   return(
     <>

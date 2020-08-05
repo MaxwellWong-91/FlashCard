@@ -15,8 +15,7 @@ function ResultsList({isSearch, initialSets}) {
   const [sets, setSets] = useState(initialSets ? initialSets : []);
   const [editSet, setEditSet] = useState({});
   const [index, setIndex] = useState(null);
-  // console.log(initialSets ? initialSets : []);
-  console.log(sets);
+  
   useEffect(() => {
     if (!isSearch) {
       const headers = {
@@ -25,9 +24,7 @@ function ResultsList({isSearch, initialSets}) {
   
       axios.get("/api/set/", {headers})
         .then((res) => {
-          console.log(res.data);
           setSets(res.data);
-          //console.log(sets);
         })
         .catch((err) => {
           console.log(err);
@@ -35,7 +32,13 @@ function ResultsList({isSearch, initialSets}) {
     }
 
     
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (initialSets && initialSets.length) {
+        setSets([...initialSets]);
+    }
+  }, [initialSets]);
 
   const handleEditClick = (e, set) => {
     e.stopPropagation();
@@ -61,16 +64,9 @@ function ResultsList({isSearch, initialSets}) {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          
           let newSets = [...sets];
-          console.log(newSets)
-          newSets[id] = res.data;
+          newSets[id].name = res.data.name;
           setSets(newSets);
-
-
-          // console.log(sets[id])
-          // console.log(res.data)
-          //setSets(sets => sets[id] = res.data)
           setEditSet({});
         }
       })
@@ -93,8 +89,6 @@ function ResultsList({isSearch, initialSets}) {
 
     axios.delete("/api/set/delete/" + id, {headers})
       .then((res) => {
-        console.log(res);
-        console.log(res.data)
         if (res.data.error) {
           console.log(res.data.error)
         } else {
@@ -144,7 +138,7 @@ function ResultsList({isSearch, initialSets}) {
                     
                     {
                       isSearch ? 
-                      <p>{set.user}</p> 
+                      <p>by {set.user}</p> 
                       :
                       <div className="icon-container">
                         {
@@ -190,61 +184,6 @@ function ResultsList({isSearch, initialSets}) {
 
         })
       }
-      {/* <li className="result-list-item">
-        <div className="result-list-heading">
-          {
-            isEdit ?
-            <TextField 
-              name="name" 
-              label="Name" 
-              multiline={true} 
-              fullWidth={true}
-            /> :
-            <p className="set-name">Set Name</p>
-          }
-          
-          {
-            isSearch ? 
-            <p>By KiruKirai</p> 
-            :
-            <div className="icon-container">
-              {
-                isEdit ? 
-                <DoneIcon /> : 
-                <EditIcon />
-              }
-              <DeleteIcon />
-            </div>
-          }
-        </div>
-        <div className="result-list-num-terms">
-          <p>
-            3 terms
-          </p>
-        </div>
-      </li>
-
-      <ul className="result-list-word-container">
-        <li className="result-list-word-container-item">
-          <p>Word Word Word Word Word WordWordWordWord</p>
-          <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-        </li>
-
-        <li className="result-list-word-container-item">
-          <p>Word</p>
-          <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-        </li>
-
-        <li className="result-list-word-container-item">
-          <p>Word</p>
-          <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-        </li>
-
-        <li className="result-list-word-container-item">
-          <p>Word</p>
-          <p>Definition Definition Definition Definition Definition Definition Definition Definition Definition DefinitionDefinition</p>
-        </li>
-      </ul> */}
     </ul>
   )
 }
