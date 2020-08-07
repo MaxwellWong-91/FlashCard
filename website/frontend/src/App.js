@@ -11,7 +11,11 @@ import LoginPage from "./pages/LoginPage";
 import {UserContext} from "./context/UserContext";
 import axios from "axios";
 
-if (process.env.PRODUCTION) {
+
+console.log(process.env.NODE_ENV);
+console.log(process.env.NODE_ENV === "production");
+
+if (process.env.NODE_ENV === "production") {
   axios.defaults.baseURL = "http://flashcard-manager-api.herokuapp.com";
 }
 

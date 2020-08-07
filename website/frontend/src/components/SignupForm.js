@@ -70,6 +70,7 @@ function SignupForm() {
         size="small"
         onChange={(e) => setPassword1(e.target.value)}
         variant="outlined"
+        type="password"
       />
       <TextField 
         classes={{root: classes.root, input: classes.input}} 
@@ -78,6 +79,7 @@ function SignupForm() {
         size="small"
         onChange={(e) => setPassword2(e.target.value)}
         variant="outlined"
+        type="password"
       />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">
