@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import {UserContext} from "../context/UserContext";
+import {UserContext, UserNameContext} from "../context/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import TextField from '@material-ui/core/TextField';
@@ -20,6 +20,7 @@ function SignupForm() {
   const history = useHistory()
 
   const {user, setUser} = useContext(UserContext);
+  const {setUsername} = useContext(UserNameContext);
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -41,6 +42,7 @@ function SignupForm() {
         } else {
           setError("");
           setUser(res.data.token);
+          setUsername(res.data.user.username);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("username", res.data.user.username);
           history.push('/');

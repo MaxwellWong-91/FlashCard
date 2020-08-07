@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {UserContext} from "../context/UserContext";
+import {UserContext, UserNameContext} from "../context/UserContext";
 import { useParams} from "react-router";
 import axios from "axios";
 import Navbar from "../components/Navbar";
@@ -10,6 +10,7 @@ import WordListBody from "../components/WordListBody";
 
 function StudySetPage({history}) {
   const {user, setUser} = useContext(UserContext);
+  const {username, setUsername} = useContext(UserNameContext);
   const [flashcards, setFlashcards] = useState({});
 
   const [setName, setSetName] = useState("");
@@ -20,8 +21,8 @@ function StudySetPage({history}) {
     axios.get("/api/set/" + setId)
       .then((res) => {
         setFlashcards(res.data.flashcards);
-        setSetName(res.data.name)
-        setIsOwner(res.data.user === localStorage.getItem("username"))
+        setSetName(res.data.name);
+        setIsOwner(res.data.user === username);
       })
       .catch((err) => {
         console.log(err);

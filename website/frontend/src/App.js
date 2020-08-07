@@ -8,7 +8,7 @@ import ViewSetsPage from "./pages/ViewSetsPage";
 import CreateSetPage from "./pages/CreateSetPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
-import {UserContext} from "./context/UserContext";
+import {UserContext, UserNameContext} from "./context/UserContext";
 import axios from "axios";
 
 
@@ -23,6 +23,7 @@ axios.defaults.validateStatus = function (status) {
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem("token"));
+  const [username, setUserName] = useState(localStorage.getItem("username"));
   const providerValue = useMemo(() => 
     ({user, setUser}), [user, setUser]
   );
@@ -31,13 +32,15 @@ function App() {
     <Router>
       <Switch>
         <UserContext.Provider value={providerValue}> 
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/set/study/:setId" component={StudySetPage} />
-          <PrivateRoute path="/set/view" component={ViewSetsPage} />
-          <PrivateRoute path="/set/create" component={CreateSetPage} />
-          <Route path="/set/search" component={SearchResultsPage} />
-          <Route path="/signup" component={SignupPage} />
-          <Route path="/login" component={LoginPage} />
+            <UserNameContext.Provider value={{username, setUserName}}>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/set/study/:setId" component={StudySetPage} />
+              <PrivateRoute path="/set/view" component={ViewSetsPage} />
+              <PrivateRoute path="/set/create" component={CreateSetPage} />
+              <Route path="/set/search" component={SearchResultsPage} />
+              <Route path="/signup" component={SignupPage} />
+              <Route path="/login" component={LoginPage} />
+          </UserNameContext.Provider>
         </UserContext.Provider>
       </Switch>
     </Router>

@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import {UserContext} from "../context/UserContext";
+import {UserContext, UserNameContext} from "../context/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import TextField from '@material-ui/core/TextField';
@@ -21,6 +21,7 @@ function LoginForm() {
   const history = useHistory();
   
   const {user, setUser} = useContext(UserContext);
+  const {setUsername} = useContext(UserNameContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -40,6 +41,7 @@ function LoginForm() {
         } else {
           setError("");
           setUser(res.data.token);
+          setUsername(res.data.user.username);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("username", res.data.user.username);
           history.push('/');
