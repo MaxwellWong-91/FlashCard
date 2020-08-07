@@ -11,8 +11,9 @@ import LoginPage from "./pages/LoginPage";
 import {UserContext} from "./context/UserContext";
 import axios from "axios";
 
-//axios.defaults.baseURL = "http://localhost:8080";
-//axios.defaults.withCredentials = true;
+if (process.env.PRODUCTION) {
+  axios.defaults.baseURL = "http://flashcard-manager-api.herokuapp.com";
+}
 
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 500;
