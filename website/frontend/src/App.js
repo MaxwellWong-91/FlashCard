@@ -12,11 +12,9 @@ import {UserContext} from "./context/UserContext";
 import axios from "axios";
 
 
-console.log(process.env.NODE_ENV);
-console.log(process.env.NODE_ENV === "production");
 
 if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "http://flashcard-manager-api.herokuapp.com";
+  axios.defaults.baseURL = "https://flashcard-manager-api.herokuapp.com";
 }
 
 axios.defaults.validateStatus = function (status) {
