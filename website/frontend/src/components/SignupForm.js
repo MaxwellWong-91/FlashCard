@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import {UserContext} from "../context/UserContext";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import TextField from '@material-ui/core/TextField';
 import "../css/components/SignupForm.css";
@@ -16,6 +17,7 @@ const useStyles = makeStyles({
 
 function SignupForm() {
   const classes = useStyles();
+  const history = useHistory()
 
   const {user, setUser} = useContext(UserContext);
   const [username, setUsername] = useState("");
@@ -40,6 +42,8 @@ function SignupForm() {
           setError("");
           setUser(res.data.token);
           localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data.user);
+          history.push('/');
         }
       })
       .catch((err) => {

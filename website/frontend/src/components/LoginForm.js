@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import {UserContext} from "../context/UserContext";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import TextField from '@material-ui/core/TextField';
 import "../css/components/LoginForm.css";
@@ -17,7 +18,8 @@ const useStyles = makeStyles({
 
 function LoginForm() {
   const classes = useStyles();
-
+  const history = useHistory();
+  
   const {user, setUser} = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -39,6 +41,8 @@ function LoginForm() {
           setError("");
           setUser(res.data.token);
           localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data.user);
+          history.push('/');
         }
       })
       .catch((err) => {
@@ -60,11 +64,12 @@ function LoginForm() {
       />
       <TextField
         classes={{root: classes.root}} 
-        value={password} 
+        value={password}
         size="small"
         onChange={(e) => setPassword(e.target.value)}
         label="Password"
         variant="outlined"
+        type="password"
       />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">

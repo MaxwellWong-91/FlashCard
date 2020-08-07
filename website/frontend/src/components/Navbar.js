@@ -36,7 +36,7 @@ function Navbar({history}) {
   useEffect(() => {
     axios.get("/api/set/names")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setOptions(res.data);
       })
       .catch((err) => {
