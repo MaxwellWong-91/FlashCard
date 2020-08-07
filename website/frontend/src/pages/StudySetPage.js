@@ -15,6 +15,8 @@ function StudySetPage({history}) {
 
   const [setName, setSetName] = useState("");
   const [isOwner, setIsOwner] = useState(false);
+  const [resUser, setResUser] = useState("");
+
   let { setId } = useParams();
   
   useEffect(() => {
@@ -22,6 +24,7 @@ function StudySetPage({history}) {
       .then((res) => {
         setFlashcards(res.data.flashcards);
         setSetName(res.data.name);
+        setResUser(res.data.user);
         setIsOwner(res.data.user === username);
       })
       .catch((err) => {
@@ -29,6 +32,10 @@ function StudySetPage({history}) {
       })
     
   }, [])
+
+  useEffect(() => {
+    setIsOwner(resUser === username);
+  }, [username])
 
   const handleDoneSubmit = (flashcard) => {
     const headers = {
