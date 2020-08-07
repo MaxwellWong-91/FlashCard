@@ -21,7 +21,7 @@ function SignupForm() {
 
   const {user, setUser} = useContext(UserContext);
   const {setUsername} = useContext(UserNameContext);
-  const [username, setUsername] = useState("");
+  const [username, setUsernameText] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
@@ -61,7 +61,7 @@ function SignupForm() {
         classes={{root: classes.root, input: classes.input}} 
         value={username}
         size="small"
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setUsernameText(e.target.value)}
         label="Username"
         variant="outlined"
       />
