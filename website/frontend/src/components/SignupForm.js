@@ -42,7 +42,7 @@ function SignupForm() {
           setError("");
           setUser(res.data.token);
           localStorage.setItem("token", res.data.token);
-          localStorage.setItem("username", res.data.user);
+          localStorage.setItem("username", res.data.user.username);
           history.push('/');
         }
       })
