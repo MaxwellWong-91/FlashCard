@@ -20,8 +20,8 @@ function SignupForm() {
   const history = useHistory()
 
   const {user, setUser} = useContext(UserContext);
-  const {setUsername} = useContext(UserNameContext);
-  const [username, setUsernameText] = useState("");
+  const {setUsername: setLocalUsername} = useContext(UserNameContext);
+  const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
@@ -61,7 +61,7 @@ function SignupForm() {
         classes={{root: classes.root, input: classes.input}} 
         value={username}
         size="small"
-        onChange={(e) => setUsernameText(e.target.value)}
+        onChange={(e) => setUsername(e.target.value)}
         label="Username"
         variant="outlined"
       />

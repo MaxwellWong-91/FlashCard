@@ -21,7 +21,7 @@ function LoginForm() {
   const history = useHistory();
   
   const {user, setUser} = useContext(UserContext);
-  const {setUsername} = useContext(UserNameContext);
+  const {setUsername: setLocalUsername} = useContext(UserNameContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -41,7 +41,7 @@ function LoginForm() {
         } else {
           setError("");
           setUser(res.data.token);
-          setUsername(res.data.user.username);
+          setLocalUsername(res.data.user.username);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("username", res.data.user.username);
           history.push('/');
