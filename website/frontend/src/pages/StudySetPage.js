@@ -6,20 +6,6 @@ import Navbar from "../components/Navbar";
 import FlashCard from "../components/FlashCard";
 import WordListBody from "../components/WordListBody";
 
-const flashcardSets = [
-  {
-    _id: ("5eae0f84f8159e46bc2028c7"), 
-    name: "Biology",
-    __v: 0
-  },
-  {
-    _id: ("5ac74cccc65aac3e0c4b6cde"),
-    flashcards: [("507f1f77bcf86cd799439011"), ("507f191e810c19729de860ea")],
-    name: "cse100",
-    __v: 0
-  }
-]
-
 
 
 function StudySetPage({history}) {
@@ -27,7 +13,7 @@ function StudySetPage({history}) {
   const [flashcards, setFlashcards] = useState({});
 
   const [setName, setSetName] = useState("");
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
   let { setId } = useParams();
   
   useEffect(() => {
@@ -35,6 +21,7 @@ function StudySetPage({history}) {
       .then((res) => {
         setFlashcards(res.data.flashcards);
         setSetName(res.data.name)
+        setIsOwner(res.data.user === localStorage.getItem("username"))
       })
       .catch((err) => {
         console.log(err);

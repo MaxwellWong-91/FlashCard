@@ -31,6 +31,7 @@ function Navbar({history}) {
   const handleLogout = (e) => {
     setUser(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("name");
   }
 
   useEffect(() => {
