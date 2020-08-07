@@ -86,7 +86,6 @@ function UploadFileBody({title}) {
       </div>
 
       <div className="file-upload-container bg-white">
-        {/* <a className="file-upload-button">File Upload <PublishIcon /></a> */}
         <label className="file-upload-label">
             <span className="file-upload-button">File Upload <PublishIcon /></span>
             <input className="file-upload-input" type="file" onChange={handleFileUpload} style={{visibility: "hidden"}}></input>

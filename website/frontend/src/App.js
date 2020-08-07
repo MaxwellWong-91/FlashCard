@@ -21,20 +21,11 @@ axios.defaults.validateStatus = function (status) {
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem("token"));
-//   const [userName, setUserName] = useState(localStorage.getItem("username"));
   const providerValue = useMemo(() => 
     ({user, setUser}), [user, setUser]
   );
 
   return (
-    /*
-    <Router>
-      <Navbar />
-      <Route path = "/set/create" component={CreateSet} />
-      <Route path = "/set/view" component={ViewSet} />
-      <Route path = "/set/study/:id" component={StudySet} />
-    </Router>
-    */
     <Router>
       <Switch>
         <UserContext.Provider value={providerValue}> 
