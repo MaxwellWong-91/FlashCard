@@ -18,6 +18,9 @@ const useStyles = makeStyles({
   },
   input: {
     padding: "0.75em 1.25em"
+  },
+  inputMobile: {
+    backgroundColor: "white"
   }
 });
 
@@ -92,7 +95,7 @@ function Navbar({history}) {
               className="searchbar inner-menu-searchbar"
               classes={{
                 input: classes.inputRoot,
-                inputRoot: classes.inputRoot
+                inputRoot: classes.inputMobile
               }}
               options={options}
               onChange={handleSubmit}
