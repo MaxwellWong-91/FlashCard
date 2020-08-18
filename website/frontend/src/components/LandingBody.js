@@ -22,12 +22,12 @@ function LandingBody() {
     <>
       <div className="outer-showcase bg-white">
         <section id="showcase">
+          <div className="inner-showcase black-bg"></div>
           <div className="container">
             <h1>Learn. Study. Repeat.</h1>
             <p>Flashcard Manager is the best way to organize and study your flashcards. Study at your convienience whether from home, school, or at the office.</p>
           </div>
         </section>
-        <div className="inner-showcase black-bg"></div>
       </div>
 
       <section id="features" className="bg-white">

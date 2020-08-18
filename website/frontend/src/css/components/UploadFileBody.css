@@ -56,9 +56,14 @@
 }
 
 .loading-spinner {
-  width: 30%;
+  width: 20%;
   min-width: 150px;
   margin: 0 auto;
+  display: block;
+}
+
+.create-flashcards-text {
+  text-align: center;
 }
 
 @media (max-width: 720px) {

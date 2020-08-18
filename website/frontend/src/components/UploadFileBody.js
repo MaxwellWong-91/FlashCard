@@ -7,7 +7,7 @@ import "../css/components/UploadFileBody.css";
 
 
 function UploadFileBody({title}) {
-  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState("loading");
   const [file, setFile] = useState(null);
   const [sets, setSets] = useState([]);
 
@@ -99,7 +99,7 @@ function UploadFileBody({title}) {
         loadingStatus === "loading" ? 
         <div>
           <img src={LoadingSpinner} className="loading-spinner"></img>
-          <h2 className="">Creating Your flashcards...</h2>
+          <h1 className="create-flashcards-text">Creating Your Flashcards...</h1>
         </div>
         : null
       }
