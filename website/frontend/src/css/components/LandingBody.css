@@ -96,6 +96,10 @@ section#features h2 {
 }
 
 @media(min-width: 720px) and (max-width: 960px) {
+  section#features {
+    height: auto;
+  }
+
   /* Features */
   section#features .container {
     grid-template-columns: repeat(4, 1fr);
@@ -114,5 +118,13 @@ section#features h2 {
 @media(max-width: 720px) {
   section#features .container {
     grid-template-columns: 1fr;
+  }
+
+  section#features {
+    height: auto;
+  }
+
+  div.feature-item:last-child {
+    margin-bottom: 2rem;
   }
 }

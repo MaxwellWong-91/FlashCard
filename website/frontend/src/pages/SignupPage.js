@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 import SignupForm from "../components/SignupForm";
 
 
-function SignupPage() {
+function SignupPage({history}) {
   return (
     <>
-      <Navbar />
+      <Navbar history={history}/>
       <SignupForm />
     </>
   )

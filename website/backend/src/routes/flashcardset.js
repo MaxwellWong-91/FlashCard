@@ -188,6 +188,7 @@ router.route("/search").post((req, res) => {
   }
 
   FlashcardSet.find({ name })
+  .populate("flashcards")
   .then((data) => {
     if (!data.length) {
       return res.status(400).json({error: `Flashcard set with name ${name} does not exist`})

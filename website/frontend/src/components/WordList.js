@@ -23,16 +23,19 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
     setEditedCard({ ...editedCard, [e.target.name]: e.target.value});
   };
 
-  const deleteCard = (e, cardId) => {
-    // should proabbly do the deleting here
-    let cardContainer = e.currentTarget.parentElement.parentElement.parentElement;
+  const handleSaveClick = (e) => {
+    if (editedCard._id === -1) { // If adding card, should set addingCard to false.
+      setAddingCard(false);
+    }
     
-    handleDeleteClick(cardId);
-    
-    cardContainer.style.animationPlayState = "running";
-    cardContainer.addEventListener("animationend", () => {
-      cardContainer.remove();
-    })
+    // Insert update call
+    handleDoneSubmit(editedCard)
+      .then((_) => {
+        setEditedCard({});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -43,7 +46,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
           let isEditCard = flashcard._id === editedCard._id || flashcard._id  === -1; // flashcard._id === null for adding card
 
           return (
-            <li>
+            <li
+            key={flashcard._id}>
               <ul className="word-container bg-white">
                 <li className="word">
                   { 
@@ -56,6 +60,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                       fullWidth={true} 
                       value={editedCard.word}
                       onChange={handleCardChange} 
+                      error={editedCard.word === ""}
+                      helperText={editedCard.word === "" ? "Please make sure field is filled out" : ""}
                     /> :
                     <p>{flashcard.word}</p>
                   }
@@ -71,6 +77,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                       fullWidth={true} 
                       value={editedCard.definition}
                       onChange={handleCardChange} 
+                      error={editedCard.definition === ""}
+                      helperText={editedCard.definition === "" ? "Please make sure field is filled out" : ""}
                     /> :
                     <p>{flashcard.definition}</p>
                   }
@@ -81,15 +89,7 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                     {
                       isEditCard ?
                       <DoneIcon 
-                        onClick={(e) => {
-                          if (editedCard._id === -1) { // If adding card, should set addingCard to false.
-                            setAddingCard(false);
-                          }
-                          
-                          // Insert update call
-                          handleDoneSubmit(editedCard);
-                          setEditedCard({});
-                        }}
+                        onClick={handleSaveClick}
                       />
                       : <EditIcon 
                         onClick={(e) => {
@@ -105,8 +105,8 @@ function WordList({ flashcards, handleDoneSubmit, handleDeleteClick, handleAddCa
                         setEditedCard({});
                       }
 
-                      deleteCard(e, flashcard._id);
-                      }}/>
+                      handleDeleteClick(e, flashcard._id);
+                    }}/>
                   </li>
                   : null
                 }

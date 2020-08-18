@@ -12,7 +12,7 @@ a {
 }
 
 /* Navbar */
-nav {
+.navbar {
   position: relative;
   height: 8vh;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
@@ -23,7 +23,7 @@ nav {
   padding: 0 2em;
 }
 
-nav > ul {
+.navbar-container {
   height: 100%;
   width: 100%;
   list-style-type: none;
@@ -63,10 +63,8 @@ nav > ul li.nav-brand {
 }
 
 .searchbar {
-  padding: 0.5em 1.75em 0.5em 0.5em;
-  font-size: 1rem;
-  background: url("../../images/search.svg") no-repeat;
-  background-position: right;
+  width: 100%;
+  padding: 0.5em;
 }
 
 input.outer-menu-searchbar {
@@ -122,31 +120,66 @@ input.outer-menu-searchbar {
   display: none;
 }
 
-input.inner-menu-searchbar {
+.inner-menu-searchbar {
   display: none;
 }
 
+.nav-list-icon-wrapper {
+  display: none;
+}
 @media(max-width: 920px) {
-  .nav-button-container > li > a {
-    max-height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: none;
-    transition: max-height 1s ease-in-out;
-  }
 
-  .nav-button-container.nav-open > li > a {
-    max-height: 30px;
-    border-radius: 0;
-  }
 
   .nav-list-button-container {
-    position: absolute;
+    position: fixed;
+    height: 100%;
+    right: 0;
+    top: 0;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in-out;
+    background-color: #C06DF1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 2em;
+    z-index: 100;
+    width: 80%;
+  }
+
+  .nav-list-icon-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .nav-button-container {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .nav-button-container .nav-button {
+    justify-content: flex-start;
+  }
+
+  .nav-button-container .nav-button a {
+    text-align: start;
+  }
+
+  .nav-pill-secondary { 
+    border-radius: 0;
+    color: white;
+    background-color: #C06DF1;
+  }
+
+  .nav-pill-secondary:hover {
+    background-color: #C06DF1;
+    color: white;
   }
   
-  .nav-button-container {
-    position: absolute;
+  .nav-open {
+    transform: translateX(0);
   }
+  
 
   .toggle-menu {
     display: flex;
@@ -161,6 +194,8 @@ input.inner-menu-searchbar {
   .search-container {
     flex: 1 1;
   }
+
+  
 }
 
 @media(max-width: 720px) {
@@ -199,11 +234,12 @@ div.background {
 }
 
 @media(max-width: 450px) {
-  input.inner-menu-searchbar {
-    display: block;
-  }
 
-  input.outer-menu-searchbar {
+  .inner-menu-searchbar {
+    display: block;
+    margin-top: 1em;
+  }
+  .outer-menu-searchbar {
     display: none;
   }
 }

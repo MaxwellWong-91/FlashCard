@@ -1,13 +1,14 @@
 import React, {useState, useContext} from "react";
-import {UserContext} from "../context/UserContext";
+import {UserContext, UserNameContext} from "../context/UserContext";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
 import "../css/components/LoginForm.css";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    marginBottom: "1rem",
+    marginBottom: "1rem"
   },
   input: {
     padding: "0.75em 1.25em"
@@ -17,9 +18,11 @@ const useStyles = makeStyles({
 
 function LoginForm() {
   const classes = useStyles();
-
+  const history = useHistory();
+  
   const {user, setUser} = useContext(UserContext);
-  const [username, setUsername] = useState("");
+  const {setUsername} = useContext(UserNameContext);
+  const [username, setUsernameText] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -38,6 +41,10 @@ function LoginForm() {
         } else {
           setError("");
           setUser(res.data.token);
+          setUsername(res.data.user.username);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("username", res.data.user.username);
+          history.push('/');
         }
       })
       .catch((err) => {
@@ -49,8 +56,23 @@ function LoginForm() {
   return(
     <form className="login-form-container bg-white" onSubmit={handleClick}>
       <h3>Welcome Back!</h3>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <OutlinedInput classes={{root: classes.root, input: classes.input}} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <TextField
+        classes={{root: classes.root}} 
+        value={username} 
+        size="small"
+        onChange={(e) => setUsernameText(e.target.value)}
+        label="Username"
+        variant="outlined"
+      />
+      <TextField
+        classes={{root: classes.root}} 
+        value={password}
+        size="small"
+        onChange={(e) => setPassword(e.target.value)}
+        label="Password"
+        variant="outlined"
+        type="password"
+      />
       {error ? <p className="error">{error}</p> : null}
       <button className="nav-pill-primary" type="submit">
         Login

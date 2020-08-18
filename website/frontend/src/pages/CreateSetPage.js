@@ -2,11 +2,11 @@ import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import CreateSetBody from "../components/CreateSetBody";
 
-function CreateSetPage() {
+function CreateSetPage({history}) {
   return (
     <>
-      <Navbar />
-      <CreateSetBody />
+      <Navbar history={history}/>
+      <CreateSetBody history={history}/>
     </>
   )
 }
