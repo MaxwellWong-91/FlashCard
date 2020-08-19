@@ -7,7 +7,7 @@ import "../css/components/UploadFileBody.css";
 
 
 function UploadFileBody({title}) {
-  const [loadingStatus, setLoadingStatus] = useState("loading");
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const [file, setFile] = useState(null);
   const [sets, setSets] = useState([]);
 

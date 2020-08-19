@@ -17,6 +17,8 @@ if (process.env.NODE_ENV === "production") {
   axios.defaults.baseURL = "https://flashcard-manager-api.herokuapp.com";
 }
 
+axios.defaults.timeout = 180000;
+
 axios.defaults.validateStatus = function (status) {
   return status >= 200 && status < 500;
 }
