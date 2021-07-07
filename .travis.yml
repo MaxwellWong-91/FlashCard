@@ -15,6 +15,10 @@ env:
 install:
   - cd ./website/backend
   - npm ci
+  - cd ../frontend
+  - npm ci
+  - cd ../backend
 
 script:
   - npm run test-coverage
+  - npm run cypress:test
